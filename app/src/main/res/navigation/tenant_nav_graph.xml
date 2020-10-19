@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/tenantLandingFragment"
+    android:id="@+id/tenant_nav_graph">
+
+    <fragment
+        android:id="@+id/tenantLandingFragment"
+        android:name="com.sneydr.roomrv2.Fragments.TenantLandingFragment"
+        android:label=""
+        tools:layout="@layout/fragment_tenant_landing_page" >
+        <action
+            android:id="@+id/action_tenantLandingFragment_to_tenantProblemFragment"
+            app:destination="@id/tenantProblemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tenantProblemFragment"
+        android:name="com.sneydr.roomrv2.Fragments.TenantProblemFragment"
+        android:label="TenantProblemFragment" >
+        <action
+            android:id="@+id/action_tenantProblemFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProblemFragment"
+        android:name="com.sneydr.roomrv2.Fragments.AddProblemFragment"
+        android:label="Report Problem" >
+        <action
+            android:id="@+id/action_addProblemFragment_to_tenantProblemFragment"
+            app:destination="@id/tenantProblemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.sneydr.roomrv2.Fragments.CameraFragment"
+        android:label="CameraFragment" >
+        <action
+            android:id="@+id/action_cameraFragment_to_addProblemFragment"
+            app:destination="@id/addProblemFragment" />
+    </fragment>
+
+
+</navigation>

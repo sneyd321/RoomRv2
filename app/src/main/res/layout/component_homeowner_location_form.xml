@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilAddHouseHomeOwnerAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/address"
+            app:startIconDrawable="@drawable/ic_home_black_24dp"
+            app:helperText="Ex. 11 Bronte Rd."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textview.MaterialAutoCompleteTextView
+                android:id="@+id/edtAddHouseHomeownerAddress"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:text="11 Bronte Rd."
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilAddHouseHomeownerProvince"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            app:startIconDrawable="@drawable/ic_my_location_black_24dp"
+            android:hint="@string/province"
+            app:helperText="Ex. Ontario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilAddHouseHomeOwnerAddress">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddHouseHomeownerProvince"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:enabled="false"
+                android:text="Ontario" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilAddHouseHomeownerCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/city"
+            app:helperText="Ex. Oakville"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilAddHouseHomeownerProvince"
+            app:startIconDrawable="@drawable/ic_location_city_black_24dp">
+
+            <com.google.android.material.textview.MaterialAutoCompleteTextView
+                android:id="@+id/edtAddHouseHomeownerCity"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:completionThreshold="1"
+                android:text="Oakville" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilAddHouseHomeownerPostalCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/postal_code"
+            app:helperText="Ex. L6L 0E1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilAddHouseHomeownerCity"
+            app:startIconDrawable="@drawable/ic_markunread_mailbox_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddHouseHomeownerPostalCode"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="textPostalAddress"
+                android:minEms="8"
+                android:text="L6L 0E1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilAddHouseUnitNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:helperText="Ex. 207"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilAddHouseHomeownerPostalCode"
+            app:startIconDrawable="@drawable/ic_home_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddHouseUnitNumber"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="textPostalAddress"
+                android:minEms="10"
+                android:text="123" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilAddHousePOBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="PO Box"
+            app:helperText="Ex. 207"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilAddHouseUnitNumber"
+            app:startIconDrawable="@drawable/ic_markunread_mailbox_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddHousePOBox"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="textPostalAddress"
+                android:minEms="10"
+                android:text="123" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

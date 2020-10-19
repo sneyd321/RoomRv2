@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTSUFirstName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:hint="First Name"
+                    android:theme="@style/AppTheme.NoActionBar"
+                    app:counterEnabled="true"
+                    app:endIconMode="clear_text"
+                    app:helperText="Ex. John"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/ic_person_outline_black_24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTSUFirstName"
+                        style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/view_height"
+                        android:inputType="textPersonName"
+                        android:text="Ryan" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTSULastName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:hint="Last Name"
+                    android:theme="@style/AppTheme.NoActionBar"
+                    app:counterEnabled="true"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:helperText="Ex. Smith"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilTSUFirstName"
+                    app:startIconDrawable="@drawable/ic_person_outline_black_24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTSULastName"
+                        style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/view_height"
+                        android:inputType="textPersonName"
+                        android:text="Sneyd" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTSUEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="Email"
+                    android:theme="@style/AppTheme.NoActionBar"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    app:boxStrokeWidth="1dp"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:helperText="Ex. example@domain.com"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilTSULastName"
+                    app:startIconDrawable="@drawable/ic_email_black_24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTSUEmail"
+                        style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/view_height"
+                        android:inputType="textEmailAddress"
+                        android:text="rts1234567@hotmail.com" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTSUHouseId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="House Id"
+                    android:theme="@style/AppTheme.NoActionBar"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    app:boxStrokeWidth="1dp"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:helperText="Ex. 11 Bronte Rd."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilTSUEmail"
+                    app:startIconDrawable="@drawable/ic_home_black_24dp">
+
+                    <com.google.android.material.textview.MaterialAutoCompleteTextView
+                        android:id="@+id/edtTSUHouseId"
+                        style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/view_height"
+                        android:inputType="number"
+                        android:text="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTSUPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="Password"
+                    android:theme="@style/AppTheme.NoActionBar"
+                    app:boxStrokeColor="@color/colorPrimary"
+                    app:boxStrokeWidth="1dp"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilTSUHouseId"
+                    app:startIconDrawable="@drawable/ic_vpn_key_black_24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTSUPassword"
+                        style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/view_height"
+                        android:inputType="textPassword"
+                        android:text="homework" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

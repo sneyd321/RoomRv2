@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView49"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Services Offered:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView50"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_weight=".5"
+            android:text="Parking"
+            app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseParking"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/swtAddHouseParking" />
+
+        <Switch
+            android:id="@+id/swtAddHouseParking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layoutDirection="ltr"
+            android:switchPadding="8dp"
+            android:text="Not Selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilAddHouseParkingAmount"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:enabled="false"
+            android:hint="@string/parking_amount"
+            android:visibility="gone"
+            app:helperText="Ex. $50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swtAddHouseParking"
+            app:prefixText="$">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddHouseParkingAmount"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView48"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="Gas"
+            app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseGas"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/swtAddHouseGas" />
+
+        <Switch
+            android:id="@+id/swtAddHouseGas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layoutDirection="ltr"
+            android:switchPadding="8dp"
+            android:text="Not Selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilAddHouseParkingAmount" />
+
+
+        <TextView
+            android:id="@+id/textView52"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_weight=".5"
+            android:text="Air Conditioning"
+            app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseAirConditioning"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/swtAddHouseAirConditioning" />
+
+        <Switch
+            android:id="@+id/swtAddHouseAirConditioning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layoutDirection="ltr"
+            android:switchPadding="8dp"
+            android:text="Not Selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swtAddHouseGas" />
+
+
+        <TextView
+            android:id="@+id/textView51"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="Additional Storage Space"
+            app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseStorage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/swtAddHouseStorage" />
+
+        <Switch
+            android:id="@+id/swtAddHouseStorage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layoutDirection="ltr"
+            android:switchPadding="8dp"
+            android:text="Not Selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swtAddHouseAirConditioning" />
+
+        <TextView
+            android:id="@+id/textView54"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginStart="8dp"
+            android:text="OnSite Laundry"
+            app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseLaundry"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/swtAddHouseLaundry" />
+
+        <Switch
+            android:id="@+id/swtAddHouseLaundry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layoutDirection="ltr"
+            android:switchPadding="8dp"
+            android:text="Not Selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swtAddHouseStorage" />
+
+
+        <TextView
+            android:id="@+id/textView53"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="Guest Parking"
+            app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseGuestParking"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/swtAddHouseGuestParking" />
+
+        <Switch
+            android:id="@+id/swtAddHouseGuestParking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layoutDirection="ltr"
+            android:switchPadding="8dp"
+            android:text="Not Selected"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swtAddHouseLaundry" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

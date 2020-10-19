@@ -1,0 +1,96 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorAccent">#A20021</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense</item>
+    </style>
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:buttonTint">@color/White</item>
+        <item name="android:buttonBarPositiveButtonStyle" >@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="Base.Widget.MaterialComponents.AutoCompleteTextView" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:background">@null</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">12dp</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textAppearance">?attr/textAppearanceSubtitle1</item>
+        <item name="android:dropDownVerticalOffset">@dimen/mtrl_exposed_dropdown_menu_popup_vertical_offset</item>
+        <item name="android:popupElevation" tools:ignore="NewApi">@dimen/mtrl_exposed_dropdown_menu_popup_elevation</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="theme"> @style/AppTheme.NoActionBar</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="endIconMode">clear_text</item>
+        <item name="errorEnabled">true</item>
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="MaterialButton" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+
+
+    <style name="CardViewMargins" parent="Widget.MaterialComponents.CardView" >
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+    
+    
+
+    <style name="general_text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/Black</item>
+    </style>
+
+
+
+
+
+
+    <style name="row_key">
+        <item name="android:paddingRight">@dimen/activity_vertical_margin</item>
+        <item name="android:textColor">@color/Gray</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="row_value">
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+
+
+
+
+
+</resources>

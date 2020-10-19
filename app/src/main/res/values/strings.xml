@@ -1,0 +1,434 @@
+<resources>
+    <string name="app_name">RoomR EP</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string-array name="status">
+        <item>Pending</item>
+        <item>Completed</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>No Language Selected</item>
+        <item>Spanish</item>
+        <item>Polish</item>
+        <item>Russian</item>
+        <item>Hindi</item>
+        <item>Afrikaans</item>
+        <item>French</item>
+        <item>Italian</item>
+        <item>Portuguese </item>
+        <item>Albanian</item>
+    </string-array>
+
+    <string-array name="languagesShortForm">
+        <item>none</item>
+        <item>es</item>
+        <item>pl</item>
+        <item>ru</item>
+        <item>hi</item>
+        <item>af</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>pt</item>
+        <item>sq</item>
+    </string-array>
+
+    <string-array name="bedNumbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="bathNumbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="utilityFrequency">
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Every Other Month</item>
+        <item>Yearly</item>
+    </string-array>
+
+
+    <string-array name="rentDueDate">
+        <item>First</item>
+        <item>Second</item>
+        <item>Last</item>
+    </string-array>
+
+
+    <string-array name="utilityName">
+        <item>Hydro</item>
+        <item>Internet</item>
+        <item>Cable</item>
+        <item>Phone Line</item>
+    </string-array>
+
+    <string-array name="provinces">
+        <item>- Select A Province -</item>
+        <item>Alberta</item>
+        <item>British Columbia</item>
+        <item>Manitoba</item>
+        <item>New Brunswick</item>
+        <item>Newfoundland and Labrador</item>
+        <item>Nova Scotia</item>
+        <item>Ontario</item>
+        <item>Prince Edward Island</item>
+        <item>Saskatchewan</item>
+        <item>Yukon</item>
+        <item>Northwest Territories</item>
+        <item>Nunavut</item>
+    </string-array>
+
+
+    <string-array name="AL_Cities">
+        <item>- Select A City -</item>
+        <item>Airdrie</item>
+        <item>Beaumont</item>
+        <item>Brooks</item>
+        <item>Calgary</item>
+        <item>Camrose</item>
+        <item>Chestermere</item>
+        <item>Cold Lake</item>
+        <item>Edmonton</item>
+        <item>Fort Sasketchewan</item>
+        <item>Grande Prarie</item>
+        <item>Lacombe</item>
+        <item>Leduc</item>
+        <item>Lethbridge</item>
+        <item>Lloydminster</item>
+        <item>Medicine Hat</item>
+        <item>Red Deer</item>
+        <item>Spruce Grove</item>
+        <item>St Albert</item>
+        <item>Wetaskiwin</item>
+    </string-array>
+
+    <string-array name="BC_Cities">
+        <item>- Select A City -</item>
+        <item>Abbotsford</item>
+        <item>Armstrong</item>
+        <item>Burnaby</item>
+        <item>Campbell River</item>
+        <item>Castlegar</item>
+        <item>Chilliwack</item>
+        <item>Colwood</item>
+        <item>Coquitlam</item>
+        <item>Courtenay</item>
+        <item>Cranbrook</item>
+        <item>Dawson Creek</item>
+        <item>Delta</item>
+        <item>Duncan</item>
+        <item>Enderby</item>
+        <item>Fernie</item>
+        <item>Fort St John</item>
+        <item>Grand Forks</item>
+        <item>Greenwood</item>
+        <item>Kamloops</item>
+        <item>Kelowna</item>
+        <item>Kimberley</item>
+        <item>Langford</item>
+        <item>Langley</item>
+        <item>Maple Ridge</item>
+        <item>Merritt</item>
+        <item>Nanaimo</item>
+        <item>Nelson</item>
+        <item>New Westminster</item>
+        <item>North Vancouver</item>
+        <item>Parksville</item>
+        <item>Penticton</item>
+        <item>Pitt Meadows</item>
+        <item>Port Alberni</item>
+        <item>Port Coquitlam</item>
+        <item>Port Moody</item>
+        <item>Powell River</item>
+        <item>Prince George</item>
+        <item>Prince Rupert</item>
+        <item>Quesnel</item>
+        <item>Revelstoke</item>
+        <item>Richmond</item>
+        <item>Rossland</item>
+        <item>Salmon Arm</item>
+        <item>Surrey</item>
+        <item>Terrace</item>
+        <item>Trail</item>
+        <item>Vancouver</item>
+        <item>Vernon</item>
+        <item>Victoria</item>
+        <item>West Kelowna</item>
+        <item>White Rock</item>
+        <item>Williams Lake</item>
+    </string-array>
+
+    <string-array name="MB_Cities">
+        <item>- Select A City -</item>
+        <item>Brandon</item>
+        <item>Dauphin</item>
+        <item>Flin Flon</item>
+        <item>Morden</item>
+        <item>Portage la Prairie</item>
+        <item>Selkirk</item>
+        <item>Steinbach</item>
+        <item>Thompson</item>
+        <item>Winkler</item>
+        <item>Winnipeg</item>
+    </string-array>
+
+    <string-array name="NB_Cities">
+        <item>- Select A City -</item>
+        <item>Bathurst</item>
+        <item>Campbellton</item>
+        <item>Dieppe</item>
+        <item>Edmundston</item>
+        <item>Fredericton</item>
+        <item>Miramichi</item>
+        <item>Moncton</item>
+        <item>Saint John</item>
+    </string-array>
+
+    <string-array name="NL_Cities">
+        <item>- Select A City -</item>
+        <item>Corner Brook</item>
+        <item>Mount Pearl</item>
+        <item>St Johns</item>
+    </string-array>
+
+    <string-array name="NT_cities">
+        <item>- Select A City -</item>
+        <item>Yellowknife</item>
+    </string-array>
+
+    <string-array name="NS_Cities">
+        <item>- Select A City -</item>
+        <item>Halifax</item>
+        <item>Sydney</item>
+        <item>Dartmouth</item>
+    </string-array>
+
+    <string-array name="NU_Cities">
+        <item>- Select A City -</item>
+        <item>Iqaluit</item>
+    </string-array>
+
+    <string-array name="ON_cities">
+        <item>- Select A City -</item>
+        <item>Ajax</item>
+        <item>Barrie</item>
+        <item>Belleville</item>
+        <item>Brampton</item>
+        <item>Brant</item>
+        <item>Brantford</item>
+        <item>Brockville</item>
+        <item>Burlington</item>
+        <item>Cambridge</item>
+        <item>Clarence-Rockland</item>
+        <item>Cornwall</item>
+        <item>Dryden</item>
+        <item>Elliot Lake</item>
+        <item>Greater Sudbury</item>
+        <item>Guelph</item>
+        <item>Hamilton</item>
+        <item>Kawartha Lakes</item>
+        <item>Kenora</item>
+        <item>Kingston</item>
+        <item>Kitchener</item>
+        <item>London</item>
+        <item>Markham</item>
+        <item>Mississauga</item>
+        <item>Niagara Falls</item>
+        <item>North Bay</item>
+        <item>Oakville</item>
+        <item>Orillia</item>
+        <item>Oshawa</item>
+        <item>Owen Sound</item>
+        <item>Pembroke</item>
+        <item>Peterborough</item>
+        <item>Pickering</item>
+        <item>Port Colborne</item>
+        <item>Quinte West</item>
+        <item>Richmond Hill</item>
+        <item>Sarnia</item>
+        <item>Sualt Ste Marie</item>
+        <item>St Catherines</item>
+        <item>St Thomas</item>
+        <item>Stratford</item>
+        <item>Temiskaming Shores</item>
+        <item>Thorold</item>
+        <item>Thunder Bay</item>
+        <item>Timmins</item>
+        <item>Toronto</item>
+        <item>Vaughn</item>
+        <item>Waterloo</item>
+        <item>Welland</item>
+        <item>Windsor</item>
+        <item>Woodstock</item>
+    </string-array>
+
+    <string-array name="PE_Cities">
+        <item>- Select A City -</item>
+        <item>Charlottetown</item>
+        <item>Summerside</item>
+    </string-array>
+
+    <string-array name="SA_Cities">
+        <item>- Select A City -</item>
+        <item>Estevan</item>
+        <item>Flin Flon</item>
+        <item>Humboldt</item>
+        <item>Lloydminster</item>
+        <item>Martensville</item>
+        <item>Meadow Lake</item>
+        <item>Melfort</item>
+        <item>Melville</item>
+        <item>Moose Jaw</item>
+        <item>North Battleford</item>
+        <item>Prince Albert</item>
+        <item>Regina</item>
+        <item>Saskatoon</item>
+        <item>Swift Current</item>
+        <item>Warman</item>
+        <item>Weyburn</item>
+        <item>Yorkton</item>
+    </string-array>
+
+    <string-array name="YU_Cities">
+        <item>- Select A City -</item>
+        <item>Whitehorse</item>
+    </string-array>
+
+    <string-array name="empty_cities">
+        <item>- Select A Province -</item>
+    </string-array>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- String for Houses ExampleFragment -->
+    <string name="houses_greeting">Hello,</string>
+    <string name="houses_add_house">Add House</string>
+    <string name="houses_view_my_listings">View My Listings</string>
+    <!-- Strings for Add Houses ExampleFragment -->
+    <string name="add_house_address">Address</string>
+    <string name="add_house_rent_title">Rent:</string>
+    <string name="add_house_add_utility">Add Utility</string>
+    <string name="add_house_bedrooms_title">Bedrooms:</string>
+    <string name="add_house_bathrooms_title">Bathrooms:</string>
+    <string name="add_house_size">Size</string>
+    <string name="add_house_sqft">SqFt</string>
+    <string name="add_house_amenities_title">Amenities:</string>
+    <string name="add_house_add_house">Add House</string>
+    <!-- Strings for Add Utility Dialog ExampleFragment -->
+    <string name="add_utility_name">Utility Name</string>
+    <string name="add_utility_amount">Amount:</string>
+    <string name="add_utility_add_utility">Add Utility</string>
+
+    <!-- Additional terms -->
+    <string name="additional_terms">The landlord agrees to recie</string>
+
+
+    <string name="too_string_error_postfix">characters.</string>
+    <string name="too_number_error_postfix">.</string>
+    <string name="empty_address_error">Please enter an address.</string>
+    <string name="address_too_short_error">Please enter an address greater than</string>
+    <string name="address_too_long_error">Please enter an address less than</string>
+    <string name="empty_city_error">Please enter a city.</string>
+    <string name="city_too_short_error">Please enter a city greater than</string>
+    <string name="city_too_long_error">Please enter a city less than</string>
+    <string name="empty_postal_code_error">Please enter a postal code.</string>
+    <string name="postal_code_too_short_error">Please enter a postal code greater than</string>
+    <string name="postal_code_too_long_error">Please enter a postal code less than</string>
+    <string name="empty_unit_name_error">Please enter a unit name.</string>
+    <string name="unit_name_too_short_error">Please enter a unit name greater than</string>
+    <string name="unit_name_too_long_error">Please enter a unit name less than</string>
+    <string name="empty_po_box_error">Please enter a P.O. box.</string>
+    <string name="po_box_too_short_error">Please enter a P.O. box greater than</string>
+    <string name="po_box_too_long_error">Please enter a P.O. box less than</string>
+    <string name="empty_unit_number_error">Please enter a unit number.</string>
+    <string name="unit_number_too_short_error">Please enter a unit number greater than</string>
+    <string name="unit_number_too_long_error">Please enter a unit number less than</string>
+    <string name="empty_rent_made_payable_error">Please enter a name.</string>
+    <string name="rent_made_payable_too_short_error">Please enter a name greater than</string>
+    <string name="rent_made_payable_too_long_error">Please enter a name less than</string>
+    <string name="empty_parking_space_error">Please enter the number of parking spaces.</string>
+    <string name="parking_space_too_short_error">Please enter a parking space number larger than</string>
+    <string name="parking_space_too_long_error">Please enter a parking space number smaller than</string>
+    <string name="parking_amount_empty_error">Please enter the parking amount.</string>
+    <string name="parking_amount_too_short_error">Please enter a parking amount larger than</string>
+    <string name="parking_amount_too_long_error">Please enter a parking amount smaller than</string>
+    <string name="empty_rent_amount_error">Please enter a rent amount.</string>
+    <string name="rent_amount_too_short_error">Please enter a rent amount larger than</string>
+    <string name="rent_amount_too_long_error">Please enter a rent amount smaller than</string>
+    <string name="rent_amount_zero_empty">Please enter a rent amount greater than 0.</string>
+    <string name="empty_storage_amount_empty_error">Please enter a storage amount.</string>
+    <string name="storage_amount_too_short_error">Please enter a storage amount larger than</string>
+    <string name="storage_amount_too_long_error">Please enter a storage amount smaller than</string>
+    <string name="empty_first_name_error">Please enter a first name.</string>
+    <string name="first_name_too_short_error">Please enter a first name greater than</string>
+    <string name="first_name_too_long_error">Please enter a first name less than</string>
+    <string name="empty_last_name_empty_error">Please enter a last name.</string>
+    <string name="last_name_too_short_error">Please enter a last name greater than</string>
+    <string name="last_name_too_long_error">Please enter a last name less than</string>
+    <string name="empty_email_empty_error">Please enter an email.</string>
+    <string name="email_too_short_error">Please enter an email greater than</string>
+    <string name="email_too_long_error">Please enter an email less than</string>
+    <string name="empty_phone_number_empty_error">Please enter a phone number.</string>
+    <string name="phone_number_too_short_error">Please enter an phone number greater than</string>
+    <string name="phone_number_too_long_error">Please enter a phone number less than</string>
+    <string name="empty_password_empty_error">Please enter a password.</string>
+    <string name="password_short_error">Please enter an password greater than</string>
+    <string name="password_too_long_error">Please enter a password less than</string>
+    <string name="sub_title">Improving the relationship between homeowners and tenants.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="select_user">Select User:</string>
+    <string name="homeowner">Homeowner</string>
+    <string name="tenant">Tenant</string>
+    <string name="sign_up">Sign up</string>
+    <string name="log_in">Log in</string>
+    <string name="back">Back</string>
+    <string name="address">Address</string>
+    <string name="province">Province</string>
+    <string name="city">City</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="rent_is_to_be_paid_on_the">Rent is to be paid on the:</string>
+    <string name="rent_amount">Rent Amount</string>
+    <string name="unit_name">Unit Name</string>
+    <string name="parking_spaces">Parking Spaces</string>
+    <string name="parking_amount">Parking Amount</string>
+
+
+</resources>

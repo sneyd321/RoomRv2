@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilLSUFirstName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/first_name"
+            app:helperText="Ex. John"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconDrawable="@drawable/ic_person_outline_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLSUFirstName"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="textPersonName"
+                android:text="Ryan" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilLSULastName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/last_name"
+            app:helperText="Ex. Smith"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilLSUFirstName"
+            app:startIconDrawable="@drawable/ic_person_outline_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLSULastName"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="textPersonName"
+                android:text="Sneyd" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilLSUEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            app:helperText="Ex. example@domain.com"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilLSULastName"
+            app:startIconDrawable="@drawable/ic_email_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLSUEmail"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="textEmailAddress"
+                android:text="rts1234567@hotmail.com" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/tilLSUPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone_number"
+            app:helperText="Ex. 416 555 5555"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilLSUEmail"
+            app:startIconDrawable="@drawable/ic_smartphone_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLSUPhoneNumber"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="phone"
+                android:text="4168186015" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLSUPassword"
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilLSUPhoneNumber"
+            app:startIconDrawable="@drawable/ic_vpn_key_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLSUPassword"
+                style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height"
+                android:inputType="textPassword"
+                android:text="homework" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

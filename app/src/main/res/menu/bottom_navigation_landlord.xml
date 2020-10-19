@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/addTenantFragment"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="NotifyR"
+        />
+    <item
+        android:id="@+id/housesFragment"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Houses"
+        />
+
+    <item
+        android:id="@+id/navMessageR"
+        android:icon="@drawable/ic_message_black_24dp"
+        android:title="MessageR"
+        />
+</menu>
