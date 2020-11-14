@@ -5,7 +5,7 @@
     <item
         android:id="@+id/tenantProblemFragment"
         android:icon="@drawable/ic_build_black_24dp"
-        android:title="Problem Tracker"
+        android:title="Problems"
         />
 
     <item
@@ -17,8 +17,8 @@
 
 
     <item
-    android:id="@+id/navMessagR"
+    android:id="@+id/messageFragment2"
     android:icon="@drawable/ic_message_black_24dp"
-    android:title="MessagR"
+    android:title="Messages"
     />
 </menu>

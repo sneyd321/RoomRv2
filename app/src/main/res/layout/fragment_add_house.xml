@@ -55,7 +55,6 @@
                 android:id="@+id/btnAddHouse"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/view_height"
-
                 android:layout_weight="1"
                 android:text="Add House"
                 android:theme="@style/Widget.MaterialComponents.Button"

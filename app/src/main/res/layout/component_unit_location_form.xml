@@ -87,6 +87,7 @@
             android:id="@+id/tilAddHousePostalCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:hint="@string/postal_code"
             app:helperText="Ex. L6L 0E1"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +99,8 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height"
-                android:inputType="textPostalAddress"
                 android:ems="10"
+                android:inputType="textPostalAddress"
                 android:text="L6L 0E1" />
 
         </com.google.android.material.textfield.TextInputLayout>

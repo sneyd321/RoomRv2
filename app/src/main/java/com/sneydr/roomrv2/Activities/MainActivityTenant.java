@@ -1,6 +1,5 @@
 package com.sneydr.roomrv2.Activities;
 
-import com.sneydr.roomrv2.App.Dialog.Dialog;
 import com.sneydr.roomrv2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -8,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -31,29 +29,28 @@ public class MainActivityTenant extends AppCompatActivity {
     Toolbar myToolbar;
     AppBarConfiguration appBarConfiguration;
     NavController navController;
+    private int tenantId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tenant);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("tenantId")){
+            myToolbar = findViewById(R.id.toolbarTenant);
+            myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
+            tenantId = bundle.getInt("tenantId");
 
-
-
-        bottomMenu = findViewById(R.id.navBarTenant);
-        myToolbar = findViewById(R.id.toolbarTenant);
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
-
-        navController = Navigation.findNavController(this, R.id.nav_tenant_host_fragment);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(myToolbar, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bottomMenu, navController);
-        navController.addOnDestinationChangedListener(onDestinationChangedListener);
-
-
-        if (savedInstanceState == null) {
-            bottomMenu.getMenu().getItem(1).setChecked(true);
+            navController = Navigation.findNavController(this, R.id.nav_tenant_host_fragment);
+            navController.setGraph(R.navigation.tenant_nav_graph, bundle);
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+            NavigationUI.setupWithNavController(myToolbar, navController, appBarConfiguration);
+            navController.addOnDestinationChangedListener(onDestinationChangedListener);
+            return;
         }
+        onDestroy();
     }
 
 
@@ -65,7 +62,6 @@ public class MainActivityTenant extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if(!Navigation.findNavController(this, R.id.nav_tenant_host_fragment).popBackStack()){
             finish();
         }

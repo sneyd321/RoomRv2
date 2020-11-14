@@ -34,12 +34,9 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-analytics:17.0.0'
 
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'com.rabbitmq:amqp-client:5.9.0'
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
     testImplementation 'junit:junit:4.13'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.google.firebase:firebase-firestore:21.3.1'
-    implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.firebaseui:firebase-ui-storage:4.1.0'
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
@@ -54,7 +51,6 @@ dependencies {
     implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
     // CameraX core library using the camera2 implementation
     def camerax_version = "1.0.0-beta11"
     // The following line is optional, as the core library is included indirectly by camera-camera2

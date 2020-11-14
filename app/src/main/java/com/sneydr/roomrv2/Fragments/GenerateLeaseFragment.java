@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,21 +22,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rabbitmq.client.Channel;
-import com.sneydr.roomrv2.Adapters.ItemClickListener;
+import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Adapters.TenantNameRecyclerViewAdapter;
 import com.sneydr.roomrv2.App.DatePicker.SelectDateDialog;
-import com.sneydr.roomrv2.Database.LeaseRepository;
-import com.sneydr.roomrv2.Database.Tenant.TenantViewModel;
 import com.sneydr.roomrv2.Entities.House.Lease;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
-import com.sneydr.roomrv2.Network.Callbacks.NetworkCallback;
 import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
+import com.sneydr.roomrv2.Network.Observers.TenantObserver;
+import com.sneydr.roomrv2.Network.Observers.TenantsObserver;
 import com.sneydr.roomrv2.RabbitMQ.ConsumeFailedCallback;
 import com.sneydr.roomrv2.RabbitMQ.ConsumeLeaseCallback;
 import com.sneydr.roomrv2.RabbitMQ.RabbitCallback;
 import com.sneydr.roomrv2.RabbitMQ.RabbitMQ;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.RabbitMQ.RabbitMQObserver;
+import com.sneydr.roomrv2.Repositories.TenantRepository;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -44,33 +46,29 @@ import java.util.List;
 
 import okhttp3.Request;
 
-public class GenerateLeaseFragment extends FragmentTemplate implements RabbitMQObserver, ItemClickListener {
+public class GenerateLeaseFragment extends FragmentTemplate implements RabbitMQObserver, ItemClickListener, TenantsObserver, TenantObserver {
 
     SelectDateDialog edtStartDate;
     SelectDateDialog edtEndDate;
     RecyclerView rcyTenantName;
     TenantNameRecyclerViewAdapter adapter;
-    private CardView crdNoTenants;
     Intent intent;
-    TenantViewModel tenantViewModel;
     private int houseId;
-    private LeaseRepository leaseRepository;
     private byte[] pdfBytes;
-
+    private TenantRepository repository;
 
     @Override
     protected void initUI(View view) {
+        repository = new TenantRepository(this);
+        repository.getTenantsByHouseId(houseId);
         edtStartDate = new SelectDateDialog(view, R.id.edtGenerateLeaseStartDate);
         edtEndDate = new SelectDateDialog(view, R.id.edtGenerateLeaseEndDate);
-        crdNoTenants = view.findViewById(R.id.crdNoTenants);
-        Button btnDownload = view.findViewById(R.id.btnLeaseDownload);
+        Button btnDownload = view.findViewById(R.id.btnDownloadLease);
         btnDownload.setOnClickListener(onDownload);
         Button btnBack = view.findViewById(R.id.btnLeaseBack);
         rcyTenantName = view.findViewById(R.id.rcyGenerateLeaseTenantNames);
         rcyTenantName.setLayoutManager(new LinearLayoutManager(getActivity()));
         intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        tenantViewModel = ViewModelProviders.of(this).get(TenantViewModel.class);
-        leaseRepository = new LeaseRepository((Application) context.getApplicationContext());
     }
 
     @Nullable
@@ -79,16 +77,12 @@ public class GenerateLeaseFragment extends FragmentTemplate implements RabbitMQO
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_generate_lease, container, false);
         initUI(view);
-        Bundle bundle = getArguments();
-        if (bundle != null && bundle.containsKey("houseId")){
-            houseId = bundle.getInt("houseId");
-            tenantViewModel.getTenantsByHouseId(houseId).observe(getViewLifecycleOwner(), observeTenants);
-            NetworkCallback callback = network.getCallback(NetworkCallbackType.GetTenants);
-            callback.registerObserver(this);
-            Request request = network.getTenants(houseId);
-            send(request, callback);
-        }
         return view;
+    }
+
+    public GenerateLeaseFragment setHouseId(int houseId) {
+        this.houseId = houseId;
+        return this;
     }
 
     @Override
@@ -101,19 +95,20 @@ public class GenerateLeaseFragment extends FragmentTemplate implements RabbitMQO
         startActivityForResult(intent, 3);
     }
 
-    private Observer<List<Tenant>> observeTenants = new Observer<List<Tenant>>() {
-        @Override
-        public void onChanged(List<Tenant> tenants) {
-            if (tenants.size() == 0) {
-                crdNoTenants.setVisibility(View.VISIBLE);
-                return;
+    @Override
+    public void onTenants(List<Tenant> tenants) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adapter = new TenantNameRecyclerViewAdapter(context, tenants);
+                adapter.setItemClickListener(GenerateLeaseFragment.this);
+                rcyTenantName.swapAdapter(adapter, true);
             }
-            crdNoTenants.setVisibility(View.INVISIBLE);
-            adapter = new TenantNameRecyclerViewAdapter(context, tenants);
-            adapter.setItemClickListener(GenerateLeaseFragment.this);
-            rcyTenantName.swapAdapter(adapter, true);
-        }
-    };
+        });
+
+    }
+
 
     @Override
     public void onItemClick(View view, int position) {
@@ -123,11 +118,7 @@ public class GenerateLeaseFragment extends FragmentTemplate implements RabbitMQO
         if (buttonView.isChecked()) {
             tenant.setApproved(true);
         }
-        NetworkCallback callback = network.getCallback(NetworkCallbackType.GetTenant);
-        callback.registerObserver(this);
-        Request request = network.putTenant(tenant);
-        send(request, callback);
-
+        repository.update(tenant);
     }
 
 
@@ -137,18 +128,6 @@ public class GenerateLeaseFragment extends FragmentTemplate implements RabbitMQO
     private View.OnClickListener onDownload = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Lease lease = leaseRepository.getLeaseData(houseId);
-            if (lease == null) return;
-            lease.setStartDate(edtStartDate.getText());
-            lease.setEndDate(edtEndDate.getText());
-
-            NetworkCallback networkCallback = network.getCallback(NetworkCallbackType.EmptyCallback);
-            networkCallback.registerObserver(GenerateLeaseFragment.this);
-            Request request = network.postLease(lease);
-            send(request, networkCallback);
-
-            RabbitTask task = new RabbitTask(lease.getQueueName());
-            task.execute();
         }
     };
 
@@ -179,7 +158,10 @@ public class GenerateLeaseFragment extends FragmentTemplate implements RabbitMQO
         input.close();
     }
 
+    @Override
+    public void onTenant(Tenant tenant) {
 
+    }
 
 
     private class RabbitTask extends AsyncTask<Void, Void, Void> {

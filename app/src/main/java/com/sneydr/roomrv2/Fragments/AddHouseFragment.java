@@ -42,13 +42,19 @@ import com.sneydr.roomrv2.Entities.House.Utility.ElectricityUtility;
 import com.sneydr.roomrv2.Entities.House.Utility.HeatUtility;
 import com.sneydr.roomrv2.Entities.House.Utility.Utility;
 import com.sneydr.roomrv2.Entities.House.Utility.WaterUtility;
+import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
+import com.sneydr.roomrv2.Network.Observers.HouseObserver;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.Repositories.HouseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import okhttp3.Request;
 
 
-public class AddHouseFragment extends FragmentTemplate {
+public class AddHouseFragment extends FragmentTemplate implements HouseObserver {
 
     private TextInput address, city, postalCode, unitName, rentMadePayable;
     private NumberTextInput parkingSpaces, parkingAmount, rentAmount;
@@ -57,14 +63,13 @@ public class AddHouseFragment extends FragmentTemplate {
     private NormalCheckboxInput chkPaymentMethod1, chkPaymentMethod3;
     private AnimatedCompoundButtonInput chkPaymentMethod2;
     private AnimatedSelectedNotSelectedSwitchInput swtParking;
-
-
-
-
-
+    private List<TextInput> textInputs;
+    private int homeownerId;
+    private HouseRepository houseRepository;
 
     protected void initUI(View view) {
-        List<TextInput> textInputs = new ArrayList<>();
+        houseRepository = new HouseRepository(this);
+        textInputs = new ArrayList<>();
         address = new AddressAutoCompleteTextInput(view, R.id.tilAddHouseAddress, R.id.edtAddHouseAddress);
         city = new CityAutoCompleteTextInput(view, R.id.tilAddHouseCity, R.id.edtAddHouseCity);
         postalCode = new PostalCodeTextInput(view, R.id.tilAddHousePostalCode, R.id.edtAddHousePostalCode);
@@ -113,7 +118,11 @@ public class AddHouseFragment extends FragmentTemplate {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_add_house, container, false);
-        initUI(view);
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey("homeownerId")){
+            homeownerId = bundle.getInt("homeownerId");
+            initUI(view);
+        }
         return view;
     }
 
@@ -164,11 +173,15 @@ public class AddHouseFragment extends FragmentTemplate {
     private View.OnClickListener onAddHouse = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            House house = new House(getRentalUnitLocation(), getRentDetail());
+            House house = new House(homeownerId, getRentalUnitLocation(), getRentDetail());
             house.setAmenities(getAmenities());
             house.setUtilities(getUtilities());
-            //network.postHouse(house);
+            houseRepository.insert(house);
         }
     };
+
+    @Override
+    public void onHouse(House house) {
+
+    }
 }

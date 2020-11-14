@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public abstract class User {
 
-
+    protected int userId;
     protected String firstName;
     protected String lastName;
     protected String email;
@@ -38,7 +38,8 @@ public abstract class User {
         this.password = password;
     }
 
-    protected User(String firstName, String lastName, String email) {
+    protected User(int userId, String firstName, String lastName, String email) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -81,5 +82,13 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

@@ -46,4 +46,14 @@ public class RentDetails {
     public void setPaymentOptions(List<PaymentOption> paymentOptions) {
         this.paymentOptions = paymentOptions;
     }
+
+    public String getRentMadePayableTo() {
+        for (PaymentOption paymentOption : this.paymentOptions) {
+            if (paymentOption instanceof ChequePaymentOption) {
+                return paymentOption.rentMadePayableTo;
+            }
+        }
+        return null;
+    }
+
 }

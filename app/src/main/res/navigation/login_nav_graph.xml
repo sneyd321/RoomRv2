@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.sneydr.roomrv2.Fragments.LoginFragment"
+        android:name="com.sneydr.roomrv2.Fragments.Login.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/fragment_login" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpStatePagerFragment"
-        android:name="com.sneydr.roomrv2.Fragments.SignUpStatePagerFragment"
+        android:name="com.sneydr.roomrv2.Fragments.Login.SignUpStatePagerFragment"
         android:label="sign_up_state_pager_fragment"
-        tools:layout="@layout/fragment_sign_up_state_pager" />
+        tools:layout="@layout/state_pager_sign_up" />
 </navigation>

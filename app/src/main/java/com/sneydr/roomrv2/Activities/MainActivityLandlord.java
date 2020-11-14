@@ -3,18 +3,11 @@ package com.sneydr.roomrv2.Activities;
 import androidx.annotation.NonNull;
 
 
-import com.sneydr.roomrv2.App.Dialog.Dialog;
-import com.sneydr.roomrv2.Database.RoomRDatabase;
-import com.sneydr.roomrv2.Fragments.GenerateLeaseFragment;
 import com.sneydr.roomrv2.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -35,7 +28,7 @@ import static com.sneydr.roomrv2.App.Permission.INTERNET_PERMISSION_REQUEST_CODE
 
 
 public class MainActivityLandlord extends AppCompatActivity {
-    BottomNavigationView bottomMenu;
+    //BottomNavigationView bottomMenu;
     Toolbar myToolbar;
 
 
@@ -49,20 +42,19 @@ public class MainActivityLandlord extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_landlord);
 
-        bottomMenu = findViewById(R.id.navBarLandlord);
-        myToolbar = findViewById(R.id.toolbarLandlord);
-        myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("homeownerId")){
+            myToolbar = findViewById(R.id.toolbarLandlord);
+            myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
 
-        navController = Navigation.findNavController(this, R.id.nav_landlord_host_fragment);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(myToolbar, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bottomMenu, navController);
-        navController.addOnDestinationChangedListener(onDestinationChangedListener);
-
-
-        if (savedInstanceState == null) {
-            bottomMenu.getMenu().getItem(1).setChecked(true);
+            navController = Navigation.findNavController(this, R.id.nav_landlord_host_fragment);
+            navController.setGraph(R.navigation.landlord_nav_graph, bundle);
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+            NavigationUI.setupWithNavController(myToolbar, navController, appBarConfiguration);
+            navController.addOnDestinationChangedListener(onDestinationChangedListener);
+            return;
         }
+        onDestroy();
     }
 
 
@@ -104,16 +96,4 @@ public class MainActivityLandlord extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RoomRDatabase db = RoomRDatabase.getInstance(this);
-        db.purge();
-        
-    }
 }

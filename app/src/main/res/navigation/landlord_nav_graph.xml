@@ -18,43 +18,41 @@
             android:id="@+id/action_housesFragment_to_houseDetailStatePagerFragment"
             app:destination="@id/houseDetailStatePagerFragment"
             app:popUpTo="@id/housesFragment"/>
-        <action
-            android:id="@+id/action_housesFragment_to_generateLeaseFragment"
-            app:destination="@id/generateLeaseFragment"
-            app:popUpTo="@id/housesFragment"/>
     </fragment>
     <fragment
         android:id="@+id/addHouseFragment"
         android:name="com.sneydr.roomrv2.Fragments.AddHouseFragment"
         android:label="Add House"
-        tools:layout="@layout/fragment_add_house">
-        <action
-            android:id="@+id/action_addHouseFragment_to_housesFragment"
-            app:destination="@id/housesFragment"
-            app:popUpTo="@id/addHouseFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_add_house"/>
     <fragment
         android:id="@+id/houseDetailStatePagerFragment"
         android:name="com.sneydr.roomrv2.Fragments.HouseDetailStatePagerFragment"
-        android:label="House Details"
-        tools:layout="@layout/fragment_house_detail_state_pager" >
+        android:label=""
+        tools:layout="@layout/state_pager_house_details" >
         <action
-            android:id="@+id/action_houseDetailStatePagerFragment_to_updateLocationFragment"
-            app:destination="@id/updateLocationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/updateLocationFragment"
-        android:name="com.sneydr.roomrv2.Fragments.UpdateRentalUnitLocationFragment"
-        android:label="Edit Location"
-        tools:layout="@layout/fragment_house_detail_update_location" >
-        <action
-            android:id="@+id/action_updateLocationFragment_to_houseDetailStatePagerFragment"
-            app:destination="@id/houseDetailStatePagerFragment" />
+            android:id="@+id/action_houseDetailStatePagerFragment_to_viewProblemFragment"
+            app:destination="@id/viewProblemFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/generateLeaseFragment"
         android:name="com.sneydr.roomrv2.Fragments.GenerateLeaseFragment"
         android:label="Generate Lease" />
+
+    <fragment
+        android:id="@+id/homeownerProblemFragment"
+        android:name="com.sneydr.roomrv2.Fragments.HomeownerProblemFragment"
+        android:label="Problem Tracker" />
+    <fragment
+        android:id="@+id/viewProblemFragment"
+        android:name="com.sneydr.roomrv2.Fragments.ViewProblemFragment"
+        android:label="View Problem" >
+        <action
+            android:id="@+id/action_viewProblemFragment_to_housesFragment"
+            app:destination="@id/housesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.sneydr.roomrv2.Fragments.HomeownerMessageFragment"
+        android:label="Messages" />
 </navigation>

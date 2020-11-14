@@ -1,16 +1,15 @@
 package com.sneydr.roomrv2.Entities.Problem;
 
-import android.graphics.Bitmap;
-
+import androidx.annotation.Nullable;
+import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
+import com.sneydr.roomrv2.Entities.RentDetails.CalendarHandler;
 
-import javax.annotation.Nullable;
 
-import kotlin.jvm.Transient;
 
+@Entity(tableName = "problem_table")
 public class Problem {
 
 
@@ -19,23 +18,27 @@ public class Problem {
     private String category;
     private String description;
     private String status;
+    private String datePosted;
+    private String lastUpdated;
     @Nullable
     private String imageUrl;
     private int houseId;
-
 
     @Ignore
     private transient ProblemContext context;
 
 
-    public Problem(int problemId, String category, String description, String status, @Nullable String imageUrl, int houseId) {
+    public Problem(int problemId, String category, String description, String status, String datePosted, String lastUpdated, @Nullable String imageUrl, int houseId) {
         this.problemId = problemId;
         this.category = category;
         this.description = description;
         this.status = status;
+        this.datePosted = datePosted;
+        this.lastUpdated = lastUpdated;
         this.imageUrl = imageUrl;
         this.houseId = houseId;
         context = new ProblemContext();
+        context.setState(this.status);
     }
 
     @Ignore
@@ -45,8 +48,11 @@ public class Problem {
         this.houseId = houseId;
         this.imageUrl = null;
         this.context = new ProblemContext();
-        this.context.setState(new ReportedStatus());
-        this.status = context.getStatus().getName();
+        this.getContext().setState("Reported");
+        this.status = getContext().getStatus().getName();
+        CalendarHandler calendarHandler = new CalendarHandler();
+        this.datePosted = calendarHandler.getNow();
+        this.lastUpdated = calendarHandler.getNow();
     }
 
     public int getProblemId() {
@@ -81,6 +87,13 @@ public class Problem {
         this.status = status;
     }
 
+    public void setHouseId(int houseId) {
+        this.houseId = houseId;
+    }
+
+    public int getHouseId() {
+        return this.houseId;
+    }
 
     @Nullable
     public String getImageUrl() {
@@ -89,5 +102,27 @@ public class Problem {
 
     public void setImageUrl(@Nullable String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDatePosted() {
+        return datePosted;
+    }
+
+    public void setDatePosted(String datePosted) {
+        this.datePosted = datePosted;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public ProblemContext getContext() {
+        ProblemContext context = new ProblemContext();
+        context.setState(this.status);
+        return context;
     }
 }

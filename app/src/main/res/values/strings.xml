@@ -18,7 +18,8 @@
     </string>
 
     <string-array name="status">
-        <item>Pending</item>
+        <item>Reported</item>
+        <item>In Progress</item>
         <item>Completed</item>
     </string-array>
 

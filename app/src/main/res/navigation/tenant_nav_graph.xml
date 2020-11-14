@@ -2,41 +2,48 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/tenantLandingFragment"
+    app:startDestination="@id/tenantStatePagerFragment"
     android:id="@+id/tenant_nav_graph">
 
     <fragment
         android:id="@+id/tenantLandingFragment"
-        android:name="com.sneydr.roomrv2.Fragments.TenantLandingFragment"
-        android:label=""
-        tools:layout="@layout/fragment_tenant_landing_page" >
-        <action
-            android:id="@+id/action_tenantLandingFragment_to_tenantProblemFragment"
-            app:destination="@id/tenantProblemFragment" />
-    </fragment>
+        android:name="com.sneydr.roomrv2.Fragments.Tenant.TenantLandingFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_tenant_landing_page" />
+
     <fragment
         android:id="@+id/tenantProblemFragment"
-        android:name="com.sneydr.roomrv2.Fragments.TenantProblemFragment"
-        android:label="TenantProblemFragment" >
-        <action
-            android:id="@+id/action_tenantProblemFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment" />
-    </fragment>
+        android:name="com.sneydr.roomrv2.Fragments.Tenant.TenantProblemFragment"
+        android:label="Problem Tracker" />
+
     <fragment
         android:id="@+id/addProblemFragment"
-        android:name="com.sneydr.roomrv2.Fragments.AddProblemFragment"
+        android:name="com.sneydr.roomrv2.Fragments.Tenant.AddProblemFragment"
         android:label="Report Problem" >
         <action
-            android:id="@+id/action_addProblemFragment_to_tenantProblemFragment"
-            app:destination="@id/tenantProblemFragment" />
+            android:id="@+id/action_addProblemFragment_to_tenantStatePagerFragment"
+            app:destination="@id/tenantStatePagerFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.sneydr.roomrv2.Fragments.CameraFragment"
-        android:label="CameraFragment" >
+        android:name="com.sneydr.roomrv2.Fragments.Tenant.CameraFragment"
+        android:label="Take a photo" >
         <action
             android:id="@+id/action_cameraFragment_to_addProblemFragment"
             app:destination="@id/addProblemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageFragment2"
+        android:name="com.sneydr.roomrv2.Fragments.HomeownerMessageFragment"
+        android:label="Messages" />
+    <fragment
+        android:id="@+id/tenantStatePagerFragment"
+        android:name="com.sneydr.roomrv2.Fragments.Tenant.TenantStatePagerFragment"
+        android:label="" >
+        <action
+            android:id="@+id/action_tenantStatePagerFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
     </fragment>
 
 

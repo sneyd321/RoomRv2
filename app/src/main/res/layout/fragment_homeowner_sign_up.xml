@@ -18,7 +18,7 @@
 
 
 
-        <include layout="@layout/component_homeowner_signup" />
+        <include layout="@layout/component_homeowner_signup_form" />
 
 
 

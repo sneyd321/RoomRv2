@@ -21,7 +21,7 @@ public class Tenant extends User {
     }
 
     public Tenant(int tenantId, String firstName, String lastName, String email, int houseId, boolean isApproved) {
-        super(firstName, lastName, email);
+        super(tenantId, firstName, lastName, email);
         this.tenantId = tenantId;
         this.houseId = houseId;
         this.isApproved = isApproved;

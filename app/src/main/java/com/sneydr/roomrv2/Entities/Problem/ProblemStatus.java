@@ -4,4 +4,6 @@ public interface ProblemStatus {
 
 
     String getName();
+
+    int getColour();
 }

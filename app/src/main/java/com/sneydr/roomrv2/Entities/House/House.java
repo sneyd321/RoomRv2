@@ -2,6 +2,7 @@ package com.sneydr.roomrv2.Entities.House;
 
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -34,7 +35,8 @@ public class House {
 
 
     @Ignore
-    public House(RentalUnitLocation rentalUnitLocation, RentDetails rentDetails) {
+    public House(int homeownerId, RentalUnitLocation rentalUnitLocation, RentDetails rentDetails) {
+        this.homeownerId = homeownerId;
         this.rentalUnitLocation = rentalUnitLocation;
         this.rentDetails = rentDetails;
         this.amenities = new ArrayList<>();
@@ -67,6 +69,16 @@ public class House {
 
     public List<Utility> getUtilities() {
         return utilities;
+    }
+
+    public List<Utility> getTenantResponsibilityUtilities() {
+        List<Utility> tenantUtilities = new ArrayList<>();
+        for (Utility utility : this.utilities) {
+            if (utility.getResponsibilityOf().equals("Tenant")) {
+                tenantUtilities.add(utility);
+            }
+        }
+        return tenantUtilities;
     }
 
 

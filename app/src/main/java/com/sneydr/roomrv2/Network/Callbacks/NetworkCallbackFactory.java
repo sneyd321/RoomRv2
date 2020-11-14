@@ -15,8 +15,8 @@ public class NetworkCallbackFactory {
                 return new GetHouseCallback();
             case GetTenants:
                 return new GetTenantsCallback();
-            case EmptyCallback:
-                return new NetworkCallback();
+            case GetProblems:
+                return new GetProblemsCallback();
             default:
                 return null;
         }

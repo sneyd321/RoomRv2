@@ -26,7 +26,7 @@ public class Homeowner extends User {
 
 
     public Homeowner(int homeownerId, String firstName, String lastName, String email, String phoneNumber, HomeownerLocation homeownerLocation) {
-        super(firstName, lastName, email);
+        super(homeownerId, firstName, lastName, email);
         this.homeownerId = homeownerId;
         this.phoneNumber = phoneNumber;
         this.homeownerLocation = homeownerLocation;

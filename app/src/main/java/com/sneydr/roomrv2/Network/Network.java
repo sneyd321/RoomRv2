@@ -5,9 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 import com.sneydr.roomrv2.Entities.House.House;
 import com.sneydr.roomrv2.Entities.House.Lease;
 import com.sneydr.roomrv2.Entities.Login.Login;
@@ -17,17 +14,15 @@ import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackFactory;
 import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
+import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import retrofit2.http.Multipart;
 
 public class Network {
 
@@ -61,11 +56,11 @@ public class Network {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    public NetworkCallback getCallback(NetworkCallbackType type) {
-        return factory.getOkHttpCallback(type);
-    }
 
-    public void send(Request request, NetworkCallback callback) {
+
+    public void send(Request request, NetworkCallbackType type, NetworkObserver observer) {
+        NetworkCallback callback = factory.getOkHttpCallback(type);
+        callback.registerObserver(observer);
         client.newCall(request).enqueue(callback);
     }
 
@@ -90,6 +85,12 @@ public class Network {
                 .build();
     }
 
+    public Request testServer() {
+        return new Request.Builder()
+                .url(SERVER_URL)
+                .get()
+                .build();
+    }
 
     public Request postHomeowner(Homeowner homeowner) {
         JSONParser jsonParser = JSONParser.getInstance();
@@ -111,7 +112,7 @@ public class Network {
         JSONParser jsonParser = JSONParser.getInstance();
         RequestBody body = RequestBody.create(JSON, jsonParser.houseToJson(house));
         return new Request.Builder()
-                .url(SERVER_URL + "House/" + house.getHouseId())
+                .url(SERVER_URL + "House")
                 .post(body)
                 .build();
     }
@@ -179,6 +180,27 @@ public class Network {
         return new Request.Builder()
                 .url(SERVER_URL + "Problem")
                 .post(body)
+                .build();
+    }
+
+    public Request putProblem(Problem problem) {
+        JSONParser jsonParser = JSONParser.getInstance();
+        RequestBody body = RequestBody.create(JSON, jsonParser.problemToJson(problem));
+        return new Request.Builder()
+                .url(SERVER_URL + "Homeowner/Problem/" + problem.getProblemId())
+                .put(body)
+                .build();
+    }
+
+    public Request getProblemsByHouseId(int houseId) {
+        return new Request.Builder()
+                .url(SERVER_URL + "Problem/" + houseId)
+                .build();
+    }
+
+    public Request getProblem(int id) {
+        return new Request.Builder()
+                .url(SERVER_URL + "Problem/")
                 .build();
     }
 
