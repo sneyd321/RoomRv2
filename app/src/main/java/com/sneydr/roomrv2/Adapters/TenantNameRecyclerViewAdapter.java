@@ -1,44 +1,33 @@
 package com.sneydr.roomrv2.Adapters;
 
-import android.content.Context;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.core.widget.CompoundButtonCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
-import com.sneydr.roomrv2.Adapters.ButtonState.ApprovedState;
-import com.sneydr.roomrv2.Adapters.ButtonState.ButtonStateContext;
-import com.sneydr.roomrv2.Adapters.ButtonState.UnapprovedState;
-import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
-import com.sneydr.roomrv2.Entities.House.House;
+import com.sneydr.roomrv2.Adapters.Listeners.StatefulItemClickListener;
+import com.sneydr.roomrv2.Adapters.ViewHolders.EmptyViewHolder;
+import com.sneydr.roomrv2.Adapters.ViewHolders.TenantNameViewHolder;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.databinding.RowEmptyRecyclerviewBinding;
+import com.sneydr.roomrv2.databinding.RowTenantNameBinding;
 
 import java.util.List;
 
 public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private LayoutInflater inflater;
     private List<Tenant> data;
-    private Context context;
-    private ItemClickListener itemClickListener;
+    private StatefulItemClickListener itemClickListener;
     private final int EMPTY = 0;
     private final int TENANTS = 1;
+    private RowTenantNameBinding binding;
 
-    public TenantNameRecyclerViewAdapter(Context context, List<Tenant> data) {
-        this.inflater = LayoutInflater.from(context);
-        this.context = context;
+    public TenantNameRecyclerViewAdapter(List<Tenant> data) {
         this.data = data;
     }
 
@@ -56,14 +45,14 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
         if (viewType == EMPTY) {
-            View emptyView = inflater.inflate(R.layout.row_empty_recyclerview, parent, false);
-            return new EmptyViewHolder(emptyView);
+            RowEmptyRecyclerviewBinding emptyBinding = DataBindingUtil.inflate(inflater, R.layout.row_empty_recyclerview, parent, false);
+            return new EmptyViewHolder(emptyBinding);
         }
-        View view = inflater.inflate(R.layout.row_tenant_name, parent, false);
-        TenantNameViewHolder tenantNameViewHolder = new TenantNameViewHolder(view);
-        tenantNameViewHolder.setItemClickListener(itemClickListener);
-        return tenantNameViewHolder;
+        binding = DataBindingUtil.inflate(inflater, R.layout.row_tenant_name, parent, false);
+        return new TenantNameViewHolder(binding, itemClickListener);
     }
 
     @Override
@@ -79,6 +68,10 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     }
 
+    public List<Tenant> getData() {
+        return this.data;
+    }
+
     @Override
     public int getItemCount() {
         if (data.isEmpty()) {
@@ -87,7 +80,7 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         return this.data.size();
     }
 
-    public void setItemClickListener(ItemClickListener onItemClickedListener) {
+    public void setItemClickListener(StatefulItemClickListener onItemClickedListener) {
         this.itemClickListener = onItemClickedListener;
     }
 

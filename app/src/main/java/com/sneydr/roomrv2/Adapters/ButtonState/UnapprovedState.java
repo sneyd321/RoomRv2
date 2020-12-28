@@ -25,4 +25,9 @@ public class UnapprovedState implements ButtonState {
     public String getText() {
         return "Unapproved";
     }
+
+    @Override
+    public int getVectorDrawable() {
+        return R.drawable.ic_baseline_clear_24;
+    }
 }

@@ -21,7 +21,7 @@
             android:id="@+id/tilAddHouseAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/address"
+            android:hint="Rental Address"
             app:startIconDrawable="@drawable/ic_home_black_24dp"
             app:helperText="Ex. 11 Bronte Rd."
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,8 +33,8 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height"
-                android:text="11 Bronte Rd."
-                android:completionThreshold="1" />
+                android:completionThreshold="1"
+                android:text="11 Bronte Rd."/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,7 +44,7 @@
             android:id="@+id/tilAddHouseCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/city"
+            android:hint="Rental City"
             app:helperText="Ex. Oakville"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height"
                 android:completionThreshold="1"
-                android:text="Oakville" />
+                android:text="Oakville"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:hint="@string/postal_code"
+            android:hint="Rental Postal Code"
             app:helperText="Ex. L6L 0E1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilAddHouseProvince"
@@ -101,7 +101,7 @@
                 android:layout_height="@dimen/view_height"
                 android:ems="10"
                 android:inputType="textPostalAddress"
-                android:text="L6L 0E1" />
+                android:text="L6L 0E1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +111,7 @@
             android:id="@+id/tilAddHouseUnitName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/unit_name"
+            android:hint="Rental Unit Name"
             app:helperText="Ex. Basement, Unit 207"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +123,8 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height"
-                android:text="Basement" />
+                android:text="Basement"
+                 />
 
         </com.google.android.material.textfield.TextInputLayout>
 

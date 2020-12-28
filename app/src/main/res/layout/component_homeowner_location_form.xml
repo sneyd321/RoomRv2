@@ -19,7 +19,7 @@
             android:id="@+id/tilAddHouseHomeOwnerAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/address"
+            android:hint="Mailing Address"
             app:startIconDrawable="@drawable/ic_home_black_24dp"
             app:helperText="Ex. 11 Bronte Rd."
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,9 +29,9 @@
             <com.google.android.material.textview.MaterialAutoCompleteTextView
                 android:id="@+id/edtAddHouseHomeownerAddress"
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
-                android:text="11 Bronte Rd."
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/view_height" />
+                android:layout_height="@dimen/view_height"
+                android:text="3327 Raspberry Bush Trail"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -63,7 +63,7 @@
             android:id="@+id/tilAddHouseHomeownerCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/city"
+            android:hint="Mailing City"
             app:helperText="Ex. Oakville"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:completionThreshold="1"
-                android:text="Oakville" />
+                android:text="Oakville"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -87,7 +87,7 @@
             android:id="@+id/tilAddHouseHomeownerPostalCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/postal_code"
+            android:hint="Mailing Postal Code"
             app:helperText="Ex. L6L 0E1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilAddHouseHomeownerCity"
@@ -100,7 +100,7 @@
                 android:layout_height="@dimen/view_height"
                 android:inputType="textPostalAddress"
                 android:minEms="8"
-                android:text="L6L 0E1" />
+                android:text="L6L 0E1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,6 +110,7 @@
             android:id="@+id/tilAddHouseUnitNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="Mailing Unit Number"
             app:helperText="Ex. 207"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilAddHouseHomeownerPostalCode"
@@ -122,7 +123,7 @@
                 android:layout_height="@dimen/view_height"
                 android:inputType="textPostalAddress"
                 android:minEms="10"
-                android:text="123" />
+                android:text="207"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +133,7 @@
             android:id="@+id/tilAddHousePOBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="PO Box"
+            android:hint="Mailing PO Box"
             app:helperText="Ex. 207"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +147,8 @@
                 android:layout_height="@dimen/view_height"
                 android:inputType="textPostalAddress"
                 android:minEms="10"
-                android:text="123" />
+                android:text="207"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

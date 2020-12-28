@@ -25,7 +25,7 @@ public class App extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
-                    "RoomR Amenity Channel",
+                    "RoomR",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
 

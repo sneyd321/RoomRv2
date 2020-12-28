@@ -1,33 +1,34 @@
 package com.sneydr.roomrv2.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sneydr.roomrv2.Adapters.Listeners.ButtonClickListener;
+import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
+import com.sneydr.roomrv2.Adapters.ViewHolders.EmptyViewHolder;
+import com.sneydr.roomrv2.Adapters.ViewHolders.HousesViewHolder;
 import com.sneydr.roomrv2.Entities.House.House;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.databinding.RowEmptyRecyclerviewBinding;
+import com.sneydr.roomrv2.databinding.RowHouseBinding;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private List<House> data;
-    private LayoutInflater inflater;
-    private ButtonClickListener btnOnEdit;
+    private ItemClickListener onItemClick;
     private final int EMPTY = 0;
     private final int HOUSES = 1;
 
-    public HousesRecyclerViewAdapter(Context context, List<House> data) {
+    public HousesRecyclerViewAdapter(List<House> data) {
         this.data = data;
-        this.inflater = LayoutInflater.from(context);
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -44,14 +45,13 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == EMPTY) {
-            View emptyView = inflater.inflate(R.layout.row_empty_recyclerview, parent, false);
-            return new EmptyViewHolder(emptyView);
+            RowEmptyRecyclerviewBinding emptyBinding = DataBindingUtil.inflate(inflater, R.layout.row_empty_recyclerview, parent, false);
+            return new EmptyViewHolder(emptyBinding);
         }
-        View houseView = inflater.inflate(R.layout.row_house, parent, false);
-        HousesViewHolder housesViewHolder = new HousesViewHolder(houseView);
-        housesViewHolder.setBtnOnEdit(btnOnEdit);
-        return housesViewHolder;
+        RowHouseBinding binding = DataBindingUtil.inflate(inflater, R.layout.row_house, parent, false);
+        return new HousesViewHolder(binding);
     }
 
     @Override
@@ -62,9 +62,10 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             House house = data.get(position);
             HousesViewHolder housesViewHolder = (HousesViewHolder) viewHolder;
-            housesViewHolder.bindHouse(house);
+            housesViewHolder.bindHouse(house, onItemClick);
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -78,8 +79,8 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         return this.data.get(position);
     }
 
-    public void setBtnOnEdit(ButtonClickListener buttonClickListener){
-        this.btnOnEdit = buttonClickListener;
+    public void setOnClickListener(ItemClickListener onItemClick) {
+        this.onItemClick = onItemClick;
     }
 
 

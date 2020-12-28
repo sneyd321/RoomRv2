@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sneydr.roomrv2.Entities.Message.Message;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
+import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.R;
 
 import java.util.List;
@@ -20,22 +21,24 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private LayoutInflater inflater;
     private List<Message> data;
-    private int userId;
+    private String email;
+    private String userType;
     private final int TO = 0;
-    private final int FROM = 0;
+    private final int FROM = 1;
 
 
 
-    public MessageRecyclerViewAdapter(Context context, List<Message> data, int userId) {
+    public MessageRecyclerViewAdapter(Context context, List<Message> data, String userType, String email) {
         this.data = data;
         inflater = LayoutInflater.from(context);
-        this.userId = userId;
+        this.userType = userType;
+        this.email = email;
     }
 
     @Override
     public int getItemViewType(int position) {
         Message message = data.get(position);
-        if (message.getUserId() == userId){
+        if (message.getEmail().equals(this.email) && message.getUserType().equals(this.userType)){
             return TO;
         }
         return FROM;
@@ -57,10 +60,18 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message message = data.get(position);
-        ToMessageViewHolder viewHolder = (ToMessageViewHolder) holder;
-        viewHolder.txtTimestamp.setText(message.getTimestamp());
-        viewHolder.txtMessage.setText(message.getMessage());
-        viewHolder.txtFullName.setText(message.getUserName());
+        if (holder.getItemViewType() == TO) {
+            ToMessageViewHolder viewHolder = (ToMessageViewHolder) holder;
+            viewHolder.txtTimestamp.setText(message.getTimestamp());
+            viewHolder.txtMessage.setText(message.getMessage());
+            viewHolder.txtFullName.setText(message.getUserName());
+        } else {
+            FromMessageViewHolder viewHolder = (FromMessageViewHolder) holder;
+            viewHolder.txtTimestamp.setText(message.getTimestamp());
+            viewHolder.txtMessage.setText(message.getMessage());
+            viewHolder.txtFullName.setText(message.getUserName());
+        }
+
     }
 
     @Override
@@ -70,6 +81,11 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public void add(Message message) {
         this.data.add(message);
+        notifyDataSetChanged();
+    }
+
+    public void refresh(List<Message> messages) {
+        this.data = messages;
         notifyDataSetChanged();
     }
 

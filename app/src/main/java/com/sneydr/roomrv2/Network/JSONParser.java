@@ -88,9 +88,13 @@ public class JSONParser {
         return gson.toJson(problem, Problem.class);
     }
 
-    public List<Problem> parseProblem(String response) {
+    public List<Problem> parseProblems(String response) {
         Type problemType = new TypeToken<ArrayList<Problem>>(){}.getType();
         return gson.fromJson(response, problemType);
+    }
+
+    public Problem parseProblem(String response) {
+        return gson.fromJson(response, Problem.class);
     }
 
     public Message parseMessage(String response) {
@@ -101,6 +105,12 @@ public class JSONParser {
     public String messageToJson(Message message) {
         return gson.toJson(message, Message.class);
     }
+
+    public List<Message> parseMessages(String response) {
+        Type messageType = new TypeToken<ArrayList<Message>>(){}.getType();
+        return gson.fromJson(response, messageType);
+    }
+
 
 
 }

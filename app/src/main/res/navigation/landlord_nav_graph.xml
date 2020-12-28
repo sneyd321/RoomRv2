@@ -41,11 +41,11 @@
 
     <fragment
         android:id="@+id/homeownerProblemFragment"
-        android:name="com.sneydr.roomrv2.Fragments.HomeownerProblemFragment"
+        android:name="com.sneydr.roomrv2.Fragments.HomeownerProblemsFragment"
         android:label="Problem Tracker" />
     <fragment
         android:id="@+id/viewProblemFragment"
-        android:name="com.sneydr.roomrv2.Fragments.ViewProblemFragment"
+        android:name="com.sneydr.roomrv2.Fragments.ViewProblemsFragment"
         android:label="View Problem" >
         <action
             android:id="@+id/action_viewProblemFragment_to_housesFragment"

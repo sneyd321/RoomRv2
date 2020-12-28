@@ -2,15 +2,12 @@ package com.sneydr.roomrv2.Entities.House;
 
 
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Embedded;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
+
 
 import com.sneydr.roomrv2.Entities.House.Amenity.Amenity;
-import com.sneydr.roomrv2.Entities.Location.RentalUnitLocation;
-import com.sneydr.roomrv2.Entities.RentDetails.RentDetails;
+import com.sneydr.roomrv2.Entities.House.Location.HomeownerLocation;
+import com.sneydr.roomrv2.Entities.House.Location.RentalUnitLocation;
+import com.sneydr.roomrv2.Entities.House.RentDetails.RentDetails;
 
 import com.sneydr.roomrv2.Entities.House.Utility.Utility;
 
@@ -18,35 +15,31 @@ import com.sneydr.roomrv2.Entities.House.Utility.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(tableName = "house_table")
 public class House {
 
-    @PrimaryKey
     private int houseId;
-    private int homeownerId;
-    @Embedded
+    private String authToken;
     private RentalUnitLocation rentalUnitLocation;
-    @Embedded
+    private HomeownerLocation homeownerLocation;
     private RentDetails rentDetails;
-
     private List<Amenity> amenities;
 
     private List<Utility> utilities;
 
-
-    @Ignore
-    public House(int homeownerId, RentalUnitLocation rentalUnitLocation, RentDetails rentDetails) {
-        this.homeownerId = homeownerId;
+    public House(String authToken, HomeownerLocation homeownerLocation, RentalUnitLocation rentalUnitLocation, RentDetails rentDetails) {
+        this.authToken = authToken;
         this.rentalUnitLocation = rentalUnitLocation;
+        this.homeownerLocation = homeownerLocation;
         this.rentDetails = rentDetails;
         this.amenities = new ArrayList<>();
         this.utilities = new ArrayList<>();
     }
 
-    public House(int houseId, int homeownerId, RentalUnitLocation rentalUnitLocation, RentDetails rentDetails) {
+    public House(int houseId, String authToken, HomeownerLocation homeownerLocation, RentalUnitLocation rentalUnitLocation, RentDetails rentDetails) {
         this.houseId = houseId;
-        this.homeownerId = homeownerId;
+        this.authToken = authToken;
         this.rentalUnitLocation = rentalUnitLocation;
+        this.homeownerLocation = homeownerLocation;
         this.rentDetails = rentDetails;
         this.amenities = new ArrayList<>();
         this.utilities = new ArrayList<>();
@@ -81,7 +74,6 @@ public class House {
         return tenantUtilities;
     }
 
-
     public void setAmenities(List<Amenity> amenities) {
         this.amenities = amenities;
     }
@@ -94,11 +86,9 @@ public class House {
         return houseId;
     }
 
-    public int getHomeownerId() {
-        return homeownerId;
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public void setHomeownerId(int homeownerId) {
-        this.homeownerId = homeownerId;
-    }
+
 }

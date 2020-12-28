@@ -16,20 +16,29 @@ import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 
-import java.io.File;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
+import java.io.IOException;
+import android.util.Base64;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.Route;
 
 public class Network {
 
 
     private final String SERVER_URL = "http://192.168.0.115:8080/api/v1/";
     private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private final MediaType JPG = MediaType.parse("image/jpg");
     private OkHttpClient client;
     private NetworkCallbackFactory factory;
 
@@ -47,6 +56,10 @@ public class Network {
         factory = new NetworkCallbackFactory();
     }
 
+    private String toBase64(String input) {
+        return Base64.encodeToString(input.getBytes(), Base64.NO_WRAP);
+    }
+
     public boolean isNetworkAvailable(Application application) {
         final ConnectivityManager cm = (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
@@ -56,54 +69,28 @@ public class Network {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-
-
     public void send(Request request, NetworkCallbackType type, NetworkObserver observer) {
-        NetworkCallback callback = factory.getOkHttpCallback(type);
-        callback.registerObserver(observer);
+        NetworkCallback callback = factory.getNetworkCallback(type, observer);
         client.newCall(request).enqueue(callback);
     }
 
-
-
-
     public Request loginHomeowner(Login login) {
-    JSONParser jsonParser = JSONParser.getInstance();
-    RequestBody body = RequestBody.create(JSON, jsonParser.loginToJson(login));
-    return new Request.Builder()
-            .url(SERVER_URL + "Login/Homeowner")
-            .post(body)
-            .build();
-    }
-
-    public Request loginTenant(Login login) {
-        JSONParser jsonParser = JSONParser.getInstance();
-        RequestBody body = RequestBody.create(JSON, jsonParser.loginToJson(login));
         return new Request.Builder()
-                .url(SERVER_URL + "Login/Tenant")
-                .post(body)
+                .url(SERVER_URL + "Login")
+                .addHeader("Authorization", "Basic " + toBase64(login.getEmail() + ":" + login.getPassword()))
                 .build();
     }
 
-    public Request testServer() {
+    public Request getSignInURL() {
         return new Request.Builder()
                 .url(SERVER_URL)
-                .get()
                 .build();
     }
 
-    public Request postHomeowner(Homeowner homeowner) {
-        JSONParser jsonParser = JSONParser.getInstance();
-        RequestBody body = RequestBody.create(JSON, jsonParser.homeownerToJson(homeowner));
-        return new Request.Builder()
-                .url(SERVER_URL + "Homeowner")
-                .post(body)
-                .build();
-    }
-
-    public Request getHomeowner(int homeownerId) {
+    public Request getHomeowner(String authToken) {
         Request request = new Request.Builder()
-                .url(SERVER_URL + "Homeowner/" + homeownerId)
+                .url(SERVER_URL + "Homeowner")
+                .addHeader("Authorization", "Bearer " + authToken)
                 .build();
         return request;
     }
@@ -113,96 +100,69 @@ public class Network {
         RequestBody body = RequestBody.create(JSON, jsonParser.houseToJson(house));
         return new Request.Builder()
                 .url(SERVER_URL + "House")
+                .addHeader("Authorization", "Bearer " + house.getAuthToken())
                 .post(body)
                 .build();
     }
 
-    public Request getHouses(Homeowner homeowner) {
+    public Request getHouses(String homeownerId) {
         return new Request.Builder()
-                .url(SERVER_URL + "Homeowner/" + homeowner.getHomeownerId() + "/House")
-                .build();
-    }
-
-    public Request getHouse(int houseId) {
-        return new Request.Builder()
-                .url(SERVER_URL + "House/" + houseId)
+                .url(SERVER_URL + "Homeowner/House")
+                .addHeader("Authorization", "Bearer " + homeownerId)
                 .build();
     }
 
 
-    public Request postTenant(Tenant tenant) {
-        JSONParser jsonParser = JSONParser.getInstance();
-        RequestBody body = RequestBody.create(JSON, jsonParser.tenantToJson(tenant));
-        return new Request.Builder()
-                .url(SERVER_URL + "Tenant")
-                .post(body)
-                .build();
-    }
 
-    public Request getTenant(int tenantId) {
-        return new Request.Builder()
-                .url(SERVER_URL + "Tenant/" + tenantId)
-                .build();
-    }
-
-    public Request getTenants(int houseId) {
+    public Request getTenants(int houseId, String authToken) {
         return new Request.Builder()
                 .url(SERVER_URL + "House/" + houseId + "/Tenant")
+                .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }
 
-    public Request putTenant(Tenant tenant) {
+    public Request putTenant(Tenant tenant, String authToken) {
         JSONParser jsonParser = JSONParser.getInstance();
         RequestBody body = RequestBody.create(JSON, jsonParser.tenantToJson(tenant));
         return new Request.Builder()
-                .url(SERVER_URL + "Tenant/" + tenant.getTenantId() + "/approve")
+                .url(SERVER_URL + "Tenant/" + tenant.getTenantId() + "/Approve")
+                .addHeader("Authorization", "Bearer " + authToken)
                 .put(body)
                 .build();
     }
 
-    public Request postLease(Lease lease) {
+    public Request postLease(Lease lease, String authToken) {
         JSONParser jsonParser = JSONParser.getInstance();
         RequestBody body = RequestBody.create(JSON, jsonParser.leaseToJson(lease));
         return new Request.Builder()
                 .url(SERVER_URL + "Lease")
+                .addHeader("Authorization", "Bearer " + authToken)
                 .post(body)
                 .build();
     }
 
-    public Request postProblem(Problem problem, File file) {
-
-        JSONParser jsonParser = JSONParser.getInstance();
-        RequestBody body = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("image", file.getName(), RequestBody.create(JPG, file))
-                .addFormDataPart("data", jsonParser.problemToJson(problem))
-                .build();
-        return new Request.Builder()
-                .url(SERVER_URL + "Problem")
-                .post(body)
-                .build();
-    }
-
-    public Request putProblem(Problem problem) {
+    public Request putProblem(Problem problem, String authToken) {
         JSONParser jsonParser = JSONParser.getInstance();
         RequestBody body = RequestBody.create(JSON, jsonParser.problemToJson(problem));
         return new Request.Builder()
-                .url(SERVER_URL + "Homeowner/Problem/" + problem.getProblemId())
+                .url(SERVER_URL + "Problem/" + problem.getProblemId() + "/Status")
+                .addHeader("Authorization", "Bearer " + authToken)
                 .put(body)
                 .build();
     }
 
-    public Request getProblemsByHouseId(int houseId) {
+    public Request getProblemsByHouseId(int houseId, String authToken) {
         return new Request.Builder()
-                .url(SERVER_URL + "Problem/" + houseId)
+                .url(SERVER_URL + "House/" + houseId + "/Problem")
+                .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }
 
-    public Request getProblem(int id) {
+    public Request getProblem(int problemId, String authToken) {
         return new Request.Builder()
-                .url(SERVER_URL + "Problem/")
+                .url(SERVER_URL + "Problem/" + problemId)
+                .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }
-
 
 }

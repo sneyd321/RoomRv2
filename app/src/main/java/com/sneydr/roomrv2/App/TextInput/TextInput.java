@@ -64,9 +64,6 @@ public abstract class TextInput {
         }
     };
 
-    public void setError(String error) {
-        getLayout().setError(error);
-    }
 
 
     protected TextWatcher textWatcher = new TextWatcher() {
@@ -102,11 +99,6 @@ public abstract class TextInput {
     protected ValidationFacade getValidationFacade() {
         return validationFacade;
     }
-
-    protected InputSanitizer getInputSanitizer() {
-        return inputSanitizer;
-    }
-
 
     public View getView() {
         return view;

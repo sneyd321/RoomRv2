@@ -11,6 +11,7 @@ import androidx.camera.extensions.HdrImageCaptureExtender;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -24,10 +25,10 @@ import java.util.concurrent.Executors;
 public class Camera {
 
     private Preview preview;
+    private Context context;
     private CameraSelector cameraSelector;
     private ImageAnalysis imageAnalysis;
     private ImageCapture imageCapture;
-    private Context context;
     private Executor executor = Executors.newSingleThreadExecutor();
 
     public Camera(PreviewView previewView) {
@@ -35,7 +36,7 @@ public class Camera {
         preview = buildPreview(previewView.getSurfaceProvider());
         cameraSelector = buildCameraSelector();
         imageAnalysis = buildImageAnalysis();
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) previewView.getContext().getSystemService(Context.WINDOW_SERVICE);
         int rotation =  windowManager.getDefaultDisplay().getRotation();
         imageCapture = buildImageCapture(cameraSelector, rotation);
     }
@@ -88,8 +89,6 @@ public class Camera {
 
     public void capturePicture(CameraObserver cameraObserver) {
         File file = new File(context.getCacheDir(), "Problem.jpg");
-        file.delete();
-        file = new File(context.getCacheDir(), "Problem.jpg");
         ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
         CaptureCallback captureCallback = new CaptureCallback();
         captureCallback.registerObserver(cameraObserver);

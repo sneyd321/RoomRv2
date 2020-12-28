@@ -25,4 +25,9 @@ public class ApprovedState implements ButtonState {
     public String getText() {
         return "Approved";
     }
+
+    @Override
+    public int getVectorDrawable() {
+        return R.drawable.ic_check_black_24dp;
+    }
 }

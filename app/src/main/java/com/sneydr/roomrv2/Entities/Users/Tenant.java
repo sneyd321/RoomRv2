@@ -1,18 +1,11 @@
 package com.sneydr.roomrv2.Entities.Users;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "tenant_table")
 public class Tenant extends User {
 
-    @PrimaryKey
     private int tenantId;
     private int houseId;
     private boolean isApproved;
 
-    @Ignore
     public Tenant(String firstName, String lastName, String email, String password, int houseId) {
         super(firstName, lastName, email, password);
         this.houseId = houseId;
@@ -20,9 +13,8 @@ public class Tenant extends User {
 
     }
 
-    public Tenant(int tenantId, String firstName, String lastName, String email, int houseId, boolean isApproved) {
-        super(tenantId, firstName, lastName, email);
-        this.tenantId = tenantId;
+    public Tenant(String firstName, String lastName, String email, int houseId, boolean isApproved) {
+        super(firstName, lastName, email);
         this.houseId = houseId;
         this.isApproved = isApproved;
     }

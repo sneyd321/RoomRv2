@@ -6,5 +6,8 @@ public enum NetworkCallbackType {
     GetTenant,
     GetHouse,
     GetTenants,
-    GetProblems
+    GetProblems,
+    GetProblem,
+    GetLease,
+    GetSignUpURL
 }

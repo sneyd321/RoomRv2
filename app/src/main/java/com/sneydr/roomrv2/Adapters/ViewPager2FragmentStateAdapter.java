@@ -15,8 +15,8 @@ public class ViewPager2FragmentStateAdapter extends FragmentStateAdapter {
     private List<Fragment> fragments = new ArrayList<>();
 
 
-    public ViewPager2FragmentStateAdapter(@NonNull FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+    public ViewPager2FragmentStateAdapter(@NonNull Fragment fragment) {
+        super(fragment);
     }
 
     public void addFragment(Fragment fragment){

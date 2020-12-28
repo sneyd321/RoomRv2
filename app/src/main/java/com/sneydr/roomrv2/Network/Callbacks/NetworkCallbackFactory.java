@@ -1,25 +1,46 @@
 package com.sneydr.roomrv2.Network.Callbacks;
 
+import com.sneydr.roomrv2.Network.Network;
+import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
+
 public class NetworkCallbackFactory {
 
 
-    public NetworkCallback getOkHttpCallback(NetworkCallbackType type) {
+    public NetworkCallback getNetworkCallback(NetworkCallbackType type, NetworkObserver observer) {
+        NetworkCallback callback = null;
         switch (type) {
             case GetHouses:
-               return new GetHousesCallback();
+                callback = new GetHousesCallback();
+                break;
             case GetHomeowner:
-                return new GetHomeownerCallback();
+                callback = new GetHomeownerCallback();
+                break;
             case GetTenant:
-                return new GetTenantCallback();
+                callback = new GetTenantCallback();
+                break;
             case GetHouse:
-                return new GetHouseCallback();
+                callback = new GetHouseCallback();
+                break;
             case GetTenants:
-                return new GetTenantsCallback();
+                callback = new GetTenantsCallback();
+                break;
             case GetProblems:
-                return new GetProblemsCallback();
-            default:
-                return null;
+                callback = new GetProblemsCallback();
+                break;
+            case GetProblem:
+                callback = new GetProblemCallback();
+                break;
+            case GetLease:
+                callback = new GetLeaseCallback();
+                break;
+            case GetSignUpURL:
+                callback = new GetSignUpURLCallback();
+                break;
         }
+        if (callback != null) {
+            callback.registerObserver(observer);
+        }
+        return callback;
 
     }
 

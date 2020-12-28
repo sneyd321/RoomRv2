@@ -8,9 +8,9 @@ import com.sneydr.roomrv2.Entities.Database.HouseDao;
 import com.sneydr.roomrv2.Entities.Database.RoomRDatabase;
 import com.sneydr.roomrv2.Entities.Database.TenantDao;
 import com.sneydr.roomrv2.Entities.House.House;
-import com.sneydr.roomrv2.Entities.Location.HomeownerLocation;
-import com.sneydr.roomrv2.Entities.Location.RentalUnitLocation;
-import com.sneydr.roomrv2.Entities.RentDetails.RentDetails;
+import com.sneydr.roomrv2.Entities.House.Location.HomeownerLocation;
+import com.sneydr.roomrv2.Entities.House.Location.RentalUnitLocation;
+import com.sneydr.roomrv2.Entities.House.RentDetails.RentDetails;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 

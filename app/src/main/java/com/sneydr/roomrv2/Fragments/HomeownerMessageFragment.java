@@ -12,9 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.engineio.client.Transport;
 import com.github.nkzawa.socketio.client.IO;
@@ -24,6 +29,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.sneydr.roomrv2.Adapters.MessageRecyclerViewAdapter;
 import com.sneydr.roomrv2.App.TextInput.NormalTextInput.FirstNameTextInput;
+import com.sneydr.roomrv2.App.TextInput.NormalTextInput.MessageTextInput;
 import com.sneydr.roomrv2.App.TextInput.TextInput;
 import com.sneydr.roomrv2.Entities.Message.Message;
 import com.sneydr.roomrv2.Entities.Message.MessageFactory;
@@ -35,103 +41,94 @@ import com.sneydr.roomrv2.Network.Network;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.Repositories.HomeownerRepository;
+import com.sneydr.roomrv2.SocketIO.Callbacks.CallbackType;
+import com.sneydr.roomrv2.SocketIO.Observers.DisconnectObserver;
+import com.sneydr.roomrv2.SocketIO.Observers.JoinObserver;
+import com.sneydr.roomrv2.SocketIO.Observers.MessageObserver;
+import com.sneydr.roomrv2.SocketIO.SocketIO;
+import com.sneydr.roomrv2.ViewModels.HomeownerViewModel;
+import com.sneydr.roomrv2.ViewModels.TenantViewModel;
 
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Request;
 
-public class HomeownerMessageFragment extends FragmentTemplate implements HomeownerObserver {
+public class HomeownerMessageFragment extends FragmentTemplate implements HomeownerObserver, JoinObserver, MessageObserver, DisconnectObserver {
 
 
     private MessageRecyclerViewAdapter adapter;
     private RecyclerView rcyMessages;
-    private TextInput message;
+    private MessageTextInput message;
     private ImageButton btnSend;
-    private Socket mSocket;
+
     private int houseId;
-    private int homeownerId;
-    private JSONParser jsonParser;
-    private HomeownerRepository homeownerRepository;
+    private String authToken;
 
     private MessageFactory factory;
-
-    @Override
-    protected void initUI(View view) {
-        try {
-            mSocket = IO.socket("http://192.168.0.115:8087");
-        } catch (URISyntaxException e) {
-            Toast.makeText(context, "Error in connection string", Toast.LENGTH_SHORT).show();
-        }
-        mSocket.on("join", onJoin);
-        mSocket.on("message", onMessage);
-        mSocket.connect();
-        jsonParser = JSONParser.getInstance();
-        rcyMessages = view.findViewById(R.id.rcyMessages);
-        rcyMessages.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new MessageRecyclerViewAdapter(context, new ArrayList<>(), 1);
-        rcyMessages.setAdapter(adapter);
-        message = new FirstNameTextInput(view, R.id.tilMessage, R.id.edtMessage);
-        btnSend = view.findViewById(R.id.btnSend);
-        homeownerRepository = new HomeownerRepository(this);
-        homeownerRepository.getHomeowner(homeownerId);
-    }
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        initUI(view);
+        rcyMessages = view.findViewById(R.id.rcyMessages);
+        rcyMessages.setLayoutManager(new LinearLayoutManager(context));
+        message = new MessageTextInput(view, R.id.tilMessage, R.id.edtMessage);
+        message.resetError();
+        btnSend = view.findViewById(R.id.btnSend);
+
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        SocketIO socketIO = SocketIO.getInstance();
+        socketIO.registerSocket("join", socketIO.getListener(CallbackType.onJoin, this));
+        socketIO.registerSocket("message", socketIO.getListener(CallbackType.onMessage, this));
+        socketIO.registerSocket("leave", socketIO.getListener(CallbackType.onDisconnect, this));
+        socketIO.connect();
+        message.resetError();
+        HomeownerViewModel homeownerViewModel = ViewModelProviders.of(this).get(HomeownerViewModel.class);
+        homeownerViewModel.loadHomeowner(authToken, this);
+    }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     @Override
     public void onHomeowner(Homeowner homeowner) {
-        factory = new MessageFactory(homeowner.getHomeownerId(), homeowner.getFullName(), houseId);
-        btnSend.setOnClickListener(onSend);
-        Message joinMessage = factory.getMessage("Join Room");
-        mSocket.emit("join", jsonParser.messageToJson(joinMessage));
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adapter = new MessageRecyclerViewAdapter(getContext(), new ArrayList<>(), "Homeowner", homeowner.getEmail());
+                rcyMessages.setAdapter(adapter);
+                factory = new MessageFactory(homeowner.getEmail(), homeowner.getFullName(), "Homeowner", houseId);
+                btnSend.setOnClickListener(onSend);
+                Message joinMessage = factory.getMessage("Join Room");
+                SocketIO socketIO = SocketIO.getInstance();
+                socketIO.emitMessage("join", joinMessage);
+            }
+        });
+
     }
 
     View.OnClickListener onSend = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Message newMessage = factory.getMessage(message.getText());
-            mSocket.emit("message", jsonParser.messageToJson(newMessage));
-        }
-    };
+            SocketIO socketIO = SocketIO.getInstance();
+            message.invokeValidation();
+            if (message.getError() != null) {
+                YoYo.with(Techniques.Shake).playOn(message.getEditText());
+            }
+            else {
+                socketIO.emitMessage("message", factory.getMessage(message.getText()));
+                message.getEditText().setText("");
+                message.resetError();
+            }
 
-    private Emitter.Listener onMessage = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    String message = (String) args[0];
-                    JSONParser jsonParser = JSONParser.getInstance();
-                    Message returnedMessage = jsonParser.parseMessage(message);
-                    adapter.add(returnedMessage);
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onJoin = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, "Join callback", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
     };
 
@@ -141,11 +138,55 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
         return this;
     }
 
-    public HomeownerMessageFragment setHomeownerId(int homeownerId) {
-        this.homeownerId = homeownerId;
+    public HomeownerMessageFragment setHomeownerId(String authToken) {
+        this.authToken = authToken;
         return this;
     }
 
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (factory != null){
+            SocketIO socketIO = SocketIO.getInstance();
+            socketIO.emitMessage("leave", factory.getMessage("Leave room"));
+        }
+    }
 
+    @Override
+    public void onMessage(Message message) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (adapter != null) {
+                    adapter.add(message);
+                    rcyMessages.scrollToPosition(adapter.getItemCount() - 1);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onJoin(List<Message> messages) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (adapter != null) {
+                    adapter.refresh(messages);
+                    rcyMessages.scrollToPosition(adapter.getItemCount() - 1);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onDisconnect(Message message) {
+        SocketIO socketIO = SocketIO.getInstance();
+        socketIO.disconnect();
+        socketIO.clearSocket("join");
+        socketIO.clearSocket("message");
+        socketIO.clearSocket("leave");
+
+    }
 }

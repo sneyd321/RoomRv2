@@ -11,6 +11,8 @@ public interface  ButtonState {
 
    String getText();
 
+   int getVectorDrawable();
+
 
 
 

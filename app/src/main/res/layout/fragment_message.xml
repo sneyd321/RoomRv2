@@ -9,15 +9,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyMessages"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/tilMessage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilMessage"
@@ -30,8 +28,7 @@
         app:endIconMode="clear_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSend"
-        app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtMessage"
@@ -42,8 +39,10 @@
 
     <ImageButton
         android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="@dimen/view_height"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_send_24"
         app:layout_constraintBottom_toBottomOf="@+id/tilMessage"
         app:layout_constraintEnd_toEndOf="parent"

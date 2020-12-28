@@ -1,39 +1,30 @@
 package com.sneydr.roomrv2.Entities.Message;
 
-import androidx.room.Ignore;
-
-import com.sneydr.roomrv2.Entities.RentDetails.CalendarHandler;
+import com.sneydr.roomrv2.Entities.House.RentDetails.CalendarHandler;
 
 
 public class Message {
 
-    private int messageId;
     private String message;
     private String timestamp;
-    private int userId;
+    private String email;
     private String userName;
     private int houseId;
-    @Ignore
-    private transient CalendarHandler calendarHandler;
+    private String userType;
 
 
-    public Message(String message, int userId, String userName, int houseId) {
+    public Message(String message, String email, String userName, String userType, int houseId) {
         this.message = message;
-        calendarHandler = new CalendarHandler();
+        CalendarHandler calendarHandler = new CalendarHandler();
         this.timestamp = calendarHandler.getNow();
-        this.userId = userId;
+        this.email = email;
         this.userName = userName;
+        this.userType = userType;
         this.houseId = houseId;
     }
 
-
-
-    public int getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(int messageId) {
-        this.messageId = messageId;
+    public String getUserType() {
+        return userType;
     }
 
     public String getMessage() {
@@ -65,7 +56,7 @@ public class Message {
         return userName;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 }

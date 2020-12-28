@@ -1,10 +1,8 @@
 package com.sneydr.roomrv2.Network.Callbacks;
 
 import com.sneydr.roomrv2.Entities.Problem.Problem;
-import com.sneydr.roomrv2.Entities.Users.Homeowner;
-import com.sneydr.roomrv2.Network.JSONParser;
-import com.sneydr.roomrv2.Network.Observables.ProblemObservable;
-import com.sneydr.roomrv2.Network.Observers.ProblemObserver;
+import com.sneydr.roomrv2.Network.Observables.ProblemsObservable;
+import com.sneydr.roomrv2.Network.Observers.ProblemsObserver;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -14,13 +12,13 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public class GetProblemsCallback extends NetworkCallback implements ProblemObservable {
+public class GetProblemsCallback extends NetworkCallback implements ProblemsObservable {
 
 
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
         if (response.isSuccessful()){
-            List<Problem> problems = jsonParser.parseProblem(response.body().string());
+            List<Problem> problems = jsonParser.parseProblems(response.body().string());
             notifyProblems(problems);
         }
         else {
@@ -31,7 +29,7 @@ public class GetProblemsCallback extends NetworkCallback implements ProblemObser
 
     @Override
     public void notifyProblems(List<Problem> problems) {
-        ProblemObserver problemObserver = (ProblemObserver) this.observer;
-        problemObserver.onProblems(problems);
+        ProblemsObserver problemsObserver = (ProblemsObserver) this.observer;
+        problemsObserver.onProblems(problems);
     }
 }
