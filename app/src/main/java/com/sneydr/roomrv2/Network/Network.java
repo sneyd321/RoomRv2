@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.sneydr.roomrv2.App.App;
 import com.sneydr.roomrv2.Entities.House.House;
 import com.sneydr.roomrv2.Entities.House.Lease;
 import com.sneydr.roomrv2.Entities.Login.Login;
@@ -25,6 +26,8 @@ import android.util.Base64;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Authenticator;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.Credentials;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -37,7 +40,7 @@ import okhttp3.Route;
 public class Network {
 
 
-    private final String SERVER_URL = "http://192.168.0.115:8080/api/v1/";
+    private final String SERVER_URL = "http://34.107.132.144/homeowner-gateway/v1/";
     private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private OkHttpClient client;
     private NetworkCallbackFactory factory;
@@ -52,7 +55,9 @@ public class Network {
     }
 
     private Network() {
-        client = new OkHttpClient();
+        int cacheSize = 10 * 1024 * 1024; // 10 MiB
+        Cache cache = new Cache(new File(App.getCache(),"OkHttpCache"), cacheSize);
+        client = new OkHttpClient.Builder().cache(cache).addInterceptor(new ForceCacheInterceptor()).build();
         factory = new NetworkCallbackFactory();
     }
 
@@ -73,6 +78,8 @@ public class Network {
         NetworkCallback callback = factory.getNetworkCallback(type, observer);
         client.newCall(request).enqueue(callback);
     }
+
+
 
     public Request loginHomeowner(Login login) {
         return new Request.Builder()
@@ -108,6 +115,7 @@ public class Network {
     public Request getHouses(String homeownerId) {
         return new Request.Builder()
                 .url(SERVER_URL + "Homeowner/House")
+                //.cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
                 .addHeader("Authorization", "Bearer " + homeownerId)
                 .build();
     }
@@ -117,6 +125,7 @@ public class Network {
     public Request getTenants(int houseId, String authToken) {
         return new Request.Builder()
                 .url(SERVER_URL + "House/" + houseId + "/Tenant")
+                //.cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
                 .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }
@@ -154,6 +163,7 @@ public class Network {
     public Request getProblemsByHouseId(int houseId, String authToken) {
         return new Request.Builder()
                 .url(SERVER_URL + "House/" + houseId + "/Problem")
+                //.cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
                 .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }
@@ -161,6 +171,7 @@ public class Network {
     public Request getProblem(int problemId, String authToken) {
         return new Request.Builder()
                 .url(SERVER_URL + "Problem/" + problemId)
+                .cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
                 .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }

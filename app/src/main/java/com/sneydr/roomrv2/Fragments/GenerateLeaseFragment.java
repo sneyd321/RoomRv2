@@ -95,9 +95,10 @@ public class GenerateLeaseFragment extends FragmentTemplate implements StatefulI
     @Override
     public void onResume() {
         super.onResume();
+        adapter = new TenantNameRecyclerViewAdapter(new ArrayList<>());
         tenantViewModel = ViewModelProviders.of(this).get(TenantViewModel.class);
         tenantViewModel.getTenantByHouseId(houseId, authToken, this);
-       }
+    }
 
     public GenerateLeaseFragment setHouseId(int houseId) {
         this.houseId = houseId;

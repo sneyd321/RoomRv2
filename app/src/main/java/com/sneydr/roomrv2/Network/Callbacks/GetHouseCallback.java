@@ -19,8 +19,16 @@ public class GetHouseCallback extends NetworkCallback implements HouseObservable
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
         if (response.isSuccessful()){
-            House house = jsonParser.parseHouse(response.body().string());
-            notifyHouse(house);
+            String body = response.body().string();
+            if (body.isEmpty()) {
+                House house = jsonParser.parseHouse(body);
+                notifyHouse(house);
+            }
+            else {
+                notifyHouse(null);
+            }
+
+
         }
         else {
             notifyFailure(response.body().string());

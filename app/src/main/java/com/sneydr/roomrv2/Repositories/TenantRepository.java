@@ -39,10 +39,10 @@ public class TenantRepository extends Repository {
     }
 
     public void getTenantsByHouseId(int houseId, String authToken, NetworkObserver observer) {
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-            Request request = network.getTenants(houseId, authToken);
-            network.send(request, NetworkCallbackType.GetTenants, observer);
-        }
+        //if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
+        Request request = network.getTenants(houseId, authToken);
+        network.send(request, NetworkCallbackType.GetTenants, observer);
+        //}
 
     }
 

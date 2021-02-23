@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
 
     <TextView
@@ -11,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
         android:text="RoomR\n(Insert logo here)"
         android:textColor="@color/colorPrimary"
-        android:gravity="center_horizontal"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,13 +25,13 @@
         android:id="@+id/textView11"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="Homeowner"
         android:textColor="@color/colorSecondary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textView47"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView47"
         app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
@@ -66,7 +67,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:hint="@string/password"
         android:theme="@style/AppTheme.NoActionBar"
         app:endIconMode="clear_text"
@@ -85,8 +85,6 @@
             android:text="homework" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
     <LinearLayout
@@ -131,8 +129,17 @@
 
     </LinearLayout>
 
-
-
+    <Space
+        android:id="@+id/space"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:minHeight="@dimen/view_height"
+        app:layout_constraintBottom_toTopOf="@+id/tilLoginEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintVertical_bias="0.489" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

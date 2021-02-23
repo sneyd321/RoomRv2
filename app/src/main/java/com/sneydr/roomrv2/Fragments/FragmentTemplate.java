@@ -69,7 +69,7 @@ public abstract class FragmentTemplate extends Fragment implements NetworkObserv
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Dialog dialog = new Dialog(getContext());
+                Dialog dialog = new Dialog(context);
                 dialog.setMessage(text);
                 dialog.buildErrorDialog().show();
             }
@@ -82,7 +82,7 @@ public abstract class FragmentTemplate extends Fragment implements NetworkObserv
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
             }
         });
     }

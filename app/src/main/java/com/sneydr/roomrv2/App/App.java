@@ -6,18 +6,31 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
+import java.io.File;
+
 public class App extends Application {
 
     public static final String CHANNEL_ID = "RoomRNotificationChannel";
 
+    private static File file;
+    private static Application application;
 
     @Override
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
+        App.file = getCacheDir();
+        App.application = this;
+
     }
 
+    public static File getCache() {
+        return App.file;
+    }
 
+    public static Application getApplication() {
+        return App.application;
+    }
 
 
 

@@ -20,6 +20,10 @@ public class MessageFactory {
         return new Message(message, email, userName, userType, houseId);
     }
 
+    public String getEmail() {
+        return email;
+    }
+
 
 
 }

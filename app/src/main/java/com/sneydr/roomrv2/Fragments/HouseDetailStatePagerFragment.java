@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.sneydr.roomrv2.Adapters.ViewPager2FragmentStateAdapter;
+import com.sneydr.roomrv2.App.UI.DepthPageTransformer;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.databinding.StatePagerHouseDetailsBinding;
 
@@ -34,6 +35,7 @@ public class HouseDetailStatePagerFragment extends Fragment {
             String authToken = bundle.getString("authToken");
 
             FragmentStateAdapter adapter = setupViewPager(authToken, houseId);
+            binding.houseDetailViewPager.setPageTransformer(new DepthPageTransformer());
             binding.houseDetailViewPager.setAdapter(adapter);
 
             new TabLayoutMediator(binding.houseDetailTabLayout, binding.houseDetailViewPager, new TabLayoutMediator.TabConfigurationStrategy() {

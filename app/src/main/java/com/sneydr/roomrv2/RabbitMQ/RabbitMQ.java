@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 
 public class RabbitMQ {
 
-    private final String RABBIT_HOST = "192.168.0.115";
+    private final String RABBIT_HOST = "104.197.86.237";
 
     private static RabbitMQ instance = null;
     private RabbitMQObserver observer;
@@ -26,7 +26,7 @@ public class RabbitMQ {
     private Connection getRabbitMQConnection() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(RABBIT_HOST);
-        factory.setPort(5673);
+        factory.setPort(5672);
         try {
             return factory.newConnection();
         } catch (TimeoutException e) {

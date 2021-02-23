@@ -28,13 +28,25 @@ public class ProblemViewHolder extends RecyclerView.ViewHolder implements View.O
     }
 
     public void bindProblem(Problem problem) {
-        Picasso.get()
-                .load(problem.getImageUrl())
-                .placeholder(R.drawable.ic_baseline_image_search_24)
-                .error(R.drawable.ic_baseline_broken_image_24)
-                .fit()
-                .centerCrop()
-                .into(binding.imgHomeownerProblem);
+        if (problem.getImageUrl() == null) {
+            Picasso.get()
+                    .load(R.drawable.ic_baseline_broken_image_24)
+                    .placeholder(R.drawable.ic_baseline_image_search_24)
+                    .error(R.drawable.ic_baseline_broken_image_24)
+                    .fit()
+                    .centerCrop()
+                    .into(binding.imgHomeownerProblem);
+        }
+        else {
+            Picasso.get()
+                    .load(problem.getImageUrl())
+                    .placeholder(R.drawable.ic_baseline_image_search_24)
+                    .error(R.drawable.ic_baseline_broken_image_24)
+                    .fit()
+                    .centerCrop()
+                    .into(binding.imgHomeownerProblem);
+        }
+
         binding.txtHomeownerProblemType.setText(problem.getCategory());
         binding.txtHomeownerProblemDescription.setText(problem.getDescription());
         binding.txtTenantProblemStatus.setText(problem.getStatus().getName());

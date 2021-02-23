@@ -35,17 +35,17 @@ public class ProblemRepository extends Repository{
     }
 
     public void getProblemByHouseId(int houseId, String authToken, NetworkObserver observer) {
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)){
-            Request request = network.getProblemsByHouseId(houseId, authToken);
-            network.send(request, NetworkCallbackType.GetProblems, observer);
-        }
+        //if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)){
+        Request request = network.getProblemsByHouseId(houseId, authToken);
+        network.send(request, NetworkCallbackType.GetProblems, observer);
+        //}
     }
 
     public void getProblemById(int id, String authToken, NetworkObserver observer){
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-            Request request = network.getProblem(id, authToken);
-            network.send(request, NetworkCallbackType.GetProblem, observer);
-        }
+        //if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
+        Request request = network.getProblem(id, authToken);
+        network.send(request, NetworkCallbackType.GetProblem, observer);
+        //}
 
 
     }

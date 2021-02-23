@@ -6,8 +6,11 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,7 +60,7 @@ import java.util.List;
 
 import okhttp3.Request;
 
-public class HomeownerMessageFragment extends FragmentTemplate implements HomeownerObserver, JoinObserver, MessageObserver, DisconnectObserver {
+public class HomeownerMessageFragment extends FragmentTemplate implements HomeownerObserver, JoinObserver, MessageObserver {
 
 
     private MessageRecyclerViewAdapter adapter;
@@ -76,7 +79,9 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         rcyMessages = view.findViewById(R.id.rcyMessages);
-        rcyMessages.setLayoutManager(new LinearLayoutManager(context));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager.setStackFromEnd(true);
+        rcyMessages.setLayoutManager(linearLayoutManager);
         message = new MessageTextInput(view, R.id.tilMessage, R.id.edtMessage);
         message.resetError();
         btnSend = view.findViewById(R.id.btnSend);
@@ -103,8 +108,6 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
         handler.post(new Runnable() {
             @Override
             public void run() {
-                adapter = new MessageRecyclerViewAdapter(getContext(), new ArrayList<>(), "Homeowner", homeowner.getEmail());
-                rcyMessages.setAdapter(adapter);
                 factory = new MessageFactory(homeowner.getEmail(), homeowner.getFullName(), "Homeowner", houseId);
                 btnSend.setOnClickListener(onSend);
                 Message joinMessage = factory.getMessage("Join Room");
@@ -150,7 +153,13 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
         super.onPause();
         if (factory != null){
             SocketIO socketIO = SocketIO.getInstance();
+            rcyMessages.swapAdapter(new MessageRecyclerViewAdapter(context, new ArrayList<>(), "Tenant", factory.getEmail()), true);
+
             socketIO.emitMessage("leave", factory.getMessage("Leave room"));
+            socketIO.disconnect();
+            socketIO.clearSocket("join");
+            socketIO.clearSocket("message");
+            socketIO.clearSocket("leave");
         }
     }
 
@@ -172,21 +181,18 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (adapter != null) {
-                    adapter.refresh(messages);
+                if (factory != null) {
+                    adapter = new MessageRecyclerViewAdapter(getContext(), messages, "Homeowner", factory.getEmail());
+                    LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+                    rcyMessages.setLayoutAnimation(animation);
+                    rcyMessages.setAdapter(adapter);
                     rcyMessages.scrollToPosition(adapter.getItemCount() - 1);
+                }
+                else {
+                    Toast.makeText(context, "Failed to load messages", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    @Override
-    public void onDisconnect(Message message) {
-        SocketIO socketIO = SocketIO.getInstance();
-        socketIO.disconnect();
-        socketIO.clearSocket("join");
-        socketIO.clearSocket("message");
-        socketIO.clearSocket("leave");
-
-    }
 }

@@ -1,9 +1,11 @@
 package com.sneydr.roomrv2.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -39,8 +41,11 @@ public class SignUpFragment extends FragmentTemplate implements SignUpRequestObs
             Request request = network.getSignInURL();
             network.send(request, NetworkCallbackType.GetSignUpURL, this);
         }
+
         return view;
     }
+
+
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     @Override
@@ -48,7 +53,7 @@ public class SignUpFragment extends FragmentTemplate implements SignUpRequestObs
         handler.post(new Runnable() {
             @Override
             public void run() {
-                webView.loadUrl(url);
+                webView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
             }
         });
     }

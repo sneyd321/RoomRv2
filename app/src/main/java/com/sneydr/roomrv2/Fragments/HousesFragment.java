@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 
 import com.sneydr.roomrv2.Adapters.HousesRecyclerViewAdapter;
@@ -64,6 +66,8 @@ public class HousesFragment extends FragmentTemplate implements ItemClickListene
         handler.post(new Runnable() {
             @Override
             public void run() {
+                LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+                binding.rcyHouses.setLayoutAnimation(animation);
                 adapter = new HousesRecyclerViewAdapter(houses);
                 adapter.setOnClickListener(HousesFragment.this);
                 binding.rcyHouses.swapAdapter(adapter, true);
