@@ -2,14 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/crdTenantName"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         style="@style/CardViewMargins"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,8 +19,8 @@
             <TextView
                 android:id="@+id/txtTenantName"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
@@ -27,34 +28,94 @@
                 android:textColor="@color/Black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/txtApprovalLabel"
-                app:layout_constraintEnd_toStartOf="@+id/txtApprovalLabel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imgApproveTenant" />
+                app:layout_constraintBottom_toBottomOf="@+id/imgTenantProfile"
+                app:layout_constraintEnd_toStartOf="@+id/imgApproveTenant"
+                app:layout_constraintStart_toEndOf="@+id/imgTenantProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgTenantProfile" />
 
             <ImageView
                 android:id="@+id/imgApproveTenant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_width="@dimen/view_height"
+                android:layout_height="@dimen/view_height"
+                android:layout_marginEnd="16dp"
                 android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/imgTenantProfile"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imgTenantProfile"
                 app:srcCompat="@drawable/ic_baseline_clear_24" />
 
-            <TextView
-                android:id="@+id/txtApprovalLabel"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imgTenantProfile"
+                android:layout_width="@dimen/view_height"
+                android:layout_height="@dimen/view_height"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgApproveTenant">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUnapprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/view_height"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="Unapprove"
+                    android:textColor="@color/colorPrimary"
+                    android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    app:backgroundTint="@color/White"
+                    app:cornerRadius="3dp"
+                    app:icon="@drawable/ic_baseline_clear_24"
+                    app:iconTint="@color/colorPrimary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/view_height"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="Approve"
+                    android:theme="@style/Widget.MaterialComponents.Button"
+                    app:cornerRadius="3dp"
+                    app:icon="@drawable/ic_check_black_24dp"
+                    app:iconTint="@color/White"
+                    app:strokeColor="@color/colorPrimaryDark" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddContact"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/view_height"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="TextView"
+                android:layout_weight="1"
+                android:text="Add To Contacts"
+                android:textColor="@color/colorPrimary"
+                android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                app:backgroundTint="@color/White"
+                app:cornerRadius="3dp"
+                app:icon="@drawable/ic_person_add_black_24dp"
+                app:iconTint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgApproveTenant" />
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

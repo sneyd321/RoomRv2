@@ -19,7 +19,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 public class HouseDetailStatePagerFragment extends Fragment {
 
@@ -46,11 +45,13 @@ public class HouseDetailStatePagerFragment extends Fragment {
             }).attach();
 
             binding.houseDetailTabLayout.getTabAt(1).setText("Tenants");
-            binding.houseDetailTabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_assignment_black_24dp));
+            binding.houseDetailTabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.ic_accessibility_black_24dp));
             binding.houseDetailTabLayout.getTabAt(0).setText("Problems");
             binding.houseDetailTabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.ic_build_black_24dp));
-            binding.houseDetailTabLayout.getTabAt(2).setText("Messages");
-            binding.houseDetailTabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.ic_message_black_24dp));
+            binding.houseDetailTabLayout.getTabAt(2).setText("Documents");
+            binding.houseDetailTabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.ic_assignment_black_24dp));
+            binding.houseDetailTabLayout.getTabAt(3).setText("Messages");
+            binding.houseDetailTabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.ic_message_black_24dp));
 
         }
         else {
@@ -62,9 +63,10 @@ public class HouseDetailStatePagerFragment extends Fragment {
 
     private FragmentStateAdapter setupViewPager(String authToken, int houseId){
         ViewPager2FragmentStateAdapter adapter = new ViewPager2FragmentStateAdapter(this);
-        adapter.addFragment(new HomeownerProblemsFragment().setHouseId(houseId).setHomeownerId(authToken));
-        adapter.addFragment(new GenerateLeaseFragment().setHouseId(houseId).setHomeownerId(authToken));
-        adapter.addFragment(new HomeownerMessageFragment().setHouseId(houseId).setHomeownerId(authToken));
+        adapter.addFragment(new HomeownerProblemsFragment().setHouseId(houseId).setAuthToken(authToken));
+        adapter.addFragment(new TenantsFragment().setHouseId(houseId).setAuthToken(authToken));
+        adapter.addFragment(new DocumentsFragment().setHouseId(houseId).setAuthToken(authToken));
+        adapter.addFragment(new HomeownerMessageFragment().setHouseId(houseId).setAuthToken(authToken));
         return adapter;
     }
 }

@@ -30,9 +30,7 @@ public class HouseViewModel extends AndroidViewModel implements LifecycleObserve
 
     }
 
-    public void saveHouse(House house, HouseObserver observer) {
-        repository.insert(house, observer);
-    }
+
 
     private void getHouse(int houseId, HouseObserver observer) {
         //repository.getHouse(houseId, observer);

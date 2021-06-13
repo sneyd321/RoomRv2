@@ -10,20 +10,13 @@
         android:label="Houses"
         tools:layout="@layout/fragment_house" >
         <action
-            android:id="@+id/action_housesFragment_to_addHouseFragment"
-            app:destination="@id/addHouseFragment"
-            app:popUpTo="@id/housesFragment"
-            />
-        <action
             android:id="@+id/action_housesFragment_to_houseDetailStatePagerFragment"
             app:destination="@id/houseDetailStatePagerFragment"
             app:popUpTo="@id/housesFragment"/>
+        <action
+            android:id="@+id/action_housesFragment_to_addHouseWebFragment"
+            app:destination="@id/addHouseWebFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/addHouseFragment"
-        android:name="com.sneydr.roomrv2.Fragments.AddHouseFragment"
-        android:label="Add House"
-        tools:layout="@layout/fragment_add_house"/>
     <fragment
         android:id="@+id/houseDetailStatePagerFragment"
         android:name="com.sneydr.roomrv2.Fragments.HouseDetailStatePagerFragment"
@@ -32,11 +25,14 @@
         <action
             android:id="@+id/action_houseDetailStatePagerFragment_to_viewProblemFragment"
             app:destination="@id/viewProblemFragment" />
+        <action
+            android:id="@+id/action_houseDetailStatePagerFragment_to_createDocumentWebFragment"
+            app:destination="@id/createDocumentWebFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/generateLeaseFragment"
-        android:name="com.sneydr.roomrv2.Fragments.GenerateLeaseFragment"
+        android:name="com.sneydr.roomrv2.Fragments.TenantsFragment"
         android:label="Generate Lease" />
 
     <fragment
@@ -55,4 +51,16 @@
         android:id="@+id/messageFragment"
         android:name="com.sneydr.roomrv2.Fragments.HomeownerMessageFragment"
         android:label="Messages" />
+    <fragment
+        android:id="@+id/addHouseWebFragment"
+        android:name="com.sneydr.roomrv2.Fragments.AddHouseWebFragment"
+        android:label="AddHouseWebFragment" />
+    <fragment
+        android:id="@+id/createDocumentWebFragment"
+        android:name="com.sneydr.roomrv2.Fragments.CreateDocumentWebFragment"
+        android:label="CreateDocumentWebFragment" />
+    <fragment
+        android:id="@+id/documentsFragment"
+        android:name="com.sneydr.roomrv2.Fragments.DocumentsFragment"
+        android:label="DocumentsFragment" />
 </navigation>

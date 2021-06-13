@@ -24,6 +24,15 @@ public class Dialog {
         }).create();
     }
 
+    public AlertDialog buildSuccessDialog() {
+        return this.dialog.setTitle("Success").setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).create();
+    }
+
 
     public void setMessage(String message) {
         this.dialog.setMessage(message);

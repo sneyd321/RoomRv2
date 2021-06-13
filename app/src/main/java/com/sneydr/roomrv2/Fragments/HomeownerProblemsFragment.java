@@ -23,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Adapters.ProblemsRecyclerViewAdapter;
+import com.sneydr.roomrv2.Adapters.TenantNameRecyclerViewAdapter;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
 import com.sneydr.roomrv2.Network.Observers.ProblemsObserver;
 import com.sneydr.roomrv2.R;
@@ -30,13 +31,13 @@ import com.sneydr.roomrv2.ViewModels.ProblemViewModel;
 import com.sneydr.roomrv2.databinding.FragmentHomeownerProblemsBinding;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeownerProblemsFragment extends FragmentTemplate implements ItemClickListener, SwipeRefreshLayout.OnRefreshListener, ProblemsObserver {
 
     private ProblemsRecyclerViewAdapter adapter;
-    private int houseId;
-    private String authToken;
     private FragmentHomeownerProblemsBinding binding;
 
 
@@ -63,6 +64,7 @@ public class HomeownerProblemsFragment extends FragmentTemplate implements ItemC
         adapter = new ProblemsRecyclerViewAdapter(new ArrayList<>());
         binding.rcyHomeownerProblems.setAdapter(adapter);
     }
+
 
     @Override
     public void onItemClick(View view, int position) {
@@ -91,6 +93,7 @@ public class HomeownerProblemsFragment extends FragmentTemplate implements ItemC
                 }
                 LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
                 binding.rcyHomeownerProblems.setLayoutAnimation(animation);
+                Collections.reverse(problems);
                 adapter = new ProblemsRecyclerViewAdapter(problems);
                 adapter.setItemClickListener(HomeownerProblemsFragment.this);
                 binding.rcyHomeownerProblems.swapAdapter(adapter, false);
@@ -111,16 +114,7 @@ public class HomeownerProblemsFragment extends FragmentTemplate implements ItemC
         });
     }
 
-    public HomeownerProblemsFragment setHouseId(int houseId) {
-        this.houseId = houseId;
-        return this;
-    }
 
-
-    public HomeownerProblemsFragment setHomeownerId(String authToken) {
-        this.authToken = authToken;
-        return this;
-    }
 
     @Override
     public void onRefresh() {

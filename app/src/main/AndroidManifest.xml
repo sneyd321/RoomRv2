@@ -18,15 +18,39 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <uses-library android:name="android.test.runner" android:required="false" />
-
+        <uses-library
+            android:name="android.test.runner"
+            android:required="false" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.sneydr.roomrv2.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
 
         <activity
             android:name=".Activities.MainActivityLandlord"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="localhost"
+                    android:port="8082"
+                    android:pathPattern="/house/v1/" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.LoginActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +58,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".Services.LeaseService" />
     </application>
 

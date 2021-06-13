@@ -13,6 +13,7 @@ import okhttp3.Response;
 public class GetSignUpURLCallback extends NetworkCallback implements SignUpRequestObservable {
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
         if (response.isSuccessful()) {
             notifyObserver(response.body().string());
         }

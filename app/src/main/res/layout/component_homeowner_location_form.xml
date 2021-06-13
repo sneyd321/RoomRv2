@@ -31,7 +31,7 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height"
-                android:text="3327 Raspberry Bush Trail"/>
+                android:text=""/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -78,7 +78,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:completionThreshold="1"
-                android:text="Oakville"/>
+                android:text=""/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -100,7 +100,7 @@
                 android:layout_height="@dimen/view_height"
                 android:inputType="textPostalAddress"
                 android:minEms="8"
-                android:text="L6L 0E1"/>
+                android:text=""/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,7 +123,7 @@
                 android:layout_height="@dimen/view_height"
                 android:inputType="textPostalAddress"
                 android:minEms="10"
-                android:text="207"/>
+                android:text=""/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,7 +147,7 @@
                 android:layout_height="@dimen/view_height"
                 android:inputType="textPostalAddress"
                 android:minEms="10"
-                android:text="207"
+                android:text=""
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

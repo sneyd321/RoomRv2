@@ -7,40 +7,31 @@ import android.net.NetworkInfo;
 
 import com.sneydr.roomrv2.App.App;
 import com.sneydr.roomrv2.Entities.House.House;
-import com.sneydr.roomrv2.Entities.House.Lease;
+import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Entities.Login.Login;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
 import com.sneydr.roomrv2.Network.Callbacks.NetworkCallback;
 import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackFactory;
 import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
-import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.File;
-import java.io.IOException;
+
 import android.util.Base64;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Authenticator;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
-import okhttp3.Credentials;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.Route;
 
 public class Network {
 
 
-    private final String SERVER_URL = "http://34.107.132.144/homeowner-gateway/v1/";
+    private static final String SERVER_URL = "http://192.168.0.108:8080/homeowner-gateway/v1/";
     private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private OkHttpClient client;
     private NetworkCallbackFactory factory;
@@ -63,6 +54,10 @@ public class Network {
 
     private String toBase64(String input) {
         return Base64.encodeToString(input.getBytes(), Base64.NO_WRAP);
+    }
+
+    public String getServerUrl() {
+        return SERVER_URL;
     }
 
     public boolean isNetworkAvailable(Application application) {
@@ -91,6 +86,13 @@ public class Network {
     public Request getSignInURL() {
         return new Request.Builder()
                 .url(SERVER_URL)
+                .build();
+    }
+
+    public Request getURL(String url, String authToken) {
+        return new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }
 
@@ -140,7 +142,7 @@ public class Network {
                 .build();
     }
 
-    public Request postLease(Lease lease, String authToken) {
+    public Request postLease(Document lease, String authToken) {
         JSONParser jsonParser = JSONParser.getInstance();
         RequestBody body = RequestBody.create(JSON, jsonParser.leaseToJson(lease));
         return new Request.Builder()
@@ -172,6 +174,14 @@ public class Network {
         return new Request.Builder()
                 .url(SERVER_URL + "Problem/" + problemId)
                 .cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
+                .addHeader("Authorization", "Bearer " + authToken)
+                .build();
+    }
+
+    public Request getDocumentsByHouseId(int houseId, String authToken) {
+        return new Request.Builder()
+                .url(SERVER_URL + "Document/" + houseId)
+                //.cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
                 .addHeader("Authorization", "Bearer " + authToken)
                 .build();
     }

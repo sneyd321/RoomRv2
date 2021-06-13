@@ -194,11 +194,14 @@ public class AddHouseFragment extends FragmentTemplate implements HouseObserver 
     private View.OnClickListener onAddHouse = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            /*
             House house = new House(authToken, getHomeownerLocation(), getRentalUnitLocation(), getRentDetail());
             house.setAmenities(getAmenities());
             house.setUtilities(getUtilities());
             houseViewModel.saveHouse(house, AddHouseFragment.this);
+            */
         }
+
     };
 
     @Override

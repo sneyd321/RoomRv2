@@ -67,10 +67,6 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
     private RecyclerView rcyMessages;
     private MessageTextInput message;
     private ImageButton btnSend;
-
-    private int houseId;
-    private String authToken;
-
     private MessageFactory factory;
 
     @Nullable
@@ -134,17 +130,6 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
 
         }
     };
-
-
-    public HomeownerMessageFragment setHouseId(int houseId) {
-        this.houseId = houseId;
-        return this;
-    }
-
-    public HomeownerMessageFragment setHomeownerId(String authToken) {
-        this.authToken = authToken;
-        return this;
-    }
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)

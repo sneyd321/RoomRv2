@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "959426188245",
+    "firebase_url": "https://roomr-222721.firebaseio.com",
+    "project_id": "roomr-222721",
+    "storage_bucket": "roomr-222721.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959426188245:android:24e0a2f4c1b8215b",
+        "android_client_info": {
+          "package_name": "com.example.ryan.roomrep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959426188245-fhl4i2dm48k1k1r95btrhto88dlq4l22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ryan.roomrep",
+            "certificate_hash": "69c38436a0f55d1d09ba4cae38dafdb82fbf2a4e"
+          }
+        },
+        {
+          "client_id": "959426188245-klupin6i30gs1hkfikr0c2qujp3qieqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYS_2lugVkL93R9zTYAkvzp34GTqRwX_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959426188245-klupin6i30gs1hkfikr0c2qujp3qieqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959426188245:android:2ce7381515f56bca50a35c",
+        "android_client_info": {
+          "package_name": "com.sneydr.roomrv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959426188245-klupin6i30gs1hkfikr0c2qujp3qieqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYS_2lugVkL93R9zTYAkvzp34GTqRwX_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959426188245-klupin6i30gs1hkfikr0c2qujp3qieqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

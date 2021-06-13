@@ -1,8 +1,6 @@
 package com.sneydr.roomrv2.Fragments;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,28 +16,17 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.sneydr.roomrv2.App.Dialog.Dialog;
 import com.sneydr.roomrv2.App.Permission;
-import com.sneydr.roomrv2.App.TextInput.TextInput;
-import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
-import com.sneydr.roomrv2.Network.Network;
-import com.sneydr.roomrv2.Network.Observables.InternetAvailableObservable;
 import com.sneydr.roomrv2.Network.Observers.InternetAvailableObserver;
 import com.sneydr.roomrv2.Network.Observers.InternetPermissionObserver;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
-import com.sneydr.roomrv2.Repositories.HomeownerRepository;
-import com.sneydr.roomrv2.Repositories.HouseRepository;
-import com.sneydr.roomrv2.Repositories.LeaseRepository;
-import com.sneydr.roomrv2.Repositories.ProblemRepository;
-import com.sneydr.roomrv2.Repositories.TenantRepository;
-
-import java.util.List;
-
-import okhttp3.Request;
 
 public abstract class FragmentTemplate extends Fragment implements NetworkObserver, LifecycleOwner, InternetPermissionObserver, InternetAvailableObserver {
 
 
     protected Handler handler;
     protected Context context;
+    protected String authToken;
+    protected int houseId;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -86,5 +73,16 @@ public abstract class FragmentTemplate extends Fragment implements NetworkObserv
             }
         });
     }
+
+    public FragmentTemplate setAuthToken(String authToken) {
+        this.authToken = authToken;
+        return this;
+    }
+
+    public FragmentTemplate setHouseId(int houseId) {
+        this.houseId = houseId;
+        return this;
+    }
+
 
 }

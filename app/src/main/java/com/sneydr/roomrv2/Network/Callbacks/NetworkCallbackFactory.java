@@ -36,6 +36,12 @@ public class NetworkCallbackFactory {
             case GetSignUpURL:
                 callback = new GetSignUpURLCallback();
                 break;
+            case GetAddHouseURL:
+                callback = new GetAddHouseURLCallback();
+                break;
+            case GetDocuments:
+                callback = new GetDocumentsCallback();
+                break;
         }
         if (callback != null) {
             callback.registerObserver(observer);

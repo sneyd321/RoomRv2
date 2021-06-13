@@ -18,21 +18,6 @@ public class HouseRepository extends Repository {
         super(application);
     }
 
-    public void insert(House house, NetworkObserver observer) {
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-            Request request = network.postHouse(house);
-            network.send(request, NetworkCallbackType.GetHouse, observer);
-        }
-    }
-
-
-    private void getHouse(int id, NetworkObserver observer) {
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-            //Request request = network.getHouse(id);
-            //network.send(request, NetworkCallbackType.GetHouse, observer);
-        }
-    }
-
     public void getHouses(String homeownerId, NetworkObserver observer) {
         //if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
         Request request = network.getHouses(homeownerId);

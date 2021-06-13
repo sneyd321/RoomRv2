@@ -9,5 +9,7 @@ public enum NetworkCallbackType {
     GetProblems,
     GetProblem,
     GetLease,
-    GetSignUpURL
+    GetSignUpURL,
+    GetAddHouseURL,
+    GetDocuments;
 }

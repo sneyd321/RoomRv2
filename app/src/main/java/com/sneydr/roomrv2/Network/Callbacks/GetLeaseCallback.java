@@ -1,6 +1,5 @@
 package com.sneydr.roomrv2.Network.Callbacks;
 
-import com.sneydr.roomrv2.Entities.House.Lease;
 import com.sneydr.roomrv2.Network.Observables.LeaseObservable;
 import com.sneydr.roomrv2.Network.Observers.LeaseObserver;
 

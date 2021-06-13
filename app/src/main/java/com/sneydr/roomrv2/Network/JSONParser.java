@@ -1,10 +1,9 @@
 package com.sneydr.roomrv2.Network;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sneydr.roomrv2.Entities.House.House;
-import com.sneydr.roomrv2.Entities.House.Lease;
+import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Entities.Login.Login;
 import com.sneydr.roomrv2.Entities.Message.Message;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
@@ -14,7 +13,6 @@ import com.sneydr.roomrv2.Entities.Users.Tenant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +34,8 @@ public class JSONParser {
         gson = new Gson();
     }
 
-    public String leaseToJson(Lease lease) {
-        return gson.toJson(lease, Lease.class);
+    public String leaseToJson(Document lease) {
+        return gson.toJson(lease, Document.class);
     }
 
 
@@ -111,6 +109,10 @@ public class JSONParser {
         return gson.fromJson(response, messageType);
     }
 
+    public List<Document> parseDocuments(String response) {
+        Type documentType = new TypeToken<ArrayList<Document>>(){}.getType();
+        return gson.fromJson(response, documentType);
+    }
 
 
 }

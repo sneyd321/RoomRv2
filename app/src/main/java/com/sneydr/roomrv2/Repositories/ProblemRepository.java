@@ -20,13 +20,7 @@ public class ProblemRepository extends Repository{
         super(application);
     }
 
-    private void insert(Problem problem, File file, NetworkObserver observer) {
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-            //Request request = network.postProblem(problem, file);
-            //network.send(request, NetworkCallbackType.GetProblem, observer);
-        }
 
-    }
     public void update(Problem problem, String authToken, NetworkObserver observer) {
         if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
             Request request = network.putProblem(problem, authToken);

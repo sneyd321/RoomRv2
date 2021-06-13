@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -26,6 +26,12 @@ android {
     }
     buildFeatures {
         dataBinding true
+    }
+    signingConfigs {
+        myDefaultSigningConfigs {
+
+            v1SigningEnabled true
+        }
     }
 }
 
@@ -106,6 +112,7 @@ dependencies {
     def fragment_version = "1.2.0"
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
     testImplementation("com.squareup.okhttp3:mockwebserver:4.4.0")
-
+    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation 'com.google.firebase:firebase-analytics'
 
 }

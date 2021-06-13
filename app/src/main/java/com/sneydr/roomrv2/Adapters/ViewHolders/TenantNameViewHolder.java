@@ -18,9 +18,11 @@ import com.sneydr.roomrv2.Adapters.ButtonState.ButtonStateContext;
 import com.sneydr.roomrv2.Adapters.ButtonState.UnapprovedState;
 import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.StatefulItemClickListener;
+import com.sneydr.roomrv2.App.CircleTransform;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.databinding.RowTenantNameBinding;
+import com.squareup.picasso.Picasso;
 
 public class TenantNameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -42,7 +44,7 @@ public class TenantNameViewHolder extends RecyclerView.ViewHolder implements Vie
     public void onClick(View v) {
         if (itemClickListener != null) {
             binding.imgApproveTenant.setColorFilter(itemView.getResources().getColor(buttonStateContext.getState().getColour()));
-            binding.txtApprovalLabel.setText(buttonStateContext.getState().getText());
+            //binding.txtApprovalLabel.setText(buttonStateContext.getState().getText());
             binding.crdTenantName.setBackground(itemView.getResources().getDrawable(buttonStateContext.getState().getBackgroundDrawable()));
             binding.imgApproveTenant.setImageDrawable(itemView.getResources().getDrawable(buttonStateContext.getState().getVectorDrawable()));
             itemClickListener.onItemClick(v, getAdapterPosition(), buttonStateContext);
@@ -53,13 +55,19 @@ public class TenantNameViewHolder extends RecyclerView.ViewHolder implements Vie
 
     public void bindTenant(Tenant tenant) {
         binding.txtTenantName.setText(tenant.getFullName());
+        Picasso.get().load("https://storage.googleapis.com/roomr-222721.appspot.com/Problems/Problem_118.jpg")
+                .transform(new CircleTransform(binding.getRoot().getContext()))
+                .fit()
+                .centerCrop()
+                .into(binding.imgTenantProfile);
         buttonStateContext.setState(new UnapprovedState(buttonStateContext));
+
         if (tenant.isApproved()) {
             buttonStateContext.setState(new ApprovedState(buttonStateContext));
         }
         binding.imgApproveTenant.setColorFilter(itemView.getResources().getColor(buttonStateContext.getState().getColour()));
         binding.imgApproveTenant.setImageDrawable(itemView.getResources().getDrawable(buttonStateContext.getState().getVectorDrawable()));
-        binding.txtApprovalLabel.setText(buttonStateContext.getState().getText());
+        //binding.txtApprovalLabel.setText(buttonStateContext.getState().getText());
         binding.crdTenantName.setBackground(itemView.getResources().getDrawable(buttonStateContext.getState().getBackgroundDrawable()));
     }
 

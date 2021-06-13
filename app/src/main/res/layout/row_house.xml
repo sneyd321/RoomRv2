@@ -47,7 +47,6 @@
                 android:text="TextView"
                 android:textColor="@color/Gray"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/btnUpdateHouse"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,22 +80,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtHouseId" />
 
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUpdateHouse"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/view_height"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:text="View House Details"
-                android:theme="@style/Widget.MaterialComponents.Button"
-                app:cornerRadius="3dp"
-                app:icon="@drawable/ic_edit_black_24dp"
-                app:iconTint="@color/White"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtHouseRowAddressSecondary">
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUpdateHouse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/view_height"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:text="View House Details"
+                    android:theme="@style/Widget.MaterialComponents.Button"
+                    app:cornerRadius="3dp"
+                    app:icon="@drawable/ic_edit_black_24dp"
+                    app:iconTint="@color/White"
+                    app:strokeColor="@color/colorPrimaryDark" />
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/txtHouseId"

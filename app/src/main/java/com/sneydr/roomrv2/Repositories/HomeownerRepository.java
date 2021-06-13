@@ -19,12 +19,6 @@ public class HomeownerRepository extends Repository {
 
     }
 
-    private void insert(Homeowner homeowner, NetworkObserver observer) {
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-            //Request request = network.postHomeowner(homeowner);
-            //network.send(request, NetworkCallbackType.GetHomeowner, observer);
-        }
-    }
 
     public void getHomeowner(String authToken, NetworkObserver observer) {
         if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {

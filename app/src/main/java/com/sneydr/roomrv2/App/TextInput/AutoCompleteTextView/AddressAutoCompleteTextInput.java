@@ -13,9 +13,9 @@ public class AddressAutoCompleteTextInput extends AutoCompleteTextInput {
         super(view, layoutId, editTextId);
         getValidationFacade().addValidator(new EmptyStringValidator("Please enter an address."));
         getValidationFacade().addValidator(new StringTooLongValidator(
-                "Please enter a password shorter than 50 characters.", 50));
+                "Please enter an address shorter than 50 characters.", 50));
         getValidationFacade().addValidator(new StringTooShortValidator(
-                "Please enter a password longer than 3 characters.", 3));
+                "Please enter an address longer than 3 characters.", 3));
 
 
 

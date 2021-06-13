@@ -17,12 +17,7 @@ public class TenantRepository extends Repository {
         super(application);
     }
 
-    private void insert(Tenant tenant, NetworkObserver observer) {
-        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-            //Request request = network.postTenant(tenant);
-            //network.send(request, NetworkCallbackType.GetTenant, observer);
-        }
-    }
+
 
     public void update(Tenant tenant, String authToken, NetworkObserver observer) {
         if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
