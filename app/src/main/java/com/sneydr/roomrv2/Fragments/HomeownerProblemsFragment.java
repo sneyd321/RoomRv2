@@ -102,8 +102,8 @@ public class HomeownerProblemsFragment extends FragmentTemplate implements ItemC
     }
 
     @Override
-    public void onFailure(String response) {
-        super.onFailure(response);
+    public void onFailure(String tag, String response) {
+        super.onFailure(tag, response);
         handler.post(new Runnable() {
             @Override
             public void run() {

@@ -1,6 +1,7 @@
 package com.sneydr.roomrv2.Adapters.ViewHolders;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -25,11 +26,11 @@ public class HousesViewHolder extends RecyclerView.ViewHolder {
 
 
     public void bindHouse(House house, ItemClickListener itemClickListener) {
-        binding.txtHouseRowAddress.setText(house.getRentalUnitLocation().getFormattedPrimaryAddress());
-        binding.txtHouseRowAddressSecondary.setText(house.getRentalUnitLocation().getFormattedSecondaryAddress());
-        binding.txtHouseRowUnitName.setText(house.getRentalUnitLocation().getUnitName());
-
-
+        if (house.getRentalUnitLocation() != null) {
+            binding.txtHouseRowAddress.setText(house.getRentalUnitLocation().getFormattedPrimaryAddress());
+            binding.txtHouseRowAddressSecondary.setText(house.getRentalUnitLocation().getFormattedSecondaryAddress());
+            binding.txtHouseRowUnitName.setText(house.getRentalUnitLocation().getUnitName());
+        }
 
         binding.txtHouseId.setText(house.getFormattedHouseId());
         Context context = binding.getRoot().getContext();

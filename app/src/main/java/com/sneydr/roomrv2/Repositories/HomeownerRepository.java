@@ -8,6 +8,8 @@ import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 
+import java.io.File;
+
 import okhttp3.Request;
 
 public class HomeownerRepository extends Repository {
@@ -31,6 +33,13 @@ public class HomeownerRepository extends Repository {
         if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)){
             Request request = network.loginHomeowner(login);
             network.send(request, NetworkCallbackType.GetHomeowner, observer);
+        }
+    }
+
+    public void uploadHomeownerImage(String authToken, File file, NetworkObserver observer) {
+        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)){
+            Request request = network.uploadProfilePicture(authToken, file);
+            network.send(request, NetworkCallbackType.Empty, observer);
         }
     }
 }

@@ -20,7 +20,7 @@ public class GetProblemCallback extends NetworkCallback implements ProblemObserv
             notifyProblem(problem);
         }
         else {
-            notifyFailure(response.body().string());
+            notifyFailure("Problem", response.body().string());
         }
         response.close();
     }

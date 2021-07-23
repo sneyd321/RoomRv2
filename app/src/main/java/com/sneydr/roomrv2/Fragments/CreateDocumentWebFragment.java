@@ -87,7 +87,7 @@ public class CreateDocumentWebFragment extends FragmentTemplate implements AddHo
 
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     @Override
-    public void onFailure(String response) {
+    public void onFailure(String tag, String response) {
         handler.post(new Runnable() {
             @Override
             public void run() {

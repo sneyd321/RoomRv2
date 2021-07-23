@@ -43,7 +43,7 @@ public class AddHouseWebFragment extends FragmentTemplate implements AddHouseURL
         webSettings.setJavaScriptEnabled(true);
 
         if (network.isNetworkAvailable(getActivity().getApplication())){
-            Request request = network.getURL("http://192.168.0.108:8080/homeowner-gateway/v1/House", authToken);
+            Request request = network.getURL("http://192.168.100.109:8080/homeowner-gateway/v1/House", authToken);
             network.send(request, NetworkCallbackType.GetAddHouseURL, this);
         }
 
@@ -91,7 +91,7 @@ public class AddHouseWebFragment extends FragmentTemplate implements AddHouseURL
 
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     @Override
-    public void onFailure(String response) {
+    public void onFailure(String tag, String response) {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -99,7 +99,13 @@ public class AddHouseWebFragment extends FragmentTemplate implements AddHouseURL
                 Dialog dialog = new Dialog(context);
                 dialog.setMessage(response);
                 dialog.buildErrorDialog().show();
-                NavHostFragment.findNavController(AddHouseWebFragment.this).popBackStack();
+                try {
+                    NavHostFragment.findNavController(AddHouseWebFragment.this).navigateUp();
+                }
+                catch (IllegalStateException ex) {
+
+                    //Toast.makeText(context, "Error navigating to houses page. Press <- to exit.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

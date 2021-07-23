@@ -19,10 +19,10 @@ public class HouseRepository extends Repository {
     }
 
     public void getHouses(String homeownerId, NetworkObserver observer) {
-        //if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
-        Request request = network.getHouses(homeownerId);
-        network.send(request, NetworkCallbackType.GetHouses, observer);
-        //}
+        if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
+            Request request = network.getHouses(homeownerId);
+            network.send(request, NetworkCallbackType.GetHouses, observer);
+        }
     }
 
 }

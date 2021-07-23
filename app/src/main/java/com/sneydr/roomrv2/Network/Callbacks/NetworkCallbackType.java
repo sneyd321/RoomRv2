@@ -11,5 +11,7 @@ public enum NetworkCallbackType {
     GetLease,
     GetSignUpURL,
     GetAddHouseURL,
-    GetDocuments;
+    GetDocuments,
+    Empty,
+    TaskId;
 }

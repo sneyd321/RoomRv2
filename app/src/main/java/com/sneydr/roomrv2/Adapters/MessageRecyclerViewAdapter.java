@@ -70,17 +70,34 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             viewHolder.txtTimestamp.setText(message.getTimestamp());
             viewHolder.txtMessage.setText(message.getMessage());
             viewHolder.txtFullName.setText(message.getUserName());
-            Picasso.get().load("https://storage.googleapis.com/roomr-222721.appspot.com/Problems/Problem_118.jpg")
-                    .transform(new CircleTransform(context))
-                    .fit()
-                    .centerCrop()
-                    .into(viewHolder.imgProfile);
+            if (message.getImageURL() == null) {
+                viewHolder.imgProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
+            }
+            else{
+                Picasso.get().load(message.getImageURL())
+                        .transform(new CircleTransform(context))
+                        .fit()
+                        .error(R.drawable.ic_baseline_account_circle_24)
+                        .centerCrop()
+                        .into(viewHolder.imgProfile);
+            }
 
         } else {
             FromMessageViewHolder viewHolder = (FromMessageViewHolder) holder;
             viewHolder.txtTimestamp.setText(message.getTimestamp());
             viewHolder.txtMessage.setText(message.getMessage());
             viewHolder.txtFullName.setText(message.getUserName());
+            if (message.getImageURL() == null) {
+                viewHolder.imgProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
+            }
+            else{
+                Picasso.get().load(message.getImageURL())
+                        .transform(new CircleTransform(context))
+                        .fit()
+                        .error(R.drawable.ic_baseline_account_circle_24)
+                        .centerCrop()
+                        .into(viewHolder.imgProfile);
+            }
         }
 
     }
@@ -121,6 +138,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private TextView txtFullName;
         private TextView txtMessage;
         private TextView txtTimestamp;
+        private ImageView imgProfile;
 
         public FromMessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -128,6 +146,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             txtFullName = itemView.findViewById(R.id.txtFullName);
             txtMessage = itemView.findViewById(R.id.txtMessage);
             txtTimestamp = itemView.findViewById(R.id.txtTimestamp);
+            imgProfile = itemView.findViewById(R.id.imgProfile);
         }
     }
 

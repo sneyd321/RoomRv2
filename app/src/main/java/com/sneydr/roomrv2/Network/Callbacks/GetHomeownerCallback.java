@@ -21,11 +21,18 @@ public class GetHomeownerCallback extends NetworkCallback implements HomeownerOb
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
         if (response.isSuccessful()){
-            Homeowner homeowner = jsonParser.parseHomeowner(response.body().string());
-            notifyHomeowner(homeowner);
+
+            Homeowner homeowner = jsonParser.parseHomeowner(response.body().byteStream());
+            if (homeowner != null){
+                notifyHomeowner(homeowner);
+            }
+            else {
+                notifyFailure("Homeowner", "Error: Failed to load homeowner data");
+            }
+            
         }
         else {
-            notifyFailure(response.body().string());
+            notifyFailure("Homeowner", response.body().string());
         }
         response.close();
     }

@@ -42,6 +42,9 @@ public class NetworkCallbackFactory {
             case GetDocuments:
                 callback = new GetDocumentsCallback();
                 break;
+            case Empty:
+                callback = new EmptyNetworkCallback();
+           
         }
         if (callback != null) {
             callback.registerObserver(observer);

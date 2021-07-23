@@ -10,6 +10,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 
 import com.sneydr.roomrv2.App.Dialog.Dialog;
@@ -41,7 +42,7 @@ public class SignUpFragment extends FragmentTemplate implements AddHouseURLObser
         webSettings.setJavaScriptEnabled(true);
 
         if (network.isNetworkAvailable(getActivity().getApplication())){
-            Request request = network.getURL("http://192.168.0.108:8080/homeowner-gateway/v1/", authToken);
+            Request request = network.getURL("http://192.168.100.109:8080/homeowner-gateway/v1/", authToken);
             network.send(request, NetworkCallbackType.GetAddHouseURL, this);
         }
 
@@ -84,15 +85,22 @@ public class SignUpFragment extends FragmentTemplate implements AddHouseURLObser
 
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     @Override
-    public void onFailure(String response) {
+    public void onFailure(String tag, String response) {
         handler.post(new Runnable() {
             @Override
             public void run() {
                 webView.stopLoading();
-                Dialog dialog = new Dialog(context);
-                dialog.setMessage(response);
-                dialog.buildErrorDialog().show();
-                NavHostFragment.findNavController(SignUpFragment.this).navigateUp();
+                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                try {
+                    Dialog dialog = new Dialog(context);
+                    dialog.setMessage(response);
+                    dialog.buildErrorDialog().show();
+                    NavHostFragment.findNavController(SignUpFragment.this).popBackStack();
+                }
+                catch (IllegalStateException ex) {
+
+                }
+
             }
         });
 
@@ -115,7 +123,13 @@ public class SignUpFragment extends FragmentTemplate implements AddHouseURLObser
             @Override
             public void run() {
                 webView.stopLoading();
-                NavHostFragment.findNavController(SignUpFragment.this).navigateUp();
+                try {
+                    NavHostFragment.findNavController(SignUpFragment.this).navigateUp();
+                }
+                catch (IllegalStateException ex) {
+
+                    //Toast.makeText(context, "Error navigating to houses page. Press <- to exit.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

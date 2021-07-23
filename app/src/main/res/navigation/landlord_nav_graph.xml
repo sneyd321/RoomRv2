@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/addHouseWebFragment"
         android:name="com.sneydr.roomrv2.Fragments.AddHouseWebFragment"
-        android:label="AddHouseWebFragment" />
+        android:label="Add House" />
     <fragment
         android:id="@+id/createDocumentWebFragment"
         android:name="com.sneydr.roomrv2.Fragments.CreateDocumentWebFragment"

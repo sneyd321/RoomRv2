@@ -45,8 +45,8 @@ public abstract class Repository implements InternetAvailableObservable, Interne
     }
 
     @Override
-    public void notifyFailure(String response) {
-        observer.onFailure(response);
+    public void notifyFailure(String tag, String response) {
+        observer.onFailure(tag, response);
     }
 
     @Override

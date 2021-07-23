@@ -15,10 +15,11 @@ public class GetSignUpURLCallback extends NetworkCallback implements SignUpReque
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
         if (response.isSuccessful()) {
+
             notifyObserver(response.body().string());
         }
         else {
-            notifyFailure("Failed to connect to server");
+            notifyFailure("Web", response.body().string());
         }
         response.close();
     }

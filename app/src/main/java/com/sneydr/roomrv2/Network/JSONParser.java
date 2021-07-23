@@ -13,6 +13,8 @@ import com.sneydr.roomrv2.Entities.Users.Tenant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +114,20 @@ public class JSONParser {
     public List<Document> parseDocuments(String response) {
         Type documentType = new TypeToken<ArrayList<Document>>(){}.getType();
         return gson.fromJson(response, documentType);
+    }
+
+    public Homeowner parseHomeowner(InputStream inputStream) {
+
+        try {
+            Homeowner homeowner = new Homeowner("", "", "", "", "");
+
+            return homeowner.readJsonStream(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
     }
 
 

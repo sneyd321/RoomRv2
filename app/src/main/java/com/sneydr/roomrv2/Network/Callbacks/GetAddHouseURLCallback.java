@@ -3,7 +3,6 @@ package com.sneydr.roomrv2.Network.Callbacks;
 import com.sneydr.roomrv2.Network.Observables.AddHouseURLObservable;
 import com.sneydr.roomrv2.Network.Observers.AddHouseURLObserver;
 import com.sneydr.roomrv2.Network.Observers.SignUpRequestObserver;
-import com.squareup.okhttp.internal.Network;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,12 +19,11 @@ public class GetAddHouseURLCallback extends NetworkCallback implements AddHouseU
             if (response.code() == 204) {
                 notifyFormCompete("TEST");
             }
-            System.out.println("TEST");
             notifyObserver(response.body().string());
         }
 
         else {
-            notifyFailure("Failed to connect to server");
+            notifyFailure("tag", response.body().string());
         }
         response.close();
     }

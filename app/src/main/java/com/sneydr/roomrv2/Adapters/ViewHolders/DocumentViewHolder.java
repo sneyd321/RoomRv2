@@ -26,7 +26,7 @@ public class DocumentViewHolder extends RecyclerView.ViewHolder {
 
         binding.btnBuildDocument.setOnClickListener(onCreateButtonListener);
         binding.btnDownloadLease.setOnClickListener(onDownloadListener);
-        binding.getRoot().setOnClickListener(onCardClickedListener);
+        binding.crdDocument.setOnClickListener(onCardClickedListener);
     }
 
 

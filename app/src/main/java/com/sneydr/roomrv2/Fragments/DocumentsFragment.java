@@ -24,6 +24,7 @@ import com.sneydr.roomrv2.Adapters.Listeners.OnCreateButtonClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.OnDownloadButtonClickListener;
 import com.sneydr.roomrv2.Adapters.ProblemsRecyclerViewAdapter;
 import com.sneydr.roomrv2.App.ConnectionManager;
+import com.sneydr.roomrv2.App.Constants;
 import com.sneydr.roomrv2.App.Permission;
 import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Network.Observers.DocumentsObserver;
@@ -88,8 +89,8 @@ public class DocumentsFragment extends FragmentTemplate implements SwipeRefreshL
     }
 
     @Override
-    public void onFailure(String response) {
-        super.onFailure(response);
+    public void onFailure(String tag, String response) {
+        super.onFailure(tag, response);
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -131,7 +132,7 @@ public class DocumentsFragment extends FragmentTemplate implements SwipeRefreshL
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("application/pdf");
             intent.putExtra(Intent.EXTRA_TITLE, document.getName());
-            startActivityForResult(intent, 1);
+            getActivity().startActivityForResult(intent, Constants.DOCUMENT_INTENT);
         }
     }
 
@@ -140,6 +141,7 @@ public class DocumentsFragment extends FragmentTemplate implements SwipeRefreshL
         DocumentViewModel documentViewModel = ViewModelProviders.of(this).get(DocumentViewModel.class);
         documentViewModel.getDocuments(houseId, authToken, this);
     }
+
 
 
 }

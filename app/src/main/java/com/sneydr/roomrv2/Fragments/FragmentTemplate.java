@@ -16,6 +16,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.sneydr.roomrv2.App.Dialog.Dialog;
 import com.sneydr.roomrv2.App.Permission;
+import com.sneydr.roomrv2.App.Validation.IntentFactory;
 import com.sneydr.roomrv2.Network.Observers.InternetAvailableObserver;
 import com.sneydr.roomrv2.Network.Observers.InternetPermissionObserver;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
@@ -27,6 +28,7 @@ public abstract class FragmentTemplate extends Fragment implements NetworkObserv
     protected Context context;
     protected String authToken;
     protected int houseId;
+    protected IntentFactory intentFactory;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -38,6 +40,8 @@ public abstract class FragmentTemplate extends Fragment implements NetworkObserv
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         handler = new Handler(Looper.getMainLooper());
+        intentFactory = new IntentFactory();
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -65,7 +69,7 @@ public abstract class FragmentTemplate extends Fragment implements NetworkObserv
     }
 
     @Override
-    public void onFailure(String response) {
+    public void onFailure(String tag, String response) {
         handler.post(new Runnable() {
             @Override
             public void run() {

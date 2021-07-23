@@ -22,11 +22,8 @@ public class GetHousesCallback extends NetworkCallback implements HousesObservab
             List<House> houses = jsonParser.parseHouses(response.body().string());
             notifyHouses(houses);
         }
-        else if (response.code() == 404) {
-            notifyHouses(new ArrayList<>());
-        }
         else {
-            notifyFailure(response.body().string());
+            notifyFailure("Houses", response.body().string());
         }
         response.close();
     }

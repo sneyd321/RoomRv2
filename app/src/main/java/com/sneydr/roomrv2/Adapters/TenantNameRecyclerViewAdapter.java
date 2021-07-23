@@ -8,7 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sneydr.roomrv2.Adapters.Listeners.OnApproved;
+import com.sneydr.roomrv2.Adapters.Listeners.OnSetContacts;
+import com.sneydr.roomrv2.Adapters.Listeners.OnUnapproved;
 import com.sneydr.roomrv2.Adapters.Listeners.StatefulItemClickListener;
+import com.sneydr.roomrv2.Adapters.ViewHolders.DocumentViewHolder;
 import com.sneydr.roomrv2.Adapters.ViewHolders.EmptyViewHolder;
 import com.sneydr.roomrv2.Adapters.ViewHolders.TenantNameViewHolder;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
@@ -26,6 +30,9 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     private final int EMPTY = 0;
     private final int TENANTS = 1;
     private RowTenantNameBinding binding;
+    private OnApproved onApproved;
+    private OnUnapproved onUnapproved;
+    private OnSetContacts onSetContacts;
 
     public TenantNameRecyclerViewAdapter(List<Tenant> data) {
         this.data = data;
@@ -52,7 +59,7 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             return new EmptyViewHolder(emptyBinding);
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.row_tenant_name, parent, false);
-        return new TenantNameViewHolder(binding, itemClickListener);
+        return new TenantNameViewHolder(binding, onApproved, onUnapproved, onSetContacts);
     }
 
     @Override
@@ -64,6 +71,8 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             Tenant tenant = data.get(position);
             TenantNameViewHolder tenantNameViewHolder = (TenantNameViewHolder) holder;
             tenantNameViewHolder.bindTenant(tenant);
+            tenantNameViewHolder.bindApproved(onApproved);
+            tenantNameViewHolder.bindOnUnapproved(onUnapproved);
         }
 
     }
@@ -80,8 +89,16 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         return this.data.size();
     }
 
-    public void setItemClickListener(StatefulItemClickListener onItemClickedListener) {
-        this.itemClickListener = onItemClickedListener;
+    public void setOnApproved(OnApproved onItemClickedListener) {
+        this.onApproved = onItemClickedListener;
+    }
+
+    public void setOnUnapproved(OnUnapproved onItemClickedListener) {
+        this.onUnapproved = onItemClickedListener;
+    }
+
+    public void setOnSetContacts(OnSetContacts onItemClickedListener) {
+        this.onSetContacts = onItemClickedListener;
     }
 
     public Tenant getTenantAtPosition(int position) {

@@ -4,10 +4,11 @@ package com.sneydr.roomrv2.Entities.Users;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import java.lang.reflect.AccessibleObject;
 import java.util.Objects;
 
 
-public abstract class User {
+public abstract class User extends AccessibleObject {
 
     protected String firstName;
     protected String lastName;

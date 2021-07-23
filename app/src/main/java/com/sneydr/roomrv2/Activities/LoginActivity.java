@@ -6,14 +6,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.Services.NotificationJobService;
 
+import static android.content.ContentValues.TAG;
 import static com.sneydr.roomrv2.App.Permission.INTERNET_PERMISSION_REQUEST_CODE;
 import static com.sneydr.roomrv2.App.Permission.WRITE_EXTERNAL_STORAGE_REQUEST_CODE;
 
@@ -31,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         navController = Navigation.findNavController(this, R.id.nav_login_host_fragment);
+        scheduleJob();
     }
 
 
@@ -67,6 +74,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
+    public void scheduleJob() {
+        ComponentName componentName = new ComponentName(this, NotificationJobService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
+    }
+
 
 }
 

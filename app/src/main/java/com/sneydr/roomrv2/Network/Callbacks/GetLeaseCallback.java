@@ -17,7 +17,7 @@ public class GetLeaseCallback extends NetworkCallback implements LeaseObservable
             notifyLease();
             return;
         }
-        notifyFailure(response.body().string());
+        notifyFailure("Lease", response.body().string());
         response.close();
     }
 

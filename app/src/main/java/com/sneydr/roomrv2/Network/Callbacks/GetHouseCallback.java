@@ -31,7 +31,7 @@ public class GetHouseCallback extends NetworkCallback implements HouseObservable
 
         }
         else {
-            notifyFailure(response.body().string());
+            notifyFailure("House", response.body().string());
         }
         response.close();
     }

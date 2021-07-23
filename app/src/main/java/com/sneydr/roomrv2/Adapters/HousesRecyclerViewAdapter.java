@@ -59,6 +59,7 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
         if (viewHolder.getItemViewType() == EMPTY) {
             EmptyViewHolder emptyViewHolder = (EmptyViewHolder) viewHolder;
             emptyViewHolder.bindText("No Houses");
+            emptyViewHolder.bindImage(R.drawable.emptyhouse);
         } else {
             House house = data.get(position);
             HousesViewHolder housesViewHolder = (HousesViewHolder) viewHolder;

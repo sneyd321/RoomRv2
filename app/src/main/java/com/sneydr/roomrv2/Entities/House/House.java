@@ -1,9 +1,6 @@
 package com.sneydr.roomrv2.Entities.House;
 
 
-
-
-
 import androidx.annotation.Nullable;
 
 import com.sneydr.roomrv2.Entities.House.Amenity.Amenity;
@@ -22,25 +19,20 @@ public class House {
     private int houseId;
     private String authToken;
     private RentalUnitLocation rentalUnitLocation;
-    private HomeownerLocation homeownerLocation;
 
 
-    public House(String authToken, HomeownerLocation homeownerLocation, RentalUnitLocation rentalUnitLocation) {
+
+    public House(String authToken, RentalUnitLocation rentalUnitLocation) {
         this.authToken = authToken;
         this.rentalUnitLocation = rentalUnitLocation;
-        this.homeownerLocation = homeownerLocation;
     }
 
     public House(int houseId, String authToken, HomeownerLocation homeownerLocation, RentalUnitLocation rentalUnitLocation) {
         this.houseId = houseId;
         this.authToken = authToken;
         this.rentalUnitLocation = rentalUnitLocation;
-        this.homeownerLocation = homeownerLocation;
     }
 
-    public HomeownerLocation getHomeownerLocation() {
-        return homeownerLocation;
-    }
     public RentalUnitLocation getRentalUnitLocation() {
         return rentalUnitLocation;
     }
@@ -49,7 +41,6 @@ public class House {
         return "House Id: " + Integer.toString(this.houseId);
     }
 
-
     public int getHouseId() {
         return houseId;
     }
@@ -57,7 +48,6 @@ public class House {
     public String getAuthToken() {
         return authToken;
     }
-
 
 
 }

@@ -43,18 +43,18 @@ public abstract class NetworkCallback implements Callback, NetworkObservable {
 
 
     @Override
-    public void notifyFailure(String response) {
-        this.observer.onFailure(response);
+    public void notifyFailure(String tag, String response) {
+        this.observer.onFailure(tag, response);
 
     }
 
     @Override
     public void onFailure(@NotNull Call call, @NotNull IOException e) {
         if(e instanceof SocketTimeoutException){
-            notifyFailure("Socket timeout error");
+            notifyFailure("NetworkCallback", "Socket timeout error");
             return;
         }
-        notifyFailure("500: Failed to connect to server.");
+        notifyFailure("NetworkCallback", "500: Failed to connect to server.");
     }
 
 }

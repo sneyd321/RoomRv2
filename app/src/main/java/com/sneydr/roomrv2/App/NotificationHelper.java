@@ -41,6 +41,14 @@ public class NotificationHelper {
         builder.setProgress(PROGRESS_MAX, progress, false);
     }
 
+    public void setIndeterminateProgress() {
+        builder.setProgress(0, 0, true);
+    }
+
+    public Notification getNotification() {
+        return builder.build();
+    }
+
 
 
     public void build() {

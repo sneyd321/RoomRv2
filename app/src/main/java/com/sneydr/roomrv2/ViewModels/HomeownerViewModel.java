@@ -16,10 +16,15 @@ import androidx.lifecycle.OnLifecycleEvent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sneydr.roomrv2.Entities.Login.Login;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
+import com.sneydr.roomrv2.Network.Network;
+import com.sneydr.roomrv2.Network.Observers.EmptyObserver;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
+import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.Repositories.HomeownerRepository;
 import com.sneydr.roomrv2.Repositories.HouseRepository;
+
+import java.io.File;
 
 
 public class HomeownerViewModel extends AndroidViewModel  {
@@ -39,5 +44,9 @@ public class HomeownerViewModel extends AndroidViewModel  {
         repository.loginHomeowner(login, observer);
     }
 
+
+    public void uploadHomeownerProfile(String authToken, File file, NetworkObserver observer) {
+        repository.uploadHomeownerImage(authToken, file, observer);
+    }
 
 }

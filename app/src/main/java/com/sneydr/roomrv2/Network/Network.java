@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -31,8 +32,10 @@ import okhttp3.RequestBody;
 public class Network {
 
 
-    private static final String SERVER_URL = "http://192.168.0.108:8080/homeowner-gateway/v1/";
+    private static final String SERVER_URL = "http://192.168.100.109:8080/homeowner-gateway/v1/";
     private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private final MediaType JPG = MediaType.parse("image/jpg");
+
     private OkHttpClient client;
     private NetworkCallbackFactory factory;
 
@@ -48,7 +51,12 @@ public class Network {
     private Network() {
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         Cache cache = new Cache(new File(App.getCache(),"OkHttpCache"), cacheSize);
-        client = new OkHttpClient.Builder().cache(cache).addInterceptor(new ForceCacheInterceptor()).build();
+        client = new OkHttpClient.Builder()
+                .cache(cache)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(new ForceCacheInterceptor()).build();
         factory = new NetworkCallbackFactory();
     }
 
@@ -113,6 +121,8 @@ public class Network {
                 .post(body)
                 .build();
     }
+
+
 
     public Request getHouses(String homeownerId) {
         return new Request.Builder()
@@ -183,6 +193,41 @@ public class Network {
                 .url(SERVER_URL + "Document/" + houseId)
                 //.cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
                 .addHeader("Authorization", "Bearer " + authToken)
+                .build();
+    }
+
+    public Request uploadProfilePicture(String authToken, File file){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", file.getName(), RequestBody.create(JPG, file))
+                .build();
+        return new Request.Builder()
+                .url(SERVER_URL + "Homeowner/Profile")
+                .post(body)
+                .addHeader("Authorization", "Bearer " + authToken)
+                .addHeader("Accept-Encoding", "identity")
+                .addHeader("Connection", "close")
+                .build();
+    }
+
+    public Request uploadHousePicture(String authToken, int houseId, File file){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", file.getName(), RequestBody.create(JPG, file))
+                .build();
+        return new Request.Builder()
+                .url(SERVER_URL + "House/" + houseId + "/Profile")
+                .post(body)
+                .addHeader("Authorization", "Bearer " + authToken)
+                .addHeader("Accept-Encoding", "identity")
+                .addHeader("Connection", "close")
+                .build();
+    }
+
+    public Request pollTaskId(String taskId) {
+        return new Request.Builder()
+                .url(SERVER_URL + "Image/Task" + taskId)
+                //.cacheControl(new CacheControl.Builder().maxStale(600, TimeUnit.SECONDS).build())
                 .build();
     }
 

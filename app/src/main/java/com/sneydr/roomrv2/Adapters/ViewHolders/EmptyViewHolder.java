@@ -22,4 +22,8 @@ public class EmptyViewHolder extends RecyclerView.ViewHolder {
     public void bindText(String text) {
         binding.txtEmptyRecyclerView.setText(text);
     }
+
+    public void bindImage(int resId) {
+        binding.imageView.setImageResource(resId);
+    }
 }

@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.sneydr.roomrv2.Adapters.ButtonState.ButtonStateContext;
 import com.sneydr.roomrv2.Adapters.ButtonState.UnapprovedState;
 import com.sneydr.roomrv2.Adapters.DocumentsRecyclerViewAdapter;
+import com.sneydr.roomrv2.Adapters.Listeners.OnApproved;
+import com.sneydr.roomrv2.Adapters.Listeners.OnSetContacts;
+import com.sneydr.roomrv2.Adapters.Listeners.OnUnapproved;
 import com.sneydr.roomrv2.Adapters.Listeners.StatefulItemClickListener;
 import com.sneydr.roomrv2.Adapters.TenantNameRecyclerViewAdapter;
 import com.sneydr.roomrv2.App.DatePicker.SelectDateDialog;
@@ -34,11 +37,12 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TenantsFragment extends FragmentTemplate implements StatefulItemClickListener, TenantsObserver {
+public class TenantsFragment extends FragmentTemplate implements StatefulItemClickListener, TenantsObserver, OnApproved, OnUnapproved, OnSetContacts {
 
     TenantNameRecyclerViewAdapter adapter;
 
     private FragmentGenerateLeaseBinding binding;
+    private TenantViewModel tenantViewModel;
 
     @Nullable
     @Override
@@ -46,26 +50,26 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
         super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_generate_lease, container, false);
         binding.rcyGenerateLeaseTenantNames.setLayoutManager(new LinearLayoutManager(context));
+        adapter = new TenantNameRecyclerViewAdapter(new ArrayList<>());
+
+        tenantViewModel = ViewModelProviders.of(this).get(TenantViewModel.class);
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        adapter = new TenantNameRecyclerViewAdapter(new ArrayList<>());
-        TenantViewModel tenantViewModel = ViewModelProviders.of(this).get(TenantViewModel.class);
         tenantViewModel.getTenantByHouseId(houseId, authToken, this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        adapter = new TenantNameRecyclerViewAdapter(new ArrayList<>());
         binding.rcyGenerateLeaseTenantNames.setAdapter(adapter);
     }
 
     @Override
-    public void onFailure(String response) {
+    public void onFailure(String tag, String response) {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -83,6 +87,9 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
             @Override
             public void run() {
                 adapter = new TenantNameRecyclerViewAdapter(tenants);
+                adapter.setOnApproved(TenantsFragment.this);
+                adapter.setOnUnapproved(TenantsFragment.this);
+                adapter.setOnSetContacts(TenantsFragment.this);
                 binding.rcyGenerateLeaseTenantNames.setAdapter(adapter);
             }
         });
@@ -98,13 +105,34 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
             tenant.setApproved(true);
             tenant.setHouseId(houseId);
         }
-        //tenantViewModel.updateTenant(tenant, authToken, TenantsFragment.this);
+        tenantViewModel.updateTenant(tenant, authToken, TenantsFragment.this);
+    }
+
+
+    @Override
+    public void onApprove(View view, int position) {
+        Tenant tenant = adapter.getTenantAtPosition(position);
+        tenant.setApproved(true);
+        tenant.setHouseId(houseId);
+        tenantViewModel.updateTenant(tenant, authToken, TenantsFragment.this);
+        adapter.notifyDataSetChanged();
     }
 
 
 
+    @Override
+    public void onUnapprove(View view, int position) {
+        Tenant tenant = adapter.getTenantAtPosition(position);
+        tenant.setApproved(false);
+        tenant.setHouseId(houseId);
+        tenantViewModel.updateTenant(tenant, authToken, TenantsFragment.this);
+        adapter.notifyDataSetChanged();
+    }
 
-
-
-
+    @Override
+    public void onSetContacts(View view, int position) {
+        Tenant tenant = adapter.getTenantAtPosition(position);
+        Intent intent = intentFactory.getContactsIntent(tenant);
+        startActivity(intent);
+    }
 }

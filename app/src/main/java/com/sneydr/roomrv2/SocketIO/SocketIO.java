@@ -29,7 +29,8 @@ public class SocketIO {
 
     public SocketIO() {
         try {
-            this.socket = IO.socket("http://34.107.132.144");
+            //this.socket = IO.socket("http://34.107.132.144");
+            this.socket = IO.socket("http://192.168.0.108:8087");
         } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
             this.socket = null;

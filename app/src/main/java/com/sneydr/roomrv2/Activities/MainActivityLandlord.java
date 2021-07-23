@@ -4,21 +4,31 @@ import androidx.annotation.NonNull;
 
 
 import com.sneydr.roomrv2.App.ConnectionManager;
+import com.sneydr.roomrv2.App.Constants;
 import com.sneydr.roomrv2.App.Dialog.Dialog;
 import com.sneydr.roomrv2.App.NotificationHelper;
+import com.sneydr.roomrv2.Network.Observables.ActivityObservable;
+import com.sneydr.roomrv2.Network.Observers.ActivityObserver;
+import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.Services.NotificationJobService;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -35,7 +45,9 @@ import androidx.navigation.ui.NavigationUI;
 
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -46,7 +58,7 @@ import static android.content.ContentValues.TAG;
 import static com.sneydr.roomrv2.App.Permission.INTERNET_PERMISSION_REQUEST_CODE;
 
 
-public class MainActivityLandlord extends AppCompatActivity  {
+public class MainActivityLandlord extends AppCompatActivity implements ActivityObservable {
     //BottomNavigationView bottomMenu;
     Toolbar myToolbar;
 
@@ -54,6 +66,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
     AppBarConfiguration appBarConfiguration;
     NavController navController;
     private byte[] pdfBytes;
+    private ActivityObserver fragment;
 
 
     @Override
@@ -71,6 +84,9 @@ public class MainActivityLandlord extends AppCompatActivity  {
             AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
             NavigationUI.setupWithNavController(myToolbar, navController, appBarConfiguration);
             navController.addOnDestinationChangedListener(onDestinationChangedListener);
+
+
+
             return;
         }
         Dialog dialog = new Dialog(this);
@@ -82,10 +98,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
             }
         });
         dialog.buildErrorDialog().show();
-        // ATTENTION: This was auto-generated to handle app links.
-        Intent appLinkIntent = getIntent();
-        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
+
     }
 
 
@@ -130,7 +143,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
-        if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == Constants.DOCUMENT_INTENT && resultCode == Activity.RESULT_OK) {
             if (resultData.getData() != null) {
                 ConnectionManager connectionManager = ConnectionManager.getInstance();
                 try {
@@ -140,16 +153,53 @@ public class MainActivityLandlord extends AppCompatActivity  {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
-
-
-
-
-
             }
+        }
+        if (requestCode == Constants.IMAGE_INTENT && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), resultData.getData());
+                    if (bitmap != null) { // sanity check
+                        File outputFile = new File(getCacheDir(), "Profile.jpg"); // follow the API for createTempFile
+                        FileOutputStream stream = new FileOutputStream (outputFile, false); // Add false here so we don't append an image to another image. That would be weird.
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        stream.close();
+                        notifyObserver(outputFile);
+                    }
+                    else {
+                        notifyFailure("Activity","Bitmap failed");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    notifyFailure("Activity","No file space in cache");
+                }
+            }
+            else {
+                notifyFailure("Activity","Image not selected");
+            }
+
         }
     }
 
+    @Override
+    public void notifyObserver(File file) {
+        this.fragment.onFile(file);
+    }
+
+    @Override
+    public void registerObserver(NetworkObserver networkObserver) {
+        this.fragment = (ActivityObserver) networkObserver;
+    }
+
+    @Override
+    public void clearObserver() {
+        this.fragment = null;
+    }
+
+    @Override
+    public void notifyFailure(String tag, String response) {
+        this.fragment.onFailure(tag, response);
+    }
 
 
 

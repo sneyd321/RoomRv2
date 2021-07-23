@@ -20,7 +20,7 @@ public class GetDocumentsCallback extends NetworkCallback implements DocumentsOb
             notifyDocuments(documents);
         }
         else {
-            notifyFailure(response.body().string());
+            notifyFailure("Documents", response.body().string());
         }
         response.close();
     }

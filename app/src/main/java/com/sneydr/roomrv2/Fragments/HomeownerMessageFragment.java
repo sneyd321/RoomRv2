@@ -104,7 +104,7 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
         handler.post(new Runnable() {
             @Override
             public void run() {
-                factory = new MessageFactory(homeowner.getEmail(), homeowner.getFullName(), "Homeowner", houseId);
+                factory = new MessageFactory(homeowner.getEmail(), homeowner.getFullName(), "Homeowner", homeowner.getImageURL(), houseId);
                 btnSend.setOnClickListener(onSend);
                 Message joinMessage = factory.getMessage("Join Room");
                 SocketIO socketIO = SocketIO.getInstance();

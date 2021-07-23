@@ -59,7 +59,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Services.LeaseService" />
+        <service
+            android:name=".Services.NotificationJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>
