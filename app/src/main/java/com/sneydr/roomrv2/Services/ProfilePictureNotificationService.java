@@ -11,7 +11,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -19,14 +18,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.sneydr.roomrv2.App.NotificationHelper;
-import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 import com.sneydr.roomrv2.R;
 
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-public class NotificationJobService extends JobService implements NotificationObservable {
+public class ProfilePictureNotificationService extends JobService implements NotificationObservable {
 
     private NotificationObserver observer;
 
@@ -47,7 +45,7 @@ public class NotificationJobService extends JobService implements NotificationOb
             @Override
             public void run() {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                final DocumentReference docRef = db.collection("Homeowner 1").document("ProfilePicture");
+                final DocumentReference docRef = db.collection("Homeowner 8").document("OntarioLease");
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
@@ -59,7 +57,7 @@ public class NotificationJobService extends JobService implements NotificationOb
 
                         if (snapshot != null && snapshot.exists()) {
                             Map<String, Object> document = snapshot.getData();
-                            NotificationHelper notificationHelper = new NotificationHelper(NotificationJobService.this);
+                            NotificationHelper notificationHelper = new NotificationHelper(ProfilePictureNotificationService.this);
                             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                             if (document.get("state").toString().equals("COMPLETE")) {
 

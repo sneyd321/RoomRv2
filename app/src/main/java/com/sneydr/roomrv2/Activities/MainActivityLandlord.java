@@ -11,15 +11,11 @@ import com.sneydr.roomrv2.Network.Observables.ActivityObservable;
 import com.sneydr.roomrv2.Network.Observers.ActivityObserver;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 import com.sneydr.roomrv2.R;
-import com.sneydr.roomrv2.Services.NotificationJobService;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;

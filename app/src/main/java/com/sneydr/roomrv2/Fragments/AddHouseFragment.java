@@ -137,26 +137,11 @@ public class AddHouseFragment extends FragmentTemplate implements HouseObserver 
     }
 
     private RentalUnitLocation getRentalUnitLocation() {
-        return new RentalUnitLocation(
-                rentalUnitAddress.getText(),
-                rentalUnitCity.getText(),
-                "Ontario",
-                rentalUnitPostalCode.getText(),
-                unitName.getText(),
-                isCondo.getChecked(),
-                parkingSpaces.getNumber()
-        );
+        return null;
     }
 
     private HomeownerLocation getHomeownerLocation() {
-        return new HomeownerLocation(
-                homeownerAddress.getText(),
-                homeownerCity.getText(),
-                "Ontario",
-                homeownerPostalCode.getText(),
-                poBox.getText(),
-                unitNumber.getText()
-        );
+        return null;
     }
 
     private RentDetails getRentDetail() {

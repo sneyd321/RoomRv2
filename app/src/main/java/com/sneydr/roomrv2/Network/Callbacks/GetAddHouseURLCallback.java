@@ -10,20 +10,24 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class GetAddHouseURLCallback extends NetworkCallback implements AddHouseURLObservable {
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        ResponseBody responseBody = response.body();
 
         if (response.isSuccessful()) {
             if (response.code() == 204) {
-                notifyFormCompete("TEST");
+                notifyFormCompete("FormComplete");
             }
-            notifyObserver(response.body().string());
+
+            notifyObserver(responseBody.string());
+
         }
 
         else {
-            notifyFailure("tag", response.body().string());
+            notifyFailure("Add House URL", responseBody.string());
         }
         response.close();
     }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
@@ -30,11 +29,9 @@ import com.sneydr.roomrv2.App.Constants;
 import com.sneydr.roomrv2.Entities.House.House;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Network.Observers.ActivityObserver;
-import com.sneydr.roomrv2.Network.Observers.EmptyObserver;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
 import com.sneydr.roomrv2.Network.Observers.HousesObserver;
 import com.sneydr.roomrv2.R;
-import com.sneydr.roomrv2.Services.NotificationJobService;
 import com.sneydr.roomrv2.ViewModels.HomeownerViewModel;
 import com.sneydr.roomrv2.ViewModels.HouseViewModel;
 import com.sneydr.roomrv2.databinding.FragmentHouseBinding;
@@ -134,7 +131,7 @@ public class HousesFragment extends FragmentTemplate implements ItemClickListene
             @Override
             public void run() {
                 if (homeowner != null){
-                    if (homeowner.getImageURL() == null) {
+                    if (homeowner.getImageURL() == null || homeowner.getImageURL().isEmpty()) {
                         binding.componentHomeownerProfile.imageView2.setImageResource(R.drawable.ic_baseline_account_circle_24);
                     }
                     else {

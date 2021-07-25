@@ -1,18 +1,17 @@
 package com.sneydr.roomrv2.Entities.Problem;
 
+
+
 import androidx.annotation.Nullable;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.sneydr.roomrv2.Entities.House.RentDetails.CalendarHandler;
+import com.sneydr.roomrv2.Entities.Problem.State.ProblemContext;
+import com.sneydr.roomrv2.Entities.Problem.State.ProblemStatus;
 
 
-
-@Entity(tableName = "problem_table")
 public class Problem {
 
 
-    @PrimaryKey
     private int problemId;
     private String category;
     private String description;

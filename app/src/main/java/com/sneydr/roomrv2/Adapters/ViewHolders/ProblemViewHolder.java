@@ -1,15 +1,12 @@
 package com.sneydr.roomrv2.Adapters.ViewHolders;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
-import com.sneydr.roomrv2.Entities.Problem.ProblemStatus;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.databinding.RowProblemBinding;
 import com.squareup.picasso.Picasso;

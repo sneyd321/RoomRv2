@@ -1,7 +1,12 @@
 package com.sneydr.roomrv2.Fragments;
 
+import android.app.Activity;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,28 +19,27 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sneydr.roomrv2.Adapters.DocumentsRecyclerViewAdapter;
-import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.OnCreateButtonClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.OnDownloadButtonClickListener;
-import com.sneydr.roomrv2.Adapters.ProblemsRecyclerViewAdapter;
 import com.sneydr.roomrv2.App.ConnectionManager;
 import com.sneydr.roomrv2.App.Constants;
 import com.sneydr.roomrv2.App.Permission;
 import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Network.Observers.DocumentsObserver;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.Services.ProfilePictureNotificationService;
 import com.sneydr.roomrv2.ViewModels.DocumentViewModel;
-import com.sneydr.roomrv2.ViewModels.HouseViewModel;
-import com.sneydr.roomrv2.ViewModels.ProblemViewModel;
 import com.sneydr.roomrv2.databinding.FragmentViewDocumentsBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
+import static android.content.Context.JOB_SCHEDULER_SERVICE;
 
 public class DocumentsFragment extends FragmentTemplate implements SwipeRefreshLayout.OnRefreshListener, DocumentsObserver, OnCreateButtonClickListener, OnDownloadButtonClickListener {
 
@@ -51,7 +55,27 @@ public class DocumentsFragment extends FragmentTemplate implements SwipeRefreshL
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_documents, container, false);
         binding.rcyDocuments.setLayoutManager(new LinearLayoutManager(context));
         binding.swrDocuments.setOnRefreshListener(this);
+        scheduleJob();
         return binding.getRoot();
+    }
+
+    public void scheduleJob() {
+        Activity activity = getActivity();
+        if (activity == null) return;
+
+        ComponentName componentName = new ComponentName(getActivity(), ProfilePictureNotificationService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+        JobScheduler scheduler = (JobScheduler) getActivity().getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
     }
 
     @Override

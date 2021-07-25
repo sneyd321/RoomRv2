@@ -1,5 +1,7 @@
 package com.sneydr.roomrv2.Network;
 
+import android.util.JsonReader;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sneydr.roomrv2.Entities.House.House;
@@ -7,6 +9,9 @@ import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Entities.Login.Login;
 import com.sneydr.roomrv2.Entities.Message.Message;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
+import com.sneydr.roomrv2.Entities.ReadJson.ReadHomeownerJson;
+import com.sneydr.roomrv2.Entities.ReadJson.ReadHouseJson;
+import com.sneydr.roomrv2.Entities.ReadJson.ReadJson;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 
@@ -15,7 +20,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +68,23 @@ public class JSONParser {
     public List<House> parseHouses(String response) {
         Type houseType = new TypeToken<ArrayList<House>>(){}.getType();
         return gson.fromJson(response, houseType);
+    }
+
+    public List<House> parseHouses(InputStream inputStream) throws IOException {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            List<House> houses = new ArrayList<>();
+            reader.beginArray();
+            while (reader.hasNext()) {
+                reader.beginObject();
+                ReadJson<House> readJson = new ReadHouseJson(House.class);
+                House house = readJson.read(reader, new House());
+                reader.endObject();
+                houses.add(house);
+            }
+            reader.endArray();
+            reader.close();
+            return houses;
+        }
     }
 
     public String houseToJson(House house) {
@@ -116,15 +140,14 @@ public class JSONParser {
         return gson.fromJson(response, documentType);
     }
 
-    public Homeowner parseHomeowner(InputStream inputStream) {
-
-        try {
-            Homeowner homeowner = new Homeowner("", "", "", "", "");
-
-            return homeowner.readJsonStream(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+    public Homeowner parseHomeowner(InputStream inputStream) throws IOException {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            ReadJson<Homeowner> readJson = new ReadHomeownerJson(Homeowner.class);
+            reader.beginObject();
+            Homeowner homeowner = readJson.read(reader, new Homeowner());
+            reader.endObject();
+            reader.close();
+            return homeowner;
         }
 
 

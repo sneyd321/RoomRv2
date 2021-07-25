@@ -19,7 +19,7 @@ public class GetHousesCallback extends NetworkCallback implements HousesObservab
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
         if (response.isSuccessful()){
-            List<House> houses = jsonParser.parseHouses(response.body().string());
+            List<House> houses = jsonParser.parseHouses(response.body().byteStream());
             notifyHouses(houses);
         }
         else {

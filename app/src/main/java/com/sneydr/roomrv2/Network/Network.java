@@ -29,10 +29,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+import static com.sneydr.roomrv2.App.Constants.SERVER_URL;
+
 public class Network {
 
 
-    private static final String SERVER_URL = "http://192.168.100.109:8080/homeowner-gateway/v1/";
+    //private static final String SERVER_URL = "http://192.168.100.109:8080/homeowner-gateway/v1/";
     private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private final MediaType JPG = MediaType.parse("image/jpg");
 

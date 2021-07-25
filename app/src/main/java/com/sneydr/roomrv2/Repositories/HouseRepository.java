@@ -12,6 +12,8 @@ import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 
 import okhttp3.Request;
 
+import static com.sneydr.roomrv2.App.Constants.SERVER_URL;
+
 public class HouseRepository extends Repository {
 
     public HouseRepository(Application application) {
@@ -22,6 +24,13 @@ public class HouseRepository extends Repository {
         if (doesHaveInternet(observer) && doesHaveInternetPermission(observer)) {
             Request request = network.getHouses(homeownerId);
             network.send(request, NetworkCallbackType.GetHouses, observer);
+        }
+    }
+
+    public void getHouseURL(String authToken, NetworkObserver observer) {
+        if (network.isNetworkAvailable(application)){
+            Request request = network.getURL(SERVER_URL + "House", authToken);
+            network.send(request, NetworkCallbackType.GetAddHouseURL, observer);
         }
     }
 

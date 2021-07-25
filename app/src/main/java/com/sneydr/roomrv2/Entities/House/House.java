@@ -1,37 +1,16 @@
 package com.sneydr.roomrv2.Entities.House;
 
 
-import androidx.annotation.Nullable;
-
-import com.sneydr.roomrv2.Entities.House.Amenity.Amenity;
-import com.sneydr.roomrv2.Entities.House.Location.HomeownerLocation;
 import com.sneydr.roomrv2.Entities.House.Location.RentalUnitLocation;
-import com.sneydr.roomrv2.Entities.House.RentDetails.RentDetails;
-
-import com.sneydr.roomrv2.Entities.House.Utility.Utility;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.AccessibleObject;
 
-public class House {
+public class House extends AccessibleObject {
 
     private int houseId;
     private String authToken;
     private RentalUnitLocation rentalUnitLocation;
-
-
-
-    public House(String authToken, RentalUnitLocation rentalUnitLocation) {
-        this.authToken = authToken;
-        this.rentalUnitLocation = rentalUnitLocation;
-    }
-
-    public House(int houseId, String authToken, HomeownerLocation homeownerLocation, RentalUnitLocation rentalUnitLocation) {
-        this.houseId = houseId;
-        this.authToken = authToken;
-        this.rentalUnitLocation = rentalUnitLocation;
-    }
 
     public RentalUnitLocation getRentalUnitLocation() {
         return rentalUnitLocation;
@@ -49,5 +28,5 @@ public class House {
         return authToken;
     }
 
-
+    public void setRentalUnitLocation(RentalUnitLocation rentalUnitLocation) { this.rentalUnitLocation = rentalUnitLocation; }
 }

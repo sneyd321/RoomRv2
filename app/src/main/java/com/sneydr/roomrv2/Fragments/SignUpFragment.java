@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -28,6 +29,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import okhttp3.Request;
 
+import static com.sneydr.roomrv2.App.Constants.SERVER_URL;
+
 public class SignUpFragment extends FragmentTemplate implements AddHouseURLObserver {
 
     private WebView webView;
@@ -39,10 +42,11 @@ public class SignUpFragment extends FragmentTemplate implements AddHouseURLObser
         network = Network.getInstance();
         webView.setWebViewClient(getWebViewClient());
         WebSettings webSettings = webView.getSettings();
+        webSettings.setDomStorageEnabled(false);
         webSettings.setJavaScriptEnabled(true);
 
         if (network.isNetworkAvailable(getActivity().getApplication())){
-            Request request = network.getURL("http://192.168.100.109:8080/homeowner-gateway/v1/", authToken);
+            Request request = network.getURL(SERVER_URL, authToken);
             network.send(request, NetworkCallbackType.GetAddHouseURL, this);
         }
 

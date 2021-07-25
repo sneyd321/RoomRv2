@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleObserver;
 import com.sneydr.roomrv2.Adapters.HousesRecyclerViewAdapter;
 import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Entities.House.House;
+import com.sneydr.roomrv2.Network.Observers.AddHouseURLObserver;
 import com.sneydr.roomrv2.Network.Observers.HouseObserver;
 import com.sneydr.roomrv2.Network.Observers.HousesObserver;
 import com.sneydr.roomrv2.Repositories.HouseRepository;
@@ -38,6 +39,10 @@ public class HouseViewModel extends AndroidViewModel implements LifecycleObserve
 
     public void getHouses(String homeownerId, HousesObserver observer) {
         repository.getHouses(homeownerId, observer);
+    }
+
+    public void getHouseURL(String authToken, AddHouseURLObserver observer) {
+        repository.getHouseURL(authToken, observer);
     }
 
 

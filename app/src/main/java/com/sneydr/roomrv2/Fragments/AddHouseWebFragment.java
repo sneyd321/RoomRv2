@@ -1,6 +1,7 @@
 package com.sneydr.roomrv2.Fragments;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -26,26 +28,34 @@ import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
 import com.sneydr.roomrv2.Network.Network;
 import com.sneydr.roomrv2.Network.Observers.AddHouseURLObserver;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.ViewModels.HouseViewModel;
 
-import okhttp3.Request;
+
+
+import static com.sneydr.roomrv2.App.Constants.SERVER_URL;
 
 public class AddHouseWebFragment extends FragmentTemplate implements AddHouseURLObserver{
 
     private WebView webView;
-    private String authToken;
-    private Network network;
+    private HouseViewModel houseViewModel;
 
     private void initUI(View view) {
         webView = view.findViewById(R.id.webView);
-        network = Network.getInstance();
         webView.setWebViewClient(getWebViewClient());
         WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-
-        if (network.isNetworkAvailable(getActivity().getApplication())){
-            Request request = network.getURL("http://192.168.100.109:8080/homeowner-gateway/v1/House", authToken);
-            network.send(request, NetworkCallbackType.GetAddHouseURL, this);
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // chromium, enable hardware acceleration
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            // older android version, disable hardware acceleration
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+
+        webSettings.setJavaScriptEnabled(true);
+        houseViewModel = ViewModelProviders.of(this).get(HouseViewModel.class);
+        houseViewModel.getHouseURL(authToken, this);
 
     }
 
@@ -65,29 +75,17 @@ public class AddHouseWebFragment extends FragmentTemplate implements AddHouseURL
         return view;
     }
 
-
     private WebViewClient getWebViewClient() {
         return new WebViewClient() {
-
-
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest webResourceRequest) {
-
-                if (network.isNetworkAvailable(getActivity().getApplication())) {
-                    Request request = network.getURL(webResourceRequest.getUrl().toString(), authToken);
-                    network.send(request, NetworkCallbackType.GetAddHouseURL, AddHouseWebFragment.this);
-                }
+                houseViewModel.getHouseURL(authToken, AddHouseWebFragment.this);
                 return false;
             }
 
 
         };
     }
-
-
-
-
 
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     @Override
@@ -103,14 +101,11 @@ public class AddHouseWebFragment extends FragmentTemplate implements AddHouseURL
                     NavHostFragment.findNavController(AddHouseWebFragment.this).navigateUp();
                 }
                 catch (IllegalStateException ex) {
-
-                    //Toast.makeText(context, "Error navigating to houses page. Press <- to exit.", Toast.LENGTH_LONG).show();
+                    ex.getMessage();
                 }
             }
         });
-
     }
-
 
     @Override
     public void onAddHouseRequest(String url) {
@@ -132,11 +127,8 @@ public class AddHouseWebFragment extends FragmentTemplate implements AddHouseURL
                     NavHostFragment.findNavController(AddHouseWebFragment.this).navigateUp();
                 }
                 catch (IllegalStateException ex) {
-
-                    //Toast.makeText(context, "Error navigating to houses page. Press <- to exit.", Toast.LENGTH_LONG).show();
+                    ex.getMessage();
                 }
-
-
             }
         });
 

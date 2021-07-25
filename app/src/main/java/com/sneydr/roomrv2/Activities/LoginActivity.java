@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 
 import com.sneydr.roomrv2.R;
-import com.sneydr.roomrv2.Services.NotificationJobService;
+import com.sneydr.roomrv2.Services.ProfilePictureNotificationService;
 
 import static android.content.ContentValues.TAG;
 import static com.sneydr.roomrv2.App.Permission.INTERNET_PERMISSION_REQUEST_CODE;
@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void scheduleJob() {
-        ComponentName componentName = new ComponentName(this, NotificationJobService.class);
+        ComponentName componentName = new ComponentName(this, ProfilePictureNotificationService.class);
         JobInfo info = new JobInfo.Builder(123, componentName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setPersisted(true)

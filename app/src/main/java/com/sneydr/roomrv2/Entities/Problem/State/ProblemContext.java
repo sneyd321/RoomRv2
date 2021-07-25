@@ -1,10 +1,10 @@
-package com.sneydr.roomrv2.Entities.Problem;
+package com.sneydr.roomrv2.Entities.Problem.State;
 
 public class ProblemContext {
 
     private ProblemStatus problemStatus;
 
-    ProblemContext() {
+    public ProblemContext() {
         this.problemStatus = null;
     }
 

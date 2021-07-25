@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class GetHomeownerCallback extends NetworkCallback implements HomeownerObservable {
 
@@ -20,19 +21,24 @@ public class GetHomeownerCallback extends NetworkCallback implements HomeownerOb
 
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-        if (response.isSuccessful()){
+        ResponseBody responseBody = response.body();
+        if (responseBody == null) {
+            notifyFailure("Homeowner", "Error: Server Returned an Empty Response");
+            response.close();
+            return;
+        }
 
-            Homeowner homeowner = jsonParser.parseHomeowner(response.body().byteStream());
+        if (response.isSuccessful()){
+            Homeowner homeowner = jsonParser.parseHomeowner(responseBody.byteStream());
             if (homeowner != null){
                 notifyHomeowner(homeowner);
             }
             else {
                 notifyFailure("Homeowner", "Error: Failed to load homeowner data");
             }
-            
         }
         else {
-            notifyFailure("Homeowner", response.body().string());
+            notifyFailure("Homeowner", responseBody.string());
         }
         response.close();
     }
