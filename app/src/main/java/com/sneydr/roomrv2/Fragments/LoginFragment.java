@@ -63,7 +63,9 @@ public class LoginFragment extends FragmentTemplate implements HomeownerObserver
     private View.OnClickListener onSignUp = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_signUpStatePagerFragment);
+            Bundle bundle = new Bundle();
+            bundle.putString("authToken", "");
+            NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_signUpStatePagerFragment, bundle);
         }
     };
 

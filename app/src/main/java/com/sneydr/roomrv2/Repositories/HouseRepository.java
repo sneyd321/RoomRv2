@@ -27,9 +27,9 @@ public class HouseRepository extends Repository {
         }
     }
 
-    public void getHouseURL(String authToken, NetworkObserver observer) {
+    public void getHouseURL(String authToken, String url, NetworkObserver observer) {
         if (network.isNetworkAvailable(application)){
-            Request request = network.getURL(SERVER_URL + "House", authToken);
+            Request request = network.getURL(url, authToken);
             network.send(request, NetworkCallbackType.GetAddHouseURL, observer);
         }
     }

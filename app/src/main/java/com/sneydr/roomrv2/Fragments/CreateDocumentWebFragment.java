@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.sneydr.roomrv2.App.Dialog.Dialog;
@@ -20,29 +21,16 @@ import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
 import com.sneydr.roomrv2.Network.Network;
 import com.sneydr.roomrv2.Network.Observers.AddHouseURLObserver;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.ViewModels.DocumentViewModel;
 
 import okhttp3.Request;
 
-public class CreateDocumentWebFragment extends FragmentTemplate implements AddHouseURLObserver {
+import static com.sneydr.roomrv2.App.Constants.SERVER_URL;
 
-    private WebView webView;
-    private String authToken;
-    private Network network;
-    private int houseId;
+public class CreateDocumentWebFragment extends WebFragmentTemplate {
 
-    private void initUI(View view) {
-        webView = view.findViewById(R.id.webView);
-        network = Network.getInstance();
-        webView.setWebViewClient(getWebViewClient());
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
 
-        if (network.isNetworkAvailable(getActivity().getApplication())){
-            Request request = network.getURL(network.getServerUrl() + "RentDetails/Ontario/" + houseId, authToken);
-            network.send(request, NetworkCallbackType.GetAddHouseURL, this);
-        }
-
-    }
+    private DocumentViewModel documentViewModel;
 
     @Nullable
     @Override
@@ -52,81 +40,27 @@ public class CreateDocumentWebFragment extends FragmentTemplate implements AddHo
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey("authToken") && bundle.containsKey("houseId")){
             authToken = bundle.getString("authToken");
-            houseId = bundle.getInt("houseId");
-            initUI(view);
+            int houseId = bundle.getInt("houseId");
+            documentViewModel = ViewModelProviders.of(this).get(DocumentViewModel.class);
+            documentViewModel.getDocumentsURL(authToken, SERVER_URL + "RentDetails/Ontario/" + houseId, this);
+            webView = view.findViewById(R.id.webView);
+            initWebView(webView);
         }
         else {
-            NavHostFragment.findNavController(this).popBackStack();
+            NavHostFragment.findNavController(this).navigateUp();
         }
         return view;
     }
 
-
-    private WebViewClient getWebViewClient() {
+    @Override
+    protected WebViewClient getWebViewClient() {
         return new WebViewClient() {
-
-
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest webResourceRequest) {
-
-                if (network.isNetworkAvailable(getActivity().getApplication())) {
-                    Request request = network.getURL(webResourceRequest.getUrl().toString(), authToken);
-                    network.send(request, NetworkCallbackType.GetAddHouseURL, CreateDocumentWebFragment.this);
-                }
+                documentViewModel.getDocumentsURL(authToken, webResourceRequest.getUrl().toString(), CreateDocumentWebFragment.this);
                 return false;
             }
-
-
         };
     }
 
-
-
-
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-    @Override
-    public void onFailure(String tag, String response) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                webView.stopLoading();
-                Dialog dialog = new Dialog(context);
-                dialog.setMessage(response);
-                dialog.buildErrorDialog().show();
-                NavHostFragment.findNavController(CreateDocumentWebFragment.this).popBackStack();
-            }
-        });
-
-    }
-
-
-    @Override
-    public void onAddHouseRequest(String url) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                webView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
-            }
-        });
-    }
-
-    @Override
-    public void onFormComplete(String message) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                webView.stopLoading();
-                try {
-                    NavHostFragment.findNavController(CreateDocumentWebFragment.this).popBackStack();
-                }
-                catch (IllegalStateException ex) {
-
-                    //Toast.makeText(context, "Error navigating to houses page. Press <- to exit.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-    }
 }

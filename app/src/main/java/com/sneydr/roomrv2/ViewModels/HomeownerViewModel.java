@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sneydr.roomrv2.Entities.Login.Login;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Network.Network;
+import com.sneydr.roomrv2.Network.Observers.AddHouseURLObserver;
 import com.sneydr.roomrv2.Network.Observers.EmptyObserver;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
@@ -47,6 +48,10 @@ public class HomeownerViewModel extends AndroidViewModel  {
 
     public void uploadHomeownerProfile(String authToken, File file, NetworkObserver observer) {
         repository.uploadHomeownerImage(authToken, file, observer);
+    }
+
+    public void getSignInUrl(String authToken, String url, AddHouseURLObserver observer) {
+        repository.getSignInUrl(authToken, url, observer);
     }
 
 }

@@ -9,6 +9,7 @@ public final class Homeowner extends User {
 
     private HomeownerLocation homeownerLocation;
 
+    public HomeownerLocation getHomeownerLocation() { return homeownerLocation; }
     public void setHomeownerLocation(HomeownerLocation homeownerLocation) { this.homeownerLocation = homeownerLocation; }
 
 }

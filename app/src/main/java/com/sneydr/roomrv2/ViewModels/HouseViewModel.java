@@ -41,9 +41,10 @@ public class HouseViewModel extends AndroidViewModel implements LifecycleObserve
         repository.getHouses(homeownerId, observer);
     }
 
-    public void getHouseURL(String authToken, AddHouseURLObserver observer) {
-        repository.getHouseURL(authToken, observer);
+    public void getHouseURL(String authToken, String url, AddHouseURLObserver observer) {
+        repository.getHouseURL(authToken, url, observer);
     }
+
 
 
 

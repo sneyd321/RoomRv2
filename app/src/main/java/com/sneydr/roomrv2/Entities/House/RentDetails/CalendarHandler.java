@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class CalendarHandler {
 
@@ -15,7 +16,7 @@ public class CalendarHandler {
 
 
     public String getNow() {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault());
         return dateFormatter.format(calendar.getTime());
     }
 

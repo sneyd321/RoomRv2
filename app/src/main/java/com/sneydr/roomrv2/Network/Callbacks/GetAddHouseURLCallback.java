@@ -16,14 +16,15 @@ public class GetAddHouseURLCallback extends NetworkCallback implements AddHouseU
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
         ResponseBody responseBody = response.body();
-
+        if (responseBody == null) {
+            return;
+        }
         if (response.isSuccessful()) {
             if (response.code() == 204) {
                 notifyFormCompete("FormComplete");
+                return;
             }
-
             notifyObserver(responseBody.string());
-
         }
 
         else {

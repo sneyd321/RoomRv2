@@ -22,4 +22,11 @@ public class DocumentRepository extends Repository{
             network.send(request, NetworkCallbackType.GetDocuments, observer);
         }
     }
+
+    public void getDocumentUrl(String authToken, String url, NetworkObserver observer) {
+        if (network.isNetworkAvailable(application)){
+            Request request = network.getURL(url, authToken);
+            network.send(request, NetworkCallbackType.GetAddHouseURL, observer);
+        }
+    }
 }
