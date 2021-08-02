@@ -30,4 +30,9 @@ public class UnapprovedState implements ButtonState {
     public int getVectorDrawable() {
         return R.drawable.ic_baseline_clear_24;
     }
+
+    @Override
+    public boolean getEnabled() {
+        return true;
+    }
 }

@@ -11,12 +11,22 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class GetProblemCallback extends NetworkCallback implements ProblemObservable {
+
+
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        ResponseBody responseBody = response.body();
+        if (responseBody == null) {
+            notifyFailure("Problem", "Error: Server Returned an Empty Response");
+            response.close();
+            return;
+        }
+
         if (response.isSuccessful()){
-            Problem problem = jsonParser.parseProblem(response.body().string());
+            Problem problem = jsonParser.parseProblem(responseBody.byteStream());
             notifyProblem(problem);
         }
         else {

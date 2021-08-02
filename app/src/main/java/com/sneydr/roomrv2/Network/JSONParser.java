@@ -9,9 +9,12 @@ import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Entities.Login.Login;
 import com.sneydr.roomrv2.Entities.Message.Message;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
+import com.sneydr.roomrv2.Entities.ReadJson.ReadDocumentJson;
 import com.sneydr.roomrv2.Entities.ReadJson.ReadHomeownerJson;
 import com.sneydr.roomrv2.Entities.ReadJson.ReadHouseJson;
 import com.sneydr.roomrv2.Entities.ReadJson.ReadJson;
+import com.sneydr.roomrv2.Entities.ReadJson.ReadProblemJson;
+import com.sneydr.roomrv2.Entities.ReadJson.ReadTenantJson;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 
@@ -104,6 +107,23 @@ public class JSONParser {
         return gson.fromJson(response, tenantType);
     }
 
+    public List<Tenant> parseTenants(InputStream inputStream) throws IOException {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            List<Tenant> tenants = new ArrayList<>();
+            reader.beginArray();
+            while (reader.hasNext()) {
+                reader.beginObject();
+                ReadJson<Tenant> readJson = new ReadTenantJson(Tenant.class);
+                Tenant tenant = readJson.read(reader, new Tenant());
+                reader.endObject();
+                tenants.add(tenant);
+            }
+            reader.endArray();
+            reader.close();
+            return tenants;
+        }
+    }
+
     public House parseHouse(String response) {
         return gson.fromJson(response, House.class);
     }
@@ -117,8 +137,37 @@ public class JSONParser {
         return gson.fromJson(response, problemType);
     }
 
+    public List<Problem> parseProblems(InputStream inputStream) throws IOException {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            List<Problem> problems = new ArrayList<>();
+            reader.beginArray();
+            while (reader.hasNext()) {
+                reader.beginObject();
+                ReadJson<Problem> readJson = new ReadProblemJson(Problem.class);
+                Problem problem = readJson.read(reader, new Problem());
+                reader.endObject();
+                problems.add(problem);
+            }
+            reader.endArray();
+            reader.close();
+            return problems;
+        }
+    }
+
     public Problem parseProblem(String response) {
         return gson.fromJson(response, Problem.class);
+    }
+
+
+    public Problem parseProblem(InputStream inputStream) throws IOException {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            reader.beginObject();
+            ReadJson<Problem> readJson = new ReadProblemJson(Problem.class);
+            Problem problem = readJson.read(reader, new Problem());
+            reader.endObject();
+            reader.close();
+            return problem;
+        }
     }
 
     public Message parseMessage(String response) {
@@ -139,6 +188,25 @@ public class JSONParser {
         Type documentType = new TypeToken<ArrayList<Document>>(){}.getType();
         return gson.fromJson(response, documentType);
     }
+
+    public List<Document> parseDocuments(InputStream inputStream) throws IOException {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            List<Document> documents = new ArrayList<>();
+            reader.beginArray();
+            while (reader.hasNext()) {
+                reader.beginObject();
+                ReadJson<Document> readJson = new ReadDocumentJson(Document.class);
+                Document document = readJson.read(reader, new Document());
+                reader.endObject();
+                documents.add(document);
+            }
+            reader.endArray();
+            reader.close();
+            return documents;
+        }
+    }
+
+
 
     public Homeowner parseHomeowner(InputStream inputStream) throws IOException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {

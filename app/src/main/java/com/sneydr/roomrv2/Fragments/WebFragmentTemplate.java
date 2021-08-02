@@ -46,12 +46,7 @@ public abstract class WebFragmentTemplate extends FragmentTemplate implements Ad
                 Dialog dialog = new Dialog(context);
                 dialog.setMessage(response);
                 dialog.buildErrorDialog().show();
-                try {
-                    NavHostFragment.findNavController(WebFragmentTemplate.this).navigateUp();
-                }
-                catch (IllegalStateException ex) {
-                    ex.getMessage();
-                }
+                navigation.navigateBack(WebFragmentTemplate.this);
             }
         });
     }

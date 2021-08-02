@@ -25,6 +25,7 @@ import com.sneydr.roomrv2.Entities.Problem.Problem;
 import com.sneydr.roomrv2.Network.Observers.ProblemObserver;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.ViewModels.ProblemViewModel;
+import com.sneydr.roomrv2.ViewModels.TenantViewModel;
 import com.squareup.picasso.Picasso;
 
 public class ViewProblemsFragment extends FragmentTemplate implements ProblemObserver {
@@ -61,12 +62,16 @@ public class ViewProblemsFragment extends FragmentTemplate implements ProblemObs
             problemId = bundle.getInt("problemId");
             houseId = bundle.getInt("houseId");
             authToken = bundle.getString("authToken");
-            problemViewModel = ViewModelProviders.of(this).get(ProblemViewModel.class);
-            problemViewModel.getProblemById(problemId, authToken,this);
+            ViewModelProviders
+                .of(this)
+                .get(ProblemViewModel.class)
+                .getProblemById(problemId, authToken,this);
             initUI(view);
             return view;
         }
-        NavHostFragment.findNavController(this).popBackStack();
+        else {
+            navigation.navigateBack(this);
+        }
         return view;
     }
 
@@ -78,12 +83,12 @@ public class ViewProblemsFragment extends FragmentTemplate implements ProblemObs
             public void run() {
                 if (problem != null) {
                     Picasso.get()
-                            .load(problem.getImageUrl())
-                            .placeholder(R.drawable.ic_baseline_image_search_24)
-                            .error(R.drawable.ic_baseline_broken_image_24)
-                            .fit()
-                            .centerCrop()
-                            .into(imgProblem);
+                        .load(problem.getImageUrl())
+                        .placeholder(R.drawable.ic_baseline_image_search_24)
+                        .error(R.drawable.ic_baseline_broken_image_24)
+                        .fit()
+                        .centerCrop()
+                        .into(imgProblem);
                     txtCategory.setText(problem.getCategory());
                     txtDescription.setText(problem.getDescription());
                     btnUpdate.setOnClickListener(onUpdate);
@@ -97,7 +102,10 @@ public class ViewProblemsFragment extends FragmentTemplate implements ProblemObs
         @Override
         public void onClick(View v) {
             Problem problem = new Problem(txtCategory.getText().toString(), txtDescription.getText().toString(), houseId, problemId, rdgStatus.getText());
-            problemViewModel.updateProblem(problem, authToken, ViewProblemsFragment.this);
+            ViewModelProviders
+                .of(ViewProblemsFragment.this)
+                .get(ProblemViewModel.class)
+                .updateProblem(problem, authToken, ViewProblemsFragment.this);
             animateCardSlide();
         }
     };
@@ -106,9 +114,7 @@ public class ViewProblemsFragment extends FragmentTemplate implements ProblemObs
         YoYo.with(Techniques.SlideOutUp).onEnd(new YoYo.AnimatorCallback() {
             @Override
             public void call(Animator animator) {
-                Bundle bundle = new Bundle();
-                bundle.putString("authToken", authToken);
-                NavHostFragment.findNavController(ViewProblemsFragment.this).navigate(R.id.action_viewProblemFragment_to_housesFragment, bundle);
+                navigation.navigateBack(ViewProblemsFragment.this);
             }
         }).duration(1000).playOn(cardView);
     }

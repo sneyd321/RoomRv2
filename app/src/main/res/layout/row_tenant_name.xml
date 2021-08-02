@@ -17,11 +17,26 @@
             android:layout_height="match_parent">
 
             <TextView
+
+                android:id="@+id/textView2"
+                style="@style/row_key"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Tenant Name:"
+                app:layout_constraintBottom_toTopOf="@+id/txtTenantName"
+                app:layout_constraintEnd_toStartOf="@+id/imgApproveTenant"
+                app:layout_constraintStart_toEndOf="@+id/imgTenantProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgTenantProfile" />
+
+            <TextView
                 android:id="@+id/txtTenantName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
@@ -30,8 +45,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imgTenantProfile"
                 app:layout_constraintEnd_toStartOf="@+id/imgApproveTenant"
-                app:layout_constraintStart_toEndOf="@+id/imgTenantProfile"
-                app:layout_constraintTop_toTopOf="@+id/imgTenantProfile" />
+                app:layout_constraintStart_toEndOf="@+id/imgTenantProfile" />
 
             <ImageView
                 android:id="@+id/imgApproveTenant"

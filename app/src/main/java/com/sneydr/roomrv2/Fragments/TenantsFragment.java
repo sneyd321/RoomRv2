@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sneydr.roomrv2.Adapters.ButtonState.ButtonStateContext;
 import com.sneydr.roomrv2.Adapters.ButtonState.UnapprovedState;
@@ -22,6 +23,7 @@ import com.sneydr.roomrv2.Adapters.Listeners.OnSetContacts;
 import com.sneydr.roomrv2.Adapters.Listeners.OnUnapproved;
 import com.sneydr.roomrv2.Adapters.Listeners.StatefulItemClickListener;
 import com.sneydr.roomrv2.Adapters.TenantNameRecyclerViewAdapter;
+import com.sneydr.roomrv2.Adapters.ViewHolders.ViewHolder;
 import com.sneydr.roomrv2.App.DatePicker.SelectDateDialog;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.Network.Observers.LeaseObserver;
@@ -37,12 +39,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TenantsFragment extends FragmentTemplate implements StatefulItemClickListener, TenantsObserver, OnApproved, OnUnapproved, OnSetContacts {
+public class TenantsFragment extends FragmentTemplate implements StatefulItemClickListener, TenantsObserver, OnApproved, OnUnapproved, OnSetContacts, SwipeRefreshLayout.OnRefreshListener {
 
     TenantNameRecyclerViewAdapter adapter;
-
     private FragmentGenerateLeaseBinding binding;
-    private TenantViewModel tenantViewModel;
 
     @Nullable
     @Override
@@ -50,34 +50,35 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
         super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_generate_lease, container, false);
         binding.rcyGenerateLeaseTenantNames.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new TenantNameRecyclerViewAdapter(new ArrayList<>());
-
-        tenantViewModel = ViewModelProviders.of(this).get(TenantViewModel.class);
+        binding.swrTenants.setOnRefreshListener(this);
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        tenantViewModel.getTenantByHouseId(houseId, authToken, this);
+        ViewModelProviders.of(this).get(TenantViewModel.class).getTenantByHouseId(houseId, authToken, this);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        binding.rcyGenerateLeaseTenantNames.setAdapter(adapter);
-    }
+
 
     @Override
     public void onFailure(String tag, String response) {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                binding.swrTenants.setRefreshing(false);
                 adapter = new TenantNameRecyclerViewAdapter(new ArrayList<>());
                 binding.rcyGenerateLeaseTenantNames.setAdapter(adapter);
             }
         });
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.swrTenants.setRefreshing(false);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -86,6 +87,7 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
         handler.post(new Runnable() {
             @Override
             public void run() {
+                binding.swrTenants.setRefreshing(false);
                 adapter = new TenantNameRecyclerViewAdapter(tenants);
                 adapter.setOnApproved(TenantsFragment.this);
                 adapter.setOnUnapproved(TenantsFragment.this);
@@ -105,7 +107,10 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
             tenant.setApproved(true);
             tenant.setHouseId(houseId);
         }
-        tenantViewModel.updateTenant(tenant, authToken, TenantsFragment.this);
+        ViewModelProviders
+            .of(this)
+            .get(TenantViewModel.class)
+            .updateTenant(tenant, authToken, TenantsFragment.this);
     }
 
 
@@ -114,7 +119,10 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
         Tenant tenant = adapter.getTenantAtPosition(position);
         tenant.setApproved(true);
         tenant.setHouseId(houseId);
-        tenantViewModel.updateTenant(tenant, authToken, TenantsFragment.this);
+        ViewModelProviders
+            .of(this)
+            .get(TenantViewModel.class)
+            .updateTenant(tenant, authToken, TenantsFragment.this);
         adapter.notifyDataSetChanged();
     }
 
@@ -122,10 +130,14 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
 
     @Override
     public void onUnapprove(View view, int position) {
+
         Tenant tenant = adapter.getTenantAtPosition(position);
         tenant.setApproved(false);
         tenant.setHouseId(houseId);
-        tenantViewModel.updateTenant(tenant, authToken, TenantsFragment.this);
+        ViewModelProviders
+            .of(this)
+            .get(TenantViewModel.class)
+            .updateTenant(tenant, authToken, TenantsFragment.this);
         adapter.notifyDataSetChanged();
     }
 
@@ -134,5 +146,11 @@ public class TenantsFragment extends FragmentTemplate implements StatefulItemCli
         Tenant tenant = adapter.getTenantAtPosition(position);
         Intent intent = intentFactory.getContactsIntent(tenant);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+
+        ViewModelProviders.of(this).get(TenantViewModel.class).getTenantByHouseId(houseId, authToken, this);
     }
 }

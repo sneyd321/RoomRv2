@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.sneydr.roomrv2.Network.Observers.AddHouseURLObserver;
 import com.sneydr.roomrv2.R;
+import com.sneydr.roomrv2.ViewModels.HomeownerViewModel;
 import com.sneydr.roomrv2.ViewModels.HouseViewModel;
 
 import static com.sneydr.roomrv2.App.Constants.SERVER_URL;
@@ -23,15 +24,15 @@ import static com.sneydr.roomrv2.App.Constants.SERVER_URL;
 
 public class AddHouseWebFragment extends WebFragmentTemplate {
 
-    private HouseViewModel houseViewModel;
-
-
     @Override
     protected WebViewClient getWebViewClient() {
         return new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest webResourceRequest) {
-                houseViewModel.getHouseURL(authToken, webResourceRequest.getUrl().toString(), AddHouseWebFragment.this);
+                ViewModelProviders
+                        .of(AddHouseWebFragment.this)
+                        .get(HouseViewModel.class)
+                        .getHouseURL(authToken, webResourceRequest.getUrl().toString(), AddHouseWebFragment.this);
                 return false;
             }
         };
@@ -47,11 +48,13 @@ public class AddHouseWebFragment extends WebFragmentTemplate {
             authToken = bundle.getString("authToken");
             webView = view.findViewById(R.id.webView);
             initWebView(webView);
-            houseViewModel = ViewModelProviders.of(this).get(HouseViewModel.class);
-            houseViewModel.getHouseURL(authToken, SERVER_URL + "House", this);
+            ViewModelProviders
+                    .of(this)
+                    .get(HouseViewModel.class)
+                    .getHouseURL(authToken, SERVER_URL + "House", this);
         }
         else {
-            NavHostFragment.findNavController(this).navigateUp();
+            navigation.navigateBack(this);
         }
         return view;
     }

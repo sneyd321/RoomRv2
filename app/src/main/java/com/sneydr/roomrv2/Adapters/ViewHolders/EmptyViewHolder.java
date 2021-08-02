@@ -1,6 +1,8 @@
 package com.sneydr.roomrv2.Adapters.ViewHolders;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,19 +13,21 @@ import com.sneydr.roomrv2.databinding.RowEmptyRecyclerviewBinding;
 
 public class EmptyViewHolder extends RecyclerView.ViewHolder {
 
-    RowEmptyRecyclerviewBinding binding;
+    RowEmptyRecyclerviewBinding rowEmptyRecyclerviewBinding;
 
 
-    public EmptyViewHolder(@NonNull RowEmptyRecyclerviewBinding binding) {
+    public EmptyViewHolder(RowEmptyRecyclerviewBinding binding) {
         super(binding.getRoot());
-        this.binding = binding;
+        rowEmptyRecyclerviewBinding = binding;
     }
 
     public void bindText(String text) {
-        binding.txtEmptyRecyclerView.setText(text);
+        rowEmptyRecyclerviewBinding.txtEmptyRecyclerView.setText(text);
     }
 
     public void bindImage(int resId) {
-        binding.imageView.setImageResource(resId);
+        rowEmptyRecyclerviewBinding.imageView.setImageResource(resId);
     }
+
+
 }

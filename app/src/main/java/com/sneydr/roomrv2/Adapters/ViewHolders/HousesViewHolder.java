@@ -2,7 +2,9 @@ package com.sneydr.roomrv2.Adapters.ViewHolders;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,26 +17,27 @@ import com.sneydr.roomrv2.databinding.RowHouseBinding;
 public class HousesViewHolder extends RecyclerView.ViewHolder {
 
 
-    ItemClickListener itemClickListener;
-    RowHouseBinding binding;
+    private ItemClickListener itemClickListener;
+    private RowHouseBinding rowHouseBinding;
 
-    public HousesViewHolder(@NonNull RowHouseBinding binding) {
+    public HousesViewHolder(RowHouseBinding binding) {
         super(binding.getRoot());
-        this.binding = binding;
-        binding.btnUpdateHouse.setOnClickListener(onClickListener);
+        this.rowHouseBinding = binding;
+        rowHouseBinding.btnUpdateHouse.setOnClickListener(onClickListener);
     }
+
 
 
     public void bindHouse(House house, ItemClickListener itemClickListener) {
         if (house.getRentalUnitLocation() != null) {
-            binding.txtHouseRowAddress.setText(house.getRentalUnitLocation().getFormattedPrimaryAddress());
-            binding.txtHouseRowAddressSecondary.setText(house.getRentalUnitLocation().getFormattedSecondaryAddress());
-            binding.txtHouseRowUnitName.setText(house.getRentalUnitLocation().getUnitName());
+            rowHouseBinding.txtHouseRowAddress.setText(house.getRentalUnitLocation().getFormattedPrimaryAddress());
+            rowHouseBinding.txtHouseRowAddressSecondary.setText(house.getRentalUnitLocation().getFormattedSecondaryAddress());
+            rowHouseBinding.txtHouseRowUnitName.setText(house.getRentalUnitLocation().getUnitName());
         }
 
-        binding.txtHouseId.setText(house.getFormattedHouseId());
-        Context context = binding.getRoot().getContext();
-        binding.imgHouse.setImageDrawable(context.getResources().getDrawable(R.drawable.examplehouse));
+        rowHouseBinding.txtHouseId.setText(house.getFormattedHouseId());
+        Context context = rowHouseBinding.getRoot().getContext();
+        rowHouseBinding.imgHouse.setImageDrawable(context.getResources().getDrawable(R.drawable.examplehouse));
         this.itemClickListener = itemClickListener;
     }
 
@@ -47,6 +50,9 @@ public class HousesViewHolder extends RecyclerView.ViewHolder {
         }
     };
 
+    public void setVoidItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
 
 }

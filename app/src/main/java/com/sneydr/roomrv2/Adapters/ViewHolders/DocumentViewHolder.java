@@ -1,11 +1,18 @@
 package com.sneydr.roomrv2.Adapters.ViewHolders;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sneydr.roomrv2.Adapters.ButtonState.ButtonState;
+import com.sneydr.roomrv2.Adapters.ButtonState.ButtonStateContext;
+import com.sneydr.roomrv2.Adapters.ButtonState.DisabledState;
+import com.sneydr.roomrv2.Adapters.ButtonState.EnabledState;
 import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.OnCreateButtonClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.OnDownloadButtonClickListener;
@@ -13,26 +20,25 @@ import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.databinding.RowDocumentBinding;
 
+import java.util.zip.Inflater;
+
+
 public class DocumentViewHolder extends RecyclerView.ViewHolder {
 
     OnCreateButtonClickListener onCreateButtonClickListener;
     OnDownloadButtonClickListener onDownloadButtonClickListener;
-    ItemClickListener itemClickListener;
-    RowDocumentBinding binding;
+    private RowDocumentBinding rowDocumentBinding;
 
-    public DocumentViewHolder(@NonNull RowDocumentBinding binding) {
+
+
+    public DocumentViewHolder(RowDocumentBinding binding) {
         super(binding.getRoot());
-        this.binding = binding;
+        this.rowDocumentBinding = binding;
+        rowDocumentBinding.btnBuildDocument.setOnClickListener(onCreateButtonListener);
+        rowDocumentBinding.btnDownloadLease.setOnClickListener(onDownloadListener);
 
-        binding.btnBuildDocument.setOnClickListener(onCreateButtonListener);
-        binding.btnDownloadLease.setOnClickListener(onDownloadListener);
-        binding.crdDocument.setOnClickListener(onCardClickedListener);
     }
 
-
-    public void bindItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
 
     public void binCreateButtonClickListener(OnCreateButtonClickListener itemClickListener) {
         this.onCreateButtonClickListener = itemClickListener;
@@ -42,38 +48,6 @@ public class DocumentViewHolder extends RecyclerView.ViewHolder {
         this.onDownloadButtonClickListener = itemClickListener;
     }
 
-
-    public void bindDocument(Document document) {
-        binding.txtDocumentName.setText(document.getName());
-        Context context = binding.getRoot().getContext();
-        binding.btnDownloadLease.setEnabled(true);
-        binding.btnDownloadLease.setTextColor(context.getResources().getColor(R.color.LightGray));
-        binding.btnDownloadLease.setIconTintResource(R.color.LightGray);
-        binding.txtDocumentDescription.setText(document.getDescription());
-        if (document.getDocumentURL() != null) {
-            binding.btnDownloadLease.setTextColor(context.getResources().getColor(R.color.colorPrimary));
-            binding.btnDownloadLease.setIconTintResource(R.color.colorPrimary);
-            binding.btnDownloadLease.setEnabled(true);
-        }
-
-
-    }
-
-    View.OnClickListener onCardClickedListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (itemClickListener != null) {
-                if (binding.txtDocumentDescription.getVisibility() == View.VISIBLE) {
-                    binding.txtDocumentDescription.setVisibility(View.GONE);
-                }
-                else {
-                    binding.txtDocumentDescription.setVisibility(View.VISIBLE);
-                }
-                itemClickListener.onItemClick(v, getAdapterPosition());
-            }
-
-        }
-    };
 
     View.OnClickListener onCreateButtonListener = new View.OnClickListener() {
         @Override
@@ -94,4 +68,19 @@ public class DocumentViewHolder extends RecyclerView.ViewHolder {
         }
     };
 
+
+    public void bind(Document document) {
+        Context context = rowDocumentBinding.getRoot().getContext();
+        ButtonStateContext buttonStateContext = new ButtonStateContext();
+        buttonStateContext.setState(new DisabledState());
+        rowDocumentBinding.txtDocumentName.setText(document.getName());
+        rowDocumentBinding.txtDocumentDescription.setText(document.getDescription());
+        if (document.getDocumentURL() != null) {
+            buttonStateContext.setState(new EnabledState());
+        }
+        ButtonState state = buttonStateContext.getState();
+        rowDocumentBinding.btnDownloadLease.setTextColor(context.getResources().getColor(state.getColour()));
+        rowDocumentBinding.btnDownloadLease.setIconTintResource(state.getBackgroundDrawable());
+        rowDocumentBinding.btnDownloadLease.setEnabled(state.getEnabled());
+    }
 }

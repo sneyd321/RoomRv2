@@ -1,4 +1,4 @@
-package com.sneydr.roomrv2.App.Validation;
+package com.sneydr.roomrv2.App;
 
 import android.content.Intent;
 import android.provider.CalendarContract;
@@ -8,6 +8,8 @@ import com.sneydr.roomrv2.App.ConnectionManager;
 import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
+
+import java.io.InputStream;
 
 
 public class IntentFactory {
@@ -29,6 +31,8 @@ public class IntentFactory {
         intent.putExtra(Intent.EXTRA_TITLE, document.getName());
         return intent;
     }
+
+
 
     public Intent getGalleryIntent() {
         Intent intent = new Intent(Intent.ACTION_PICK);

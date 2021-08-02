@@ -102,10 +102,10 @@
                     android:layout_height="@dimen/view_height"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:text="View House Details"
+                    android:text="Enter House"
                     android:theme="@style/Widget.MaterialComponents.Button"
                     app:cornerRadius="3dp"
-                    app:icon="@drawable/ic_edit_black_24dp"
+                    app:icon="@drawable/ic_baseline_home_work_24"
                     app:iconTint="@color/White"
                     app:strokeColor="@color/colorPrimaryDark" />
 
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 style="@style/general_text"
-                android:text="House Id: "
+                android:text="House Key: "
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

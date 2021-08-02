@@ -22,6 +22,9 @@ public class Problem {
     private String imageUrl;
     private int houseId;
 
+    public Problem() {
+
+    }
 
 
     public Problem(String category, String description, int houseId) {

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 
 import com.sneydr.roomrv2.R;
-import com.sneydr.roomrv2.Services.ProfilePictureNotificationService;
+import com.sneydr.roomrv2.Services.NotificationService;
 
 import static android.content.ContentValues.TAG;
 import static com.sneydr.roomrv2.App.Permission.INTERNET_PERMISSION_REQUEST_CODE;
@@ -37,9 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         navController = Navigation.findNavController(this, R.id.nav_login_host_fragment);
-        scheduleJob();
     }
-
 
     @Override
     public void onBackPressed() {
@@ -48,14 +46,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         NavController navController = Navigation.findNavController(this, R.id.nav_login_host_fragment);
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -77,21 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    public void scheduleJob() {
-        ComponentName componentName = new ComponentName(this, ProfilePictureNotificationService.class);
-        JobInfo info = new JobInfo.Builder(123, componentName)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .setPersisted(true)
-                .setPeriodic(15 * 60 * 1000)
-                .build();
-        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        int resultCode = scheduler.schedule(info);
-        if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            Log.d(TAG, "Job scheduled");
-        } else {
-            Log.d(TAG, "Job scheduling failed");
-        }
-    }
+
 
 
 }

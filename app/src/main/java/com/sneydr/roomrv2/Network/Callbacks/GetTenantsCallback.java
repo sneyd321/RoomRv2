@@ -14,18 +14,26 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class GetTenantsCallback extends NetworkCallback implements TenantsObservable {
 
 
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        ResponseBody responseBody = response.body();
+        if (responseBody == null) {
+            notifyFailure("Tenants", "Error: Server Returned an Empty Response");
+            response.close();
+            return;
+        }
+
         if (response.isSuccessful()){
-            List<Tenant> tenants = jsonParser.parseTenants(response.body().string());
+            List<Tenant> tenants = jsonParser.parseTenants(responseBody.byteStream());
             notifyTenants(tenants);
         }
         else {
-            notifyFailure("Tenants", response.body().string());
+            notifyFailure("Tenants", responseBody.string());
         }
         response.close();
     }

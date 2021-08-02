@@ -22,12 +22,8 @@ public class Document {
     private String documentURL;
 
 
-    public Document(int houseId, String province, String description, String name, @Nullable String documentURL) {
-        this.houseId = houseId;
-        this.province = province;
-        this.description = description;
-        this.name = name;
-        this.documentURL = documentURL;
+    public Document() {
+
     }
 
     public int getHouseId() {

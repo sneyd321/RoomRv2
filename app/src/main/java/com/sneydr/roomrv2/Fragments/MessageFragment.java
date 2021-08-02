@@ -60,7 +60,7 @@ import java.util.List;
 
 import okhttp3.Request;
 
-public class HomeownerMessageFragment extends FragmentTemplate implements HomeownerObserver, JoinObserver, MessageObserver {
+public class MessageFragment extends FragmentTemplate implements HomeownerObserver, JoinObserver, MessageObserver {
 
 
     private MessageRecyclerViewAdapter adapter;
@@ -94,8 +94,10 @@ public class HomeownerMessageFragment extends FragmentTemplate implements Homeow
         socketIO.registerSocket("leave", socketIO.getListener(CallbackType.onDisconnect, this));
         socketIO.connect();
         message.resetError();
-        HomeownerViewModel homeownerViewModel = ViewModelProviders.of(this).get(HomeownerViewModel.class);
-        homeownerViewModel.loadHomeowner(authToken, this);
+        ViewModelProviders
+                .of(this)
+                .get(HomeownerViewModel.class)
+                .loadHomeowner(authToken, this);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

@@ -17,7 +17,7 @@ public class House extends AccessibleObject {
     }
 
     public String getFormattedHouseId() {
-        return "House Id: " + Integer.toString(this.houseId);
+        return "House Key: " + Integer.toString(this.houseId);
     }
 
     public int getHouseId() {

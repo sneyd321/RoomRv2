@@ -5,8 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
+import com.sneydr.roomrv2.Adapters.ViewHolders.DocumentViewHolder;
 import com.sneydr.roomrv2.Adapters.ViewHolders.EmptyViewHolder;
 import com.sneydr.roomrv2.Adapters.ViewHolders.HousesViewHolder;
+import com.sneydr.roomrv2.Adapters.ViewHolders.ViewHolder;
 import com.sneydr.roomrv2.Entities.House.House;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.databinding.RowEmptyRecyclerviewBinding;
@@ -16,65 +18,37 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HousesRecyclerViewAdapter extends RecyclerViewAdapter<House> {
 
-
-    private List<House> data;
     private ItemClickListener onItemClick;
-    private final int EMPTY = 0;
-    private final int HOUSES = 1;
 
     public HousesRecyclerViewAdapter(List<House> data) {
-        this.data = data;
+        super(data);
+        this.emptyString = "No Houses";
     }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (data.isEmpty()) {
-            return EMPTY;
-        }
-        else if (data.get(0) != null) {
-            return HOUSES;
-        }
-        return 2;
-    }
-
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == EMPTY) {
-            RowEmptyRecyclerviewBinding emptyBinding = DataBindingUtil.inflate(inflater, R.layout.row_empty_recyclerview, parent, false);
-            return new EmptyViewHolder(emptyBinding);
+            RowEmptyRecyclerviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.row_empty_recyclerview, parent, false);
+            return new EmptyViewHolder(binding);
         }
         RowHouseBinding binding = DataBindingUtil.inflate(inflater, R.layout.row_house, parent, false);
         return new HousesViewHolder(binding);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        if (viewHolder.getItemViewType() == EMPTY) {
-            EmptyViewHolder emptyViewHolder = (EmptyViewHolder) viewHolder;
-            emptyViewHolder.bindText("No Houses");
-            emptyViewHolder.bindImage(R.drawable.emptyhouse);
-        } else {
-            House house = data.get(position);
-            HousesViewHolder housesViewHolder = (HousesViewHolder) viewHolder;
-            housesViewHolder.bindHouse(house, onItemClick);
-        }
-    }
-
 
     @Override
-    public int getItemCount() {
-        if (data.isEmpty()) {
-            return 1;
-        }
-        return this.data.size();
+    protected void bind(House house, RecyclerView.ViewHolder holder) {
+        HousesViewHolder housesViewHolder = (HousesViewHolder) holder;
+        housesViewHolder.bindHouse(house, onItemClick);
     }
+
 
     public House getItemAtPosition(int position) {
         return this.data.get(position);

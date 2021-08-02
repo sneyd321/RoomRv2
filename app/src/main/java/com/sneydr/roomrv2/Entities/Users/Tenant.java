@@ -22,7 +22,7 @@ public class Tenant extends User {
     }
     public int getTenantId() { return tenantId; }
 
-       public void setHouseId(int houseId) { this.houseId = houseId; }
+    public void setHouseId(int houseId) { this.houseId = houseId; }
     public void setApproved(boolean approved) { isApproved = approved; }
 
 }

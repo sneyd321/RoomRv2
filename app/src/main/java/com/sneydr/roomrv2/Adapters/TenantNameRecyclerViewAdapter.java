@@ -53,7 +53,6 @@ public class TenantNameRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
         if (viewType == EMPTY) {
             RowEmptyRecyclerviewBinding emptyBinding = DataBindingUtil.inflate(inflater, R.layout.row_empty_recyclerview, parent, false);
             return new EmptyViewHolder(emptyBinding);

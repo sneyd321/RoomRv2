@@ -13,6 +13,8 @@ public interface  ButtonState {
 
    int getVectorDrawable();
 
+   boolean getEnabled();
+
 
 
 

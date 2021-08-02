@@ -36,18 +36,6 @@
             android:name=".Activities.MainActivityLandlord"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="http"
-                    android:host="localhost"
-                    android:port="8082"
-                    android:pathPattern="/house/v1/" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.LoginActivity"
@@ -58,10 +46,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".Services.NotificationService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
-        <service
-            android:name=".Services.ProfilePictureNotificationService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

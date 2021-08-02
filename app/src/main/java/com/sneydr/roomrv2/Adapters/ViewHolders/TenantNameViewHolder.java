@@ -1,32 +1,16 @@
 package com.sneydr.roomrv2.Adapters.ViewHolders;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
-import androidx.core.widget.CompoundButtonCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sneydr.roomrv2.Adapters.ButtonState.ApprovedState;
 import com.sneydr.roomrv2.Adapters.ButtonState.ButtonStateContext;
 import com.sneydr.roomrv2.Adapters.ButtonState.UnapprovedState;
-import com.sneydr.roomrv2.Adapters.Listeners.ItemClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.OnApproved;
-import com.sneydr.roomrv2.Adapters.Listeners.OnCreateButtonClickListener;
-import com.sneydr.roomrv2.Adapters.Listeners.OnDownloadButtonClickListener;
 import com.sneydr.roomrv2.Adapters.Listeners.OnSetContacts;
 import com.sneydr.roomrv2.Adapters.Listeners.OnUnapproved;
-import com.sneydr.roomrv2.Adapters.Listeners.StatefulItemClickListener;
-import com.sneydr.roomrv2.App.App;
 import com.sneydr.roomrv2.App.CircleTransform;
-import com.sneydr.roomrv2.App.Validation.IntentFactory;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.databinding.RowTenantNameBinding;
@@ -71,11 +55,17 @@ public class TenantNameViewHolder extends RecyclerView.ViewHolder {
 
     public void bindTenant(Tenant tenant) {
         binding.txtTenantName.setText(tenant.getFullName());
-        Picasso.get().load(tenant.getImageURL())
-                .transform(new CircleTransform(binding.getRoot().getContext()))
-                .fit()
-                .centerCrop()
-                .into(binding.imgTenantProfile);
+        if (tenant.getImageURL() == null || tenant.getImageURL().isEmpty()) {
+            binding.imgTenantProfile.setImageResource(R.drawable.ic_baseline_account_circle_24);
+        }
+        else {
+            Picasso.get().load(tenant.getImageURL())
+                    .transform(new CircleTransform(binding.getRoot().getContext()))
+                    .fit()
+                    .centerCrop()
+                    .into(binding.imgTenantProfile);
+        }
+
         buttonStateContext.setState(new UnapprovedState(buttonStateContext));
         if (tenant.isApproved()) {
             buttonStateContext.setState(new ApprovedState(buttonStateContext));

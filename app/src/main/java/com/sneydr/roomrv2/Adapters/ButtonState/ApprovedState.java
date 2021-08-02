@@ -30,4 +30,9 @@ public class ApprovedState implements ButtonState {
     public int getVectorDrawable() {
         return R.drawable.ic_check_black_24dp;
     }
+
+    @Override
+    public boolean getEnabled() {
+        return true;
+    }
 }

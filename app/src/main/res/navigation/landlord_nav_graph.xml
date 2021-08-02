@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/homeownerProblemFragment"
-        android:name="com.sneydr.roomrv2.Fragments.HomeownerProblemsFragment"
+        android:name="com.sneydr.roomrv2.Fragments.ProblemsFragment"
         android:label="Problem Tracker" />
     <fragment
         android:id="@+id/viewProblemFragment"
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
-        android:name="com.sneydr.roomrv2.Fragments.HomeownerMessageFragment"
+        android:name="com.sneydr.roomrv2.Fragments.MessageFragment"
         android:label="Messages" />
     <fragment
         android:id="@+id/addHouseWebFragment"
@@ -57,8 +57,8 @@
         android:label="Add House" />
     <fragment
         android:id="@+id/createDocumentWebFragment"
-        android:name="com.sneydr.roomrv2.Fragments.CreateDocumentWebFragment"
-        android:label="CreateDocumentWebFragment" />
+        android:name="com.sneydr.roomrv2.Fragments.LeaseWebFragment"
+        android:label="Create Lease" />
     <fragment
         android:id="@+id/documentsFragment"
         android:name="com.sneydr.roomrv2.Fragments.DocumentsFragment"

@@ -13,6 +13,7 @@
             android:id="@+id/houseDetailViewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toTopOf="@+id/houseDetailTabLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +35,11 @@
                 android:icon="@drawable/ic_build_black_24dp"
                 android:text="Problems" />
 
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_assignment_black_24dp"
+                android:text="Generate Lease" />
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

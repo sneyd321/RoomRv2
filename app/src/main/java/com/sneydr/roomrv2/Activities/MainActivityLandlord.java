@@ -70,7 +70,7 @@ public class MainActivityLandlord extends AppCompatActivity implements ActivityO
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_landlord);
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("authToken")) {
+        if (bundle != null && bundle.containsKey("authToken") && bundle.containsKey("email")) {
 
             myToolbar = findViewById(R.id.toolbarLandlord);
             myToolbar.setTitleTextColor(getResources().getColor(R.color.White));

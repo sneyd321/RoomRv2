@@ -18,12 +18,14 @@ import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
 import com.sneydr.roomrv2.R;
 import com.sneydr.roomrv2.ViewModels.HomeownerViewModel;
+import com.sneydr.roomrv2.databinding.FragmentLoginBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -31,33 +33,19 @@ public class LoginFragment extends FragmentTemplate implements HomeownerObserver
 
 
 
-    private Button btnLogin;
-    private Button btnSignup;
-    private TextInput email, password;
-    private List<TextInput> textInputs;
-    private HomeownerViewModel homeownerViewModel;
 
+    private FragmentLoginBinding binding;
+    private Login login;
 
-    protected void initUI(View view) {
-        textInputs = new ArrayList<>();
-        homeownerViewModel = ViewModelProviders.of(this).get(HomeownerViewModel.class);
-        email = new EmailTextInput(view, R.id.tilLoginEmail, R.id.edtLoginEmail);
-        password = new PasswordTextInput(view, R.id.tilLoginPassword, R.id.edtLoginPassword);
-        textInputs.add(email);
-        textInputs.add(password);
-        btnLogin = view.findViewById(R.id.btnLoginLogin);
-        btnLogin.setOnClickListener(onLogin);
-        btnSignup = view.findViewById(R.id.btnLoginSignup);
-        btnSignup.setOnClickListener(onSignUp);
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        initUI(view);
-        return view;
+        binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+        binding.btnLoginLogin.setOnClickListener(onLogin);
+        binding.btnLoginSignup.setOnClickListener(onSignUp);
+        return binding.getRoot();
     }
 
     private View.OnClickListener onSignUp = new View.OnClickListener() {
@@ -76,8 +64,8 @@ public class LoginFragment extends FragmentTemplate implements HomeownerObserver
     View.OnClickListener onLogin = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Login login = new Login(email.getText(), password.getText());
-            homeownerViewModel.login(login, LoginFragment.this);
+            login = new Login(binding.edtLoginEmail.getText().toString(), binding.edtLoginPassword.getText().toString());
+            ViewModelProviders.of(LoginFragment.this).get(HomeownerViewModel.class).login(login, LoginFragment.this);
         }
     };
 
@@ -85,6 +73,7 @@ public class LoginFragment extends FragmentTemplate implements HomeownerObserver
     public void onHomeowner(Homeowner homeowner) {
         Intent intent = new Intent(getActivity(), MainActivityLandlord.class);
         intent.putExtra("authToken", homeowner.getAuthToken());
+        intent.putExtra("email", login.getEmail());
         startActivity(intent);
     }
 

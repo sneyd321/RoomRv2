@@ -33,7 +33,7 @@ public abstract class ReadJson<T> {
 
 
     public T read(JsonReader reader, T t) throws IOException {
-        if (!reader.hasNext() || reader.peek() == JsonToken.END_OBJECT) {
+        if (!reader.hasNext() || reader.peek() == JsonToken.END_OBJECT ) {
             return t;
         }
         if (reader.peek() == JsonToken.NULL || reader.peek() != JsonToken.NAME) {

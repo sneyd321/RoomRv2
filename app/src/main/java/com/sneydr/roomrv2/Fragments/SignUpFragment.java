@@ -44,8 +44,10 @@ public class SignUpFragment extends WebFragmentTemplate {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.sign_up_web, container, false);
-        homeownerViewModel = ViewModelProviders.of(this).get(HomeownerViewModel.class);
-        homeownerViewModel.getSignInUrl(authToken, SERVER_URL, this);
+        ViewModelProviders
+            .of(this)
+            .get(HomeownerViewModel.class)
+            .getSignInUrl(authToken, SERVER_URL, this);
         webView = view.findViewById(R.id.webView);
         initWebView(webView);
         return view;
@@ -59,7 +61,10 @@ public class SignUpFragment extends WebFragmentTemplate {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest webResourceRequest) {
-                homeownerViewModel.getSignInUrl(authToken, webResourceRequest.getUrl().toString(), SignUpFragment.this);
+                ViewModelProviders
+                    .of(SignUpFragment.this)
+                    .get(HomeownerViewModel.class)
+                    .getSignInUrl(authToken, webResourceRequest.getUrl().toString(), SignUpFragment.this);
                 return false;
             }
 
