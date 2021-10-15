@@ -61,8 +61,7 @@
                 android:id="@+id/edtLoginEmail"
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/view_height"
-                android:text="rts1234567@hotmail.com" />
+                android:layout_height="@dimen/view_height" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,8 +86,7 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height"
-                android:inputType="textPassword"
-                android:text="aaaaaa" />
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,9 +1,9 @@
-package com.sneydr.roomrv2.Entities.ReadJson;
+package com.sneydr.roomrv2.Network.ReadJson;
 
 import android.util.JsonReader;
 
 import com.sneydr.roomrv2.Entities.House.Location.HomeownerLocation;
-import com.sneydr.roomrv2.Entities.ReadJson.State.JsonFieldTypeState;
+import com.sneydr.roomrv2.Network.ReadJson.State.JsonFieldTypeState;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 
 import java.io.IOException;

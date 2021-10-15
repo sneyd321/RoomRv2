@@ -1,4 +1,4 @@
-package com.sneydr.roomrv2.Entities.ReadJson.State;
+package com.sneydr.roomrv2.Network.ReadJson.State;
 
 import android.util.JsonReader;
 

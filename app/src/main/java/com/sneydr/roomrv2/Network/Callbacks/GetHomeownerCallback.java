@@ -1,11 +1,8 @@
 package com.sneydr.roomrv2.Network.Callbacks;
 
-import com.sneydr.roomrv2.Network.JSONParser;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Network.Observables.HomeownerObservable;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
-import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 

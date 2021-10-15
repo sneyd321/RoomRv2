@@ -1,8 +1,7 @@
 package com.sneydr.roomrv2.SocketIO.Callbacks;
 
 import com.github.nkzawa.emitter.Emitter;
-import com.google.gson.JsonParser;
-import com.sneydr.roomrv2.Network.JSONParser;
+import com.sneydr.roomrv2.Network.ReadJson.JSONParser;
 import com.sneydr.roomrv2.SocketIO.Observables.SocketIOObservable;
 import com.sneydr.roomrv2.SocketIO.Observers.SocketIOObserver;
 

@@ -1,4 +1,4 @@
-package com.sneydr.roomrv2.Network;
+package com.sneydr.roomrv2.Network.ReadJson;
 
 import android.util.JsonReader;
 
@@ -9,12 +9,6 @@ import com.sneydr.roomrv2.Entities.House.Document;
 import com.sneydr.roomrv2.Entities.Login.Login;
 import com.sneydr.roomrv2.Entities.Message.Message;
 import com.sneydr.roomrv2.Entities.Problem.Problem;
-import com.sneydr.roomrv2.Entities.ReadJson.ReadDocumentJson;
-import com.sneydr.roomrv2.Entities.ReadJson.ReadHomeownerJson;
-import com.sneydr.roomrv2.Entities.ReadJson.ReadHouseJson;
-import com.sneydr.roomrv2.Entities.ReadJson.ReadJson;
-import com.sneydr.roomrv2.Entities.ReadJson.ReadProblemJson;
-import com.sneydr.roomrv2.Entities.ReadJson.ReadTenantJson;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 

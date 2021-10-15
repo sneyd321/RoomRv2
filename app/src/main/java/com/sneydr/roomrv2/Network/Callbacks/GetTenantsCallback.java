@@ -1,10 +1,7 @@
 package com.sneydr.roomrv2.Network.Callbacks;
 
-import com.sneydr.roomrv2.Network.JSONParser;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
-import com.sneydr.roomrv2.Network.Observables.NetworkObservable;
 import com.sneydr.roomrv2.Network.Observables.TenantsObservable;
-import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
 import com.sneydr.roomrv2.Network.Observers.TenantsObserver;
 
 import org.jetbrains.annotations.NotNull;

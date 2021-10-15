@@ -1,9 +1,7 @@
 package com.sneydr.roomrv2.Network.Callbacks;
 
 import com.sneydr.roomrv2.Entities.House.House;
-import com.sneydr.roomrv2.Network.JSONParser;
 import com.sneydr.roomrv2.Network.Observables.HousesObservable;
-import com.sneydr.roomrv2.Network.Observers.HouseObserver;
 import com.sneydr.roomrv2.Network.Observers.HousesObserver;
 
 import org.jetbrains.annotations.NotNull;

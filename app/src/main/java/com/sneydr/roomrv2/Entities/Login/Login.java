@@ -18,5 +18,13 @@ public class Login {
         return password;
     }
 
+    public boolean validateEmail() {
+        return this.email != null && !this.email.isEmpty();
+    }
+
+    public boolean validatePassword() {
+        return this.password != null && !this.password.isEmpty();
+    }
+
 
 }

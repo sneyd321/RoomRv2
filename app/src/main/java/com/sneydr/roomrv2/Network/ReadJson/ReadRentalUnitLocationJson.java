@@ -1,4 +1,4 @@
-package com.sneydr.roomrv2.Entities.ReadJson;
+package com.sneydr.roomrv2.Network.ReadJson;
 
 import com.sneydr.roomrv2.Entities.House.Location.RentalUnitLocation;
 

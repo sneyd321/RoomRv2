@@ -15,6 +15,7 @@ import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackFactory;
 import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
 import com.sneydr.roomrv2.Entities.Users.Tenant;
 import com.sneydr.roomrv2.Network.Observers.NetworkObserver;
+import com.sneydr.roomrv2.Network.ReadJson.JSONParser;
 
 import java.io.File;
 

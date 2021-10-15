@@ -1,16 +1,12 @@
 package com.sneydr.roomrv2.Fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,42 +19,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.engineio.client.Transport;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Manager;
-import com.github.nkzawa.socketio.client.Socket;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import com.sneydr.roomrv2.Adapters.MessageRecyclerViewAdapter;
-import com.sneydr.roomrv2.App.TextInput.NormalTextInput.FirstNameTextInput;
 import com.sneydr.roomrv2.App.TextInput.NormalTextInput.MessageTextInput;
-import com.sneydr.roomrv2.App.TextInput.TextInput;
 import com.sneydr.roomrv2.Entities.Message.Message;
 import com.sneydr.roomrv2.Entities.Message.MessageFactory;
 import com.sneydr.roomrv2.Entities.Users.Homeowner;
-import com.sneydr.roomrv2.Network.Callbacks.GetHomeownerCallback;
-import com.sneydr.roomrv2.Network.Callbacks.NetworkCallbackType;
-import com.sneydr.roomrv2.Network.JSONParser;
-import com.sneydr.roomrv2.Network.Network;
 import com.sneydr.roomrv2.Network.Observers.HomeownerObserver;
 import com.sneydr.roomrv2.R;
-import com.sneydr.roomrv2.Repositories.HomeownerRepository;
 import com.sneydr.roomrv2.SocketIO.Callbacks.CallbackType;
-import com.sneydr.roomrv2.SocketIO.Observers.DisconnectObserver;
 import com.sneydr.roomrv2.SocketIO.Observers.JoinObserver;
 import com.sneydr.roomrv2.SocketIO.Observers.MessageObserver;
 import com.sneydr.roomrv2.SocketIO.SocketIO;
 import com.sneydr.roomrv2.ViewModels.HomeownerViewModel;
-import com.sneydr.roomrv2.ViewModels.TenantViewModel;
 
-import org.json.JSONObject;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Request;
 
 public class MessageFragment extends FragmentTemplate implements HomeownerObserver, JoinObserver, MessageObserver {
 

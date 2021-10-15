@@ -8,7 +8,7 @@ public class Constants {
 
 
 
-    public static final String SERVER_URL = "http://192.168.100.109:8080/homeowner-gateway/v1/";
+    public static final String SERVER_URL = "http://34.107.132.144/homeowner-gateway/v1/";
 
 
 

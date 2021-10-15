@@ -4,14 +4,13 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.sneydr.roomrv2.Entities.Message.Message;
-import com.sneydr.roomrv2.Network.JSONParser;
+import com.sneydr.roomrv2.Network.ReadJson.JSONParser;
 import com.sneydr.roomrv2.SocketIO.Callbacks.CallbackFactory;
 import com.sneydr.roomrv2.SocketIO.Callbacks.CallbackType;
 import com.sneydr.roomrv2.SocketIO.Callbacks.SocketCallback;
 import com.sneydr.roomrv2.SocketIO.Observers.SocketIOObserver;
 
 import java.net.URISyntaxException;
-import java.security.PublicKey;
 
 public class SocketIO {
 
@@ -29,8 +28,8 @@ public class SocketIO {
 
     public SocketIO() {
         try {
-            //this.socket = IO.socket("http://34.107.132.144");
-            this.socket = IO.socket("http://192.168.100.109:8087");
+            this.socket = IO.socket("http://34.107.132.144");
+            //this.socket = IO.socket("http://192.168.100.109:8087");
         } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
             this.socket = null;

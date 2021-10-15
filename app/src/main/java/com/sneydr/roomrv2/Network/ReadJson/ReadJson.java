@@ -1,14 +1,14 @@
-package com.sneydr.roomrv2.Entities.ReadJson;
+package com.sneydr.roomrv2.Network.ReadJson;
 
 import android.util.JsonReader;
 import android.util.JsonToken;
 
 
-import com.sneydr.roomrv2.Entities.ReadJson.State.BoolState;
-import com.sneydr.roomrv2.Entities.ReadJson.State.IntState;
-import com.sneydr.roomrv2.Entities.ReadJson.State.JsonFieldTypeContext;
-import com.sneydr.roomrv2.Entities.ReadJson.State.JsonFieldTypeState;
-import com.sneydr.roomrv2.Entities.ReadJson.State.StringState;
+import com.sneydr.roomrv2.Network.ReadJson.State.BoolState;
+import com.sneydr.roomrv2.Network.ReadJson.State.IntState;
+import com.sneydr.roomrv2.Network.ReadJson.State.JsonFieldTypeContext;
+import com.sneydr.roomrv2.Network.ReadJson.State.JsonFieldTypeState;
+import com.sneydr.roomrv2.Network.ReadJson.State.StringState;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
